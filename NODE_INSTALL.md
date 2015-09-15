@@ -1,6 +1,4 @@
-******************
-Node.js 安裝與設定
-******************
+#Node.js 安裝與設定
 
 本篇將講解如何在各個不同OS建立NodeJS 環境，目前NodeJS 0.4.8版本環境架設方式需依賴Linux指令才可編譯完成，當然在不同作業系統中也已經有NodeJS package，可以直接使用指令快速架設。以下各不同作業系統解說如何安裝NodeJS。
 
@@ -57,7 +55,7 @@ Linux 很適合作為 NodeJS 的伺服器作業系統及開發環境。安裝前
 
 出現版本訊息即表示安裝成功。
 
-(node_ins
+![](node_install_linux_node_test.jpg)
 
 Windows
 =======
@@ -73,11 +71,10 @@ nodeJS 在v0.6.0版本之後開始正式支援windows native，直接使用node.
     node -v
 
 接著出現node.js 版本訊息畫面，表示安裝完成。
+   
+   ![](node_install_cmd.jpg)
 
-.. image:: ../images/zh-tw/node_install_cmd.jpg
-   :scale: 100%
-   :align: center
-
-.. image:: ../images/zh-tw/node_install_node_test.jpg
-   :scale: 100%
-   :align: center
+   
+   ![](node_install_node_test.jpg)
+   
+   
