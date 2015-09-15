@@ -3,7 +3,7 @@
 * [README](README.md)
 * [PREFACE](PREFACE.md)
 * [NODE_INTRODUCE](nodeintroduce_md.md)
-* [NODE_INSTALL](NODE_INSTALL.md)
+* [NODE_INSTALL](nodeinstall_md.md)
 * [NODE_BASIC](NODE_BASIC.md)
 * [NODE_NPM](NODE_NPM.md)
 * [NODE_EXPRESS](NODE_EXPRESS.md)
