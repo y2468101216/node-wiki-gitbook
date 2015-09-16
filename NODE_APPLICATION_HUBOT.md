@@ -1,6 +1,5 @@
-*******************************
-製作一個 Hubot 的Plurk Adapter
-*******************************
+# 製作一個 Hubot 的Plurk Adapter
+
 
 應用事項提醒
 ============
@@ -48,7 +47,7 @@
 plurk.coffee 程式碼，
 
 
-.. code-block javascript
+
 
 	Robot = require("hubot").robot()
 	Adapter = require("hubto").adapter()
@@ -64,7 +63,7 @@ plurk.coffee 程式碼，
 
 先弄個基本架構，主要 Class 皆參考 Twitter Adapter 命名方式，接著再將 Plurk 這個 Class 增加幾個 Method，基本上只要有 run, send, reply 就夠了，而 run 用來做初始化的部分。
 
-.. code-block javascript
+
 
 	class Plurk entends Adapter
   		send: (plurk_id, strings…) ->
@@ -75,7 +74,7 @@ plurk.coffee 程式碼，
 
 看起來有點東西，接著來處理主要的Plurk API 結合部分，
 
-.. code-block javascript
+
 
 	class PlurkStreaming extends EventEmitter
 
@@ -100,7 +99,7 @@ plurk.coffee 程式碼，
 
 然後把注意力集中到 constructor 上，先把建構子弄好。
 
-.. code-block javascript
+
 
    constructor: (options) ->
     super()
@@ -127,7 +126,7 @@ plurk.coffee 程式碼，
 
 接著來處理 request 這個 method。
 
-.. code-block javascript
+
 
     request: (method, path, body, callback) ->                                                                                                                                
         #記錄一下這次的 Request
@@ -160,7 +159,7 @@ plurk.coffee 程式碼，
 
 大致上就是這樣，上面程式的架構已經將整個 Hubot Plurk Adapter 完成。因為在測試時竟然因為噗浪 Lag 而沒讀到完整的 Comet 資料，然後造成程式異常，為了避免這個問題發生，因此需要加上為了完美呈現需要再加上 Comet 的處理，所以要使用到 EventEmitter 的功能。
 
-.. code-block javascript
+
 
   	comet: (server, callback) ->
   	#在 Callback 裡面會找不到自身，所以設定區域變數
@@ -213,7 +212,7 @@ plurk.coffee 程式碼，
 
 後面的 get 跟 post 就簡單多了！
 
-.. code-block javascript
+
 
 	get: (path, callback) ->
     	@request("GET", path, null, callback)
@@ -223,7 +222,7 @@ plurk.coffee 程式碼，
 
 接著處理取的 Comet 網址的 getChannel
 
-.. code-block javascript
+
 
     getChannel: ->
         self = @
@@ -238,7 +237,7 @@ plurk.coffee 程式碼，
 
 那麼，先來處理 Plurk Adaper 好處理的部份
 
-.. code-block javascript
+
 
       send: (plruk_id, strings…)->
         #跟 Reply 一樣，直接交給 reply 做
@@ -250,7 +249,7 @@ plurk.coffee 程式碼，
 
 接著把 run 處理好就可以上線運作摟！
 
-.. code-block javascript
+
 
       run: ->
         self = @

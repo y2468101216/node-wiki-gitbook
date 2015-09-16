@@ -241,7 +241,7 @@ JavaScript Array
 
 宣告方式，
 
-.. code-block js
+
 
     var a=['a', 'b', 'c'];
     
@@ -249,21 +249,21 @@ JavaScript Array
 
 以上這兩種方式都可以宣告成陣列，接著我們將 a 這個變數印出來看一下，
 
-.. code-block js
+
 
     console.log(a);
     //print: [0, 1, 2]
 
 Array 的排列指標從 0 開始，像上面的例子來說， a 的指標就有三個，0, 1, 2，如果要印出特定的某個陣列數值，使用方法，
 
-.. code-block js
+
 
     console.log(a[1]);
     //print: b
     
 如果要判斷一個變數是不是 Array 最簡單的方式就是直接使用 Array 的原生方法，
 
-.. code-block js
+
 
     var a=['a', 'b', 'c'];
     
@@ -276,7 +276,7 @@ Array 的排列指標從 0 開始，像上面的例子來說， a 的指標就�
 
 如果要取得陣列變數的長度可以直接使用，
 
-.. code-block js
+
 
     console.log(a.length);
     
@@ -287,13 +287,13 @@ pop, shift
 
 以前面所宣告的陣列為範例，
 
-.. code-block js
+
 
     var a=['a', 'b', 'c'];
     
 使用 pop 可以從最後面取出陣列的最後一個值。
 
-.. code-block js
+
 
     console.log(a.pop());
     //print: c
@@ -303,7 +303,7 @@ pop, shift
 
 同時也可以注意到，使用 pop 這個方法之後，陣列的長度內容也會被輸出。另外一個跟 pop 很像的方式就是 shift，
 
-.. code-block js
+
 
     console.log(a.shift());
     //print: a
@@ -318,7 +318,7 @@ slice
 
 前面提到 pop, shift 就不得不說一下 slice，使用方式，
 
-.. code-block js
+
 
     console.log(a.slice(1,3));
     //print: 'b', 'c'
@@ -326,7 +326,7 @@ slice
 第一個參數為起始指標，第二個參數為結束指標，會將這個陣列進行切割，變成一個新的陣列型態。
 如果需要給予新的變數，就可以這樣子做，完整的範例。
 
-.. code-block js
+
 
     var a=['a', 'b', 'c'];
     
@@ -340,7 +340,7 @@ concat
 
 concat 這個方法，可以將兩個 Array 組合起來，
 
-.. code-block js
+
 
     var a=['a'];
     
@@ -351,7 +351,7 @@ concat 這個方法，可以將兩個 Array 組合起來，
     
 concat 會將陣列組合，之後變成全新的數組，如果以例子來說，a 陣列希望變成 ['a', 'b', 'c']，可以重新將數值分配給 a，範例來說
 
-.. code-block js
+
 
     a = a.concat(b);    
 
@@ -360,7 +360,7 @@ Iterator
 
 陣列資料，必須要有 Iterator，將資料巡迴一次，通常是使用迴圈的方式，
 
-.. code-block js
+
 
     var a=['a', 'b', 'c'];
     
@@ -374,7 +374,7 @@ Iterator
 
 事實上可以用更簡單的方式進行，
 
-.. code-block js
+
 
     var a=['a', 'b', 'c'];
     
@@ -422,7 +422,7 @@ Scope 與 Closure
 
 為了維護程式執行時所依賴的變數，即使執行時程式運行在原本的scope之外，他的變數作用範圍仍然維持不變。這時程式依賴的自由變數（定義時不是local的，而是在上一層scope定義的變數）一樣可以使用，就好像被關閉起來，所以叫做Closure。用程式看比較好懂：
 
-.. code-block js
+
 
     function outter(arg1) {
         //arg1及free_variable1對inner函數來說，都是自由變數
@@ -458,7 +458,7 @@ callback在形式上，其實就是把函數傳給函數，然後在適當的時
 在 物件 中，可以使用 物件.emit(事件名稱, 參數...) 呼叫傳入的callback函數
 這是Observer Pattern的簡單實作，而且跟在網頁中使用DOM的addEventListener使用上很類似，也很容易上手。不過NodeJS是大量使用非同步方式執行的應用，所以程式邏輯幾乎都是寫在callback函數中，當邏輯比較複雜時，大量的callback會讓程式看起來很複雜，也比較難單元測試。舉例來說：
 
-.. code-block js
+
 
     var p_client = new Db('integration_tests_20', new Server("127.0.0.1", 27017, {}), {'pk':CustomPKFactory});
     p_client.open(function(err, p_client) {
@@ -480,7 +480,7 @@ callback在形式上，其實就是把函數傳給函數，然後在適當的時
 
 這樣的程式碼，會比較難進行單元測試。有一個簡單的解決方式，是盡量不要使用匿名函數來當作callback或是event handler。透過這樣的方式，就可以對各個handler做單元測試了。例如：
 
-.. code-block js
+
 
     var http = require('http');
     var tools = {
@@ -499,7 +499,7 @@ callback在形式上，其實就是把函數傳給函數，然後在適當的時
 
 更進一步，可以把tools改成外部module，例如叫做tools.js：
 
-.. code-block js
+
 
     module.exports = {
      cookieParser: function(request, response) {
@@ -511,7 +511,7 @@ callback在形式上，其實就是把函數傳給函數，然後在適當的時
 
 然後把程式改成：
 
-.. code-block js
+
 
     var http = require('http');
     
@@ -524,7 +524,7 @@ callback在形式上，其實就是把函數傳給函數，然後在適當的時
 
 這樣就可以單元測試cookieParser了。例如使用nodeunit時，可以這樣寫：
 
-.. code-block js
+
 
     var testCase = require('nodeunit').testCase;
     module.exports = testCase({
@@ -587,7 +587,7 @@ cps是callback使用上的特例，形式上就是在函數最後呼叫callback�
 
 前面的cps範例裡面，使用了函數返回函數，這是為了把cps callback傳遞給onreadystatechange事件處理函數的方法。（因為這個事件處理函數並沒有設計好會傳送/接收這樣的參數）實際會執行的事件處理函數其實是內層返回的那個函數，之外包覆的這個函數，主要是為了利用Closure，把next傳給內層的事件處理函數。這個方法更常使用的地方，是為了解決一些scope問題。例如：
 
-.. code-block js
+
 
     <script>
     var accu=0,count=10;
@@ -605,7 +605,7 @@ cps是callback使用上的特例，形式上就是在函數最後呼叫callback�
 
 最後得出的結果會是100，而不是想像中的45，這是因為等到setTimeout指定的函數執行時，變數i已經變成10而離開迴圈了。要解決這個問題，就需要透過Closure來保存變數i：
 
-.. code-block js
+
 
     <script>
     var accu=0,count=10;
@@ -626,7 +626,7 @@ cps是callback使用上的特例，形式上就是在函數最後呼叫callback�
 
 函數返回函數的另外一個用途，是可以暫緩函數執行。例如：
 
-.. code-block js
+
     
     function add(m, n) {
       return m+n;
@@ -636,7 +636,7 @@ cps是callback使用上的特例，形式上就是在函數最後呼叫callback�
 
 add這個函數，必須同時輸入兩個參數，才有辦法執行。如果我希望這個函數可以先給它一個參數，等一些處理過後再給一個參數，然後得到結果，就必須用函數返回函數的方式做修改：
 
-.. code-block js
+
 
     function add(m) {
       return function(n) {
@@ -677,7 +677,7 @@ add這個函數，必須同時輸入兩個參數，才有辦法執行。如果�
 
 下面的程式參考了mixu文章中的做法：
 
-.. code-block js
+
 
     var wait = function(callbacks, done) {
      console.log('wait start');
@@ -740,7 +740,7 @@ done all. result: 3000
 
 不過這樣的寫法，還不夠實用，因為沒辦法實際讓函數可以等待執行完畢，又能當作事件處理函數來實際使用。上面參考到的Tim Caswell的文章，裡面有一種解法，不過還需要額外包裝（在他的例子中）NodeJS核心的fs物件，把一些函數（例如readFile）用Currying處理。類似像這樣：
 
-.. code-block js
+
 
     var fs = require('fs');
     var readFile = function(path) {
@@ -759,7 +759,7 @@ done all. result: 3000
 
 另外一種做法是去修飾一下callback，當他作為事件處理函數執行後，再用cps的方式取得結果：
 
-.. code-block js
+
 
     <script>
     function Wait(fns, done) {
@@ -840,7 +840,7 @@ done all. result: 3500
 
 循序執行可以協助把非常深的巢狀callback結構攤平，例如用這樣的簡單模組來做（serial.js）：
 
-.. code-block js
+
 
     module.exports = function(funs) {
         var c = 0;
@@ -870,7 +870,7 @@ done all. result: 3500
 
 簡單的測試範例（testSerial.js），使用fs模組，確定某個path是檔案，然後讀取印出檔案內容。這樣會用到兩層的callback，所以測試中有使用serial的版本與nested callbacks的版本做對照：
 
-.. code-block js
+
 
     var serial = require('./serial'),
         fs = require('fs'),
@@ -919,7 +919,7 @@ done all. result: 3500
 
 測試中的./dclient.js是一個簡單的dnode測試程式，放在跟testSerial.js同一個目錄：
 
-.. code-block js
+
 
     var dnode = require('dnode');
     
@@ -934,7 +934,7 @@ done all. result: 3500
 
 [flattened by searial:]
 
-.. code-block js
+
 
     var dnode = require('dnode');
     
@@ -947,7 +947,7 @@ done all. result: 3500
 
 [nested callbacks:]
 
-.. code-block js
+
 
     var dnode = require('dnode');
     
