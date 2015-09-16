@@ -1,6 +1,5 @@
-**************************************
-用 Express 和 MongoDB 寫一個 todo list
-**************************************
+# 用 Express 和 MongoDB 寫一個 todo list
+
 
 練習一種語言或是 framework 最快的入門方式就是寫一個 todo list 了. 他包含了基本的 C.R.U.D. ( 新增, 讀取, 更新, 刪除 ). 這篇文章將用 node.js 裡最通用的 framework Express 架構 application 和 MongoDB 來儲存資料.
 
@@ -147,7 +146,7 @@ MongoDB 以及 Mongoose 設定
 
 在根目錄下新增一個檔案叫做 db.js 來設定 MongoDB 和定義 schema.
 
-.. code-block js
+
 
     var mongoose = require( 'mongoose' );
     var Schema   = mongoose.Schema;
@@ -170,7 +169,7 @@ MongoDB 以及 Mongoose 設定
 
 將 require routes 移動到 db config 之後.
 
-.. code-block js
+
 
     var express = require( 'express' );
      
@@ -210,7 +209,7 @@ MongoDB 以及 Mongoose 設定
 
 修改 project title "routes/index.js"
 
-.. code-block js
+
 
     exports.index = function ( req, res ){
       res.render( 'index', { title : 'Express Todo Example' });
@@ -231,14 +230,14 @@ views/index.ejs
 
 新增待辦事項以及存檔，routes/index.js，首先先 require mongoose 和 Todo model.
 
-.. code-block js
+
 
     var mongoose = require( 'mongoose' );
     var Todo     = mongoose.model( 'Todo' );
 
 新增成功後將頁面導回首頁.
 
-.. code-block js
+
 
     exports.create = function ( req, res ){
       new Todo({
@@ -253,7 +252,7 @@ views/index.ejs
 
 app.js
 
-.. code-block js
+
 
     // 新增下列語法到 routes
     app.post( '/create', routes.create );
@@ -261,7 +260,7 @@ app.js
 顯示待辦事項
 routes/index.js
 
-.. code-block js
+
 
     // 查詢資料庫來取得所有待辦是事項.
     exports.index = function ( req, res ){
@@ -275,7 +274,7 @@ routes/index.js
 
 views/index.ejs
 
-.. code-block js
+
 
     // 在最下面跑回圈來秀出所有待辦事項.
     <% todos.forEach( function( todo ){ %>
@@ -286,7 +285,7 @@ views/index.ejs
 在每一個待辦事項的旁邊加一個刪除的連結.
 routes/index.js
 
-.. code-block js
+
 
     // 根据待辦事項的 id 来移除他
     exports.destroy = function ( req, res ){
@@ -316,7 +315,7 @@ views/index.ejs
 將這個刪除的動作加到 routes 裡.
 app.js
 
-.. code-block js
+
 
     // 新增下列語法到 routes
     app.get( '/destroy/:id', routes.destroy );
@@ -325,7 +324,7 @@ app.js
 當滑鼠點擊待辦事項時將他轉成一個 text input.
 routes/index.js
 
-.. code-block js
+
 
     exports.edit = function ( req, res ){
       Todo.find( function ( err, todos ){
@@ -397,7 +396,7 @@ app.js
 新增一個 update 動作來更新待辦事項.
 routes/index.js
 
-.. code-block js
+
 
     // 結束後重新導回首頁
     exports.update = function ( req, res ){
@@ -422,7 +421,7 @@ app.js
 現在待辦事項是最早產生的排最前面, 我們要將他改為最晚產生的放最前面.
 routes/index.js
 
-.. code-block js
+
 
     exports.index = function ( req, res ){
       Todo.
@@ -453,7 +452,7 @@ routes/index.js
 現在所有使用者看到的都是同一份資料. 意思就是說每一個人的 todo list 都長得一樣, 資料都有可能被其他人修改. 我們可以用 cookie 來記錄使用者資訊讓每個人有自己的 todo list. Express 已經有內建的 cookie, 只要在 app.js 新增一個 middleware 就好. 另外我們也會需要新增一個依據 cookie 來抓取當下的使用者的 middleware.
 app.js
 
-.. code-block js
+
 
     var express = require( 'express' );
      
@@ -500,7 +499,7 @@ app.js
 
 routes/index.js
 
-.. code-block js
+
 
     var mongoose = require( 'mongoose' );
     var Todo     = mongoose.model( 'Todo' );
@@ -593,7 +592,7 @@ Error handling
 要處理錯誤我們需要新增 next 參數到每個 action 裡. 一旦錯誤發生遍將他傳給下一個 middleware 去處理.
 routes/index.js
 
-.. code-block js
+
 
     ... function ( req, res, next ){
       // ...
