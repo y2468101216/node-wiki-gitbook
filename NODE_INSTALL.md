@@ -55,7 +55,7 @@ Linux 很適合作為 NodeJS 的伺服器作業系統及開發環境。安裝前
 
 出現版本訊息即表示安裝成功。
 
-![](img/node_install_linux_node_test.jpg)
+![](img/zh-tw/node_install_linux_node_test.jpg)
 
 Windows
 =======
