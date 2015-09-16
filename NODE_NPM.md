@@ -26,11 +26,9 @@ Node.js 在 0.6.3 版本開始內建 npm，
 
 若要檢查 npm 是否正確安裝，可以使用以下的指令：
 
-::
-
     npm -v
 
-.. topic:: 執行結果說明
+ 執行結果說明
 
     若 npm 正確安裝，執行 ``npm -v`` 將會看到類似 1.1.0-2 的版本訊息。
 
@@ -374,9 +372,7 @@ npm 還提供其他許多指令（commands）。
 可以建立一個命名為 ``package.json`` 的設定檔（純文字格式），
 檔案內容參考範例如下：
 
-.. topic:: package.json（範例）
-
-    ::
+ package.json（範例）
 
         {
             "name": "application-name"
