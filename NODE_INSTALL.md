@@ -7,7 +7,7 @@ Ubuntu Linux
 
 更新：推薦使用 nvm。
 
-::
+
 
     git clone git://github.com/creationix/nvm.git ~/.nvm
     echo ". ~/.nvm/nvm.sh" >> ~/.bashrc
@@ -18,7 +18,7 @@ Ubuntu Linux
 
 使用 APT 套件管理工具是常見的方法，以下是使用社群提供的 PPA 安裝方式。
 
-::
+
     
     sudo apt-get install python-software-properties
     sudo add-apt-repository ppa:chris-lea/node.js-devel
@@ -38,7 +38,7 @@ Linux 很適合作為 NodeJS 的伺服器作業系統及開發環境。安裝前
 
 安裝指令如下，如設有權限問題，請在指令前面加上sudo 
 
-.. code-block:: javascript
+
 
     git clone https://github.com/joyent/node.git
     cd node
@@ -49,7 +49,7 @@ Linux 很適合作為 NodeJS 的伺服器作業系統及開發環境。安裝前
 
 接著測試nodeJS 是否正常執行
 
-.. code-block:: javascript
+
 
     node --version
 
@@ -66,7 +66,7 @@ nodeJS 在v0.6.0版本之後開始正式支援windows native，直接使用node.
 
 如此完成windows native node.exe 安裝，接著可以進入command line 執行測試。在command line 輸指令如下
 
-.. code-block:: javascript
+
 
     node -v
 

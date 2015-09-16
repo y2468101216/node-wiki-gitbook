@@ -238,9 +238,6 @@ Express GET 應用範例
 ====================
 
 我們準備一個使用GET方法傳送資料的表單。
-
-.. literalinclude ../src/view/express_get_example_form.html
-   :language: javascript
    
 ```
 <!DOCTYPE html>
@@ -344,9 +341,6 @@ Express POST 應用範例
 =====================
 
 一開始準備基本的 html 表單，傳送內容以 POST 方式， form 的 action 屬性設定為 POST，其餘 html 內容與前一個範例應用相同，
-
-.. literalinclude ../src/view/express_post_example_form.html
-   :language: javascript
    
 ```
 <!DOCTYPE html>
@@ -414,9 +408,6 @@ JavaScript在訂閱事件時使用addEventListener，而node.js使用的則是on
 修改完成後，接著執行 node.js 程式，啟動 web server ，開啟瀏覽器進入表單測試看看，POST 的方式能否順利運作。
 
 完整程式碼如下，
-
-.. literalinclude ../src/node_express_post_form.js
-   :language: javascript
    
 ```
 var http = require('http'),
@@ -473,9 +464,6 @@ Express AJAX 應用範例
 這一回其實大多數的工作都會落在前端Ajax上面，前端要負責發送與接收資料，並在接收資料後，撤掉原先發送資料的表單，並將取得的資料，改成HTML格式之後，放上頁面。
 
 首先先準備 HTML 靜態頁面資料，
-
-.. literalinclude ../src/view/express_ajax_example_form.html
-   :language: javascript
 
 ```
 <!DOCTYPE html>
@@ -544,9 +532,6 @@ HTML 頁面上準備了一個表單，用來傳送註冊資料。接著直接引
 Server很輕鬆就完成任務了，最後進行程式測試，啟動 node.js 主程式之後，開啟瀏覽器就會看到表單，填寫完畢按下送出，就可以看到結果了。
 
 最後 node.js 本篇範例程式碼如下，
-
-.. literalinclude ../src/node_express_ajax_form.js
-   :language: javascript
    
 ```
 var http = require('http'),
