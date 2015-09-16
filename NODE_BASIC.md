@@ -60,7 +60,7 @@ node.js http 路徑建立
 重新啟動node.js 程式後，在瀏覽器端測試一下路徑行為，結果如下圖：
 
 
-   ![](/img/node_basic_rout_url_test.png)
+   ![](img/zh-tw/node_basic_rout_url_test.png)
 
 當在瀏覽器輸入http://127.0.0.1:1337/test ，在伺服器端會收到兩個要求，一個是我們輸入的/test 要求，另外一個則是 /favicon.ico。
 /test 的路徑要求，http 伺服器本身需要經過程式設定才有辦法回應給瀏覽器端所需要的回應，在伺服器中所有的路徑要求都是需要被解析才有辦法取得資料。
@@ -106,21 +106,21 @@ url 模組就跟如同他的命名一般，專門處理url 字串處理，裡面
 
 在這邊使用url.parse 的方法，裡面帶入網址格式資料，會回傳路徑資料。為了後需方便使用，將回傳的資料設定到path 變數當中。在回傳的路徑資料，裡面包含資訊，如下圖，
 
-![node_basic_rout_url.png](node_basic_rout_url.png)
+![](img/zh-tw/node_basic_rout_url.png)
    
 
 這邊只需要使用單純的路徑要求，直接取用path.pathname ，就可以達到我們的目的。
 
 最後要做路徑的判別，在不同的路徑可以指定不同的輸出，在範例中有三個可能結果，第一個從瀏覽器輸入/index 就會顯示 index 結果， /test 就會呈現出 test 頁面，最後如果都不符合預期的輸入會直接顯示 default 的頁面，最後的預防可以讓瀏覽器不會出現非預期結果，讓程式的可靠性提昇，底下為測試結果。
 
-![](/img/node_basic_rout_url_index.png)
+![](img/zh-tw/node_basic_rout_url_index.png)
     
 
-![](/img/node_basic_rout_url_test.png)
+![](img/zh-tw/node_basic_rout_url_test.png)
 
-![](/img/node_basic_rout_url_default.png)
+![](img/zh-tw/node_basic_rout_url_default.png)
 
-![](/img/node_basic_rout_url_error.png)
+![](img/zh-tw/node_basic_rout_url_error.png)
 
 node.js 檔案讀取 
 ================
@@ -164,13 +164,13 @@ node.js 檔案讀取
 一開始直接載入**file system 模組**，載入名稱為 **fs** 。讀取檔案主要使用的方法為readFile ，裡面以三個參數 **路徑(file path)** , **編碼方式(encoding)** ， **回應函式(callback)** ，路徑必須要設定為靜態html 所在位置，才能指定到正確的檔案。靜態檔案的編碼方式也必須正確，這邊使用靜態檔案的編碼為 **utf8** ，如果編碼設定錯誤，node.js 讀取出來檔案結果會使用 byte raw 格式輸出，如果 **錯誤編碼格式，會導致輸出資料為 byte raw**
 
    
-   ![](/img/node_basic_file_byte.png)
+   ![](img/zh-tw/node_basic_file_byte.png)
 
 **回應函式** 中裡面會使用兩個變數，error 為錯誤資訊，如果讀取的檔案不存在，或者發生錯誤，error 數值會是 true ，如果成功讀取資料 error 將會是 false 。 content 則是檔案內容，資料讀取後將會把資料全數丟到content 這個變數當中。
 
 最後程式的輸出結果畫面如下，
    
-   ![](/img/node_basic_file_read.png)
+   ![](img/zh-tw/node_basic_file_read.png)
 
 
 node.js http 靜態檔案輸出
