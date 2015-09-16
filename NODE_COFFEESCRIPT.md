@@ -1,6 +1,5 @@
-************
-CoffeeScript
-************
+#CoffeeScript
+
 
 * Spine
 * Hem
