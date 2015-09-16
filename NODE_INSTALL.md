@@ -55,7 +55,7 @@ Linux 很適合作為 NodeJS 的伺服器作業系統及開發環境。安裝前
 
 出現版本訊息即表示安裝成功。
 
-![](node_install_linux_node_test.jpg)
+![](/img/node_install_linux_node_test.jpg)
 
 Windows
 =======
@@ -72,9 +72,9 @@ nodeJS 在v0.6.0版本之後開始正式支援windows native，直接使用node.
 
 接著出現node.js 版本訊息畫面，表示安裝完成。
    
-   ![](node_install_cmd.jpg)
+   ![](/img/node_install_cmd.jpg)
 
    
-   ![](node_install_node_test.jpg)
+   ![](/img/node_install_node_test.jpg)
    
    

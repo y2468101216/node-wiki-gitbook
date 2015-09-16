@@ -60,15 +60,14 @@ node.js http 路徑建立
 重新啟動node.js 程式後，在瀏覽器端測試一下路徑行為，結果如下圖：
 
 
-   ![](node_basic_rout_url_test.png)
+   ![](/img/node_basic_rout_url_test.png)
 
 當在瀏覽器輸入http://127.0.0.1:1337/test ，在伺服器端會收到兩個要求，一個是我們輸入的/test 要求，另外一個則是 /favicon.ico。
 /test 的路徑要求，http 伺服器本身需要經過程式設定才有辦法回應給瀏覽器端所需要的回應，在伺服器中所有的路徑要求都是需要被解析才有辦法取得資料。
 從上面解說可以了解到在node.js 當中所有的路徑都需要經過設定，未經過設定的路由會讓瀏覽器無法取得任何資料導致錯誤頁面的發生，底下將會解說如何設定路由，同時避免發生錯誤情形。
 先前node.js 程式需要增加一些修改，才能讓使用者透過瀏覽器，在不同路徑時有不同的結果。根據剛才的程式做如下的修改，
 
-.. literalinclude:: ../src/node_basic_http_rout_done.js
-   :language: javascript
+
    ```
    var server,
     ip   = "127.0.0.1",
@@ -114,14 +113,14 @@ url 模組就跟如同他的命名一般，專門處理url 字串處理，裡面
 
 最後要做路徑的判別，在不同的路徑可以指定不同的輸出，在範例中有三個可能結果，第一個從瀏覽器輸入/index 就會顯示 index 結果， /test 就會呈現出 test 頁面，最後如果都不符合預期的輸入會直接顯示 default 的頁面，最後的預防可以讓瀏覽器不會出現非預期結果，讓程式的可靠性提昇，底下為測試結果。
 
-![](node_basic_rout_url_index.png)
+![](/img/node_basic_rout_url_index.png)
     
 
-![](node_basic_rout_url_test.png)
+![](/img/node_basic_rout_url_test.png)
 
-![](node_basic_rout_url_default.png)
+![](/img/node_basic_rout_url_default.png)
 
-![](node_basic_rout_url_error.png)
+![](/img/node_basic_rout_url_error.png)
 
 node.js 檔案讀取 
 ================
@@ -130,8 +129,7 @@ node.js 檔案讀取
 
 檔案管理最重要的部分就是`File system <http://nodejs.org/docs/latest/api/fs.html>` 這個模組，此模組可以針對檔案做管理、監控、讀取等行為，裡面有許多預設的方法，底下是檔案輸出的基本範例，底下會有兩個檔案，第一個是靜態html 檔案，
 
-.. literalinclude:: ../src/static/index.html
-   :language: javascript  
+
    ```
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-tw" lang="zh-tw">
@@ -149,8 +147,7 @@ node.js 檔案讀取
 
 另一個為node.js 程式，
 
-.. literalinclude:: ../src/node_basic_file_simple.js
-   :language: javascript
+
    ```
     var fs = require("fs"),
     filename = "static/index.html",
@@ -167,13 +164,13 @@ node.js 檔案讀取
 一開始直接載入**file system 模組**，載入名稱為 **fs** 。讀取檔案主要使用的方法為readFile ，裡面以三個參數 **路徑(file path)** , **編碼方式(encoding)** ， **回應函式(callback)** ，路徑必須要設定為靜態html 所在位置，才能指定到正確的檔案。靜態檔案的編碼方式也必須正確，這邊使用靜態檔案的編碼為 **utf8** ，如果編碼設定錯誤，node.js 讀取出來檔案結果會使用 byte raw 格式輸出，如果 **錯誤編碼格式，會導致輸出資料為 byte raw**
 
    
-   ![](node_basic_file_byte.png)
+   ![](/img/node_basic_file_byte.png)
 
 **回應函式** 中裡面會使用兩個變數，error 為錯誤資訊，如果讀取的檔案不存在，或者發生錯誤，error 數值會是 true ，如果成功讀取資料 error 將會是 false 。 content 則是檔案內容，資料讀取後將會把資料全數丟到content 這個變數當中。
 
 最後程式的輸出結果畫面如下，
    
-   ![](node_basic_file_read.png)
+   ![](/img/node_basic_file_read.png)
 
 
 node.js http 靜態檔案輸出
@@ -214,8 +211,7 @@ node.js http 靜態檔案輸出
 ```
 
 
-.. literalinclude:: ../src/static/static.html
-   :language: javascript  
+  
 ```
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-TW" lang="zh-TW">

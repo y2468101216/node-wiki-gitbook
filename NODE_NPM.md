@@ -180,7 +180,7 @@ http://search.npmjs.org/
 舉例來說，在關鍵字欄位輸入「coffee-script」，
 下方的清單就會自動列出包含 coffee-script 關鍵字的套件。
 
-![](node_npm_registry.png)
+![](/img/node_npm_registry.png)
 
 接著我們回到終端機模式的操作，
 ``npm`` 的指令工具本身就可以完成套件搜尋的任務。
@@ -191,7 +191,7 @@ http://search.npmjs.org/
 
 以下是搜尋結果的參考畫面：
 
-![](node_npm_search.png)
+![](/img/node_npm_search.png)
 
 找到需要的套件後（例如 express），即可使用以下指令安裝：
 
