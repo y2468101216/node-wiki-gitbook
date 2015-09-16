@@ -36,6 +36,14 @@ Node.js 英文書籍
 
 * <a href="http://visionmedia.github.com/masteringnode/">Mastering Node.js</a>,visionmedia
 
+Node.js 中文書籍
+================
+
+* <a href="http://www.books.com.tw/products/0010635109">不一樣的Node.js：用JavaScript打造高效能的前後台網頁程式</a>,2014/05/12,  錢逢祥, 蔡政崇, 林政毅
+
+* <a href="http://www.books.com.tw/products/0010671565">Node.js模組參考手冊</a>,2015/04/15,錢逢祥, 蔡政崇, 楊傑文 
+
+* <a href="http://www.books.com.tw/products/0010644512">深入淺出Node.js</a>,2014/07/29, 朴靈/編著 
 
 
 
