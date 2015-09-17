@@ -1,17 +1,19 @@
 關於本書
 =======
 
-這是一本關於 Node.js 技術的開放源碼電子書，我們使用 GitHub 維護電子書內容，並交由 ContPub（Continuous Publishing）系統自動線上發佈。本書提供 PDF、EPUB、MOBI 及 HTML 等格式，您除了可以在網站檢視本書所有內容，也可以將電子書下載至閱讀器保存。
+這是一本關於 Node.js 技術的開放源碼電子書，我們使用 GitBook 維護電子書內容，並交由 GitBook自動線上發佈。本書提供 PDF、EPUB、MOBI 及 HTML 等格式，您除了可以在網站檢視本書所有內容，也可以將電子書下載至閱讀器保存。
 
-本書的線上閱讀網址，與 GitHub 資料同步更新。
+本書的線上閱讀網址，與 GitBook 資料同步更新。
 
-http://book.nodejs.tw/
+https://www.gitbook.com/read/book/y2468101216/node-wiki-book
 
-如果您想要取得本書的其他格式，可以從 ContPub 的電子書專頁下載最新版本。
+如果您想要取得本書的其他格式，可以從 GitBook 的電子書專頁下載最新版本。
 
-http://contpub.org/read/nodejs-wiki-book
+https://www.gitbook.com/book/y2468101216/node-wiki-book/details
 
 本書適合 Node.js 初學者至進階開發者，也歡迎您在學習時一起參與本書內容撰寫。
+
+有興趣者請來信y2468101216@gmail.com
 
 編寫語法與規範
 ============
@@ -24,13 +26,12 @@ http://contpub.org/read/nodejs-wiki-book
 根目錄結構
 =======
 
- * index.rst -> 基礎設定檔案，讓 contpub.org 讀取設定
- * contents.rst.inc -> 本書編排列表
- * conver.tex -> 本書封面
- * links.rst -> 外部連結
- * readme.rst -> 本書說明
- * zh-tw -> 內含各章節詳細資料，編排方式可參考 contents.rst.inc
- * src -> 範例程式碼擺放位置
+ * SUMMARY.md -> 本書編排列表
+ * cover.jpg -> 本書封面(徵求封面設計者）
+ * LINKS.md -> 外部連結
+ * README.md -> 本書說明
+ * zh-tw -> 內含各章節詳細資料，編排方式可參考 SUMMARY.md
+ * src -> 範例程式碼擺放位置(目前全部嵌在網頁裡面）
 
 授權
 ====
@@ -55,9 +56,13 @@ http://creativecommons.org/licenses/by-nc/3.0/legalcode
 本書由 Node.js Taiwan 社群成員協作，以下名單依照字母排序。
 
 * Caesar Chi (clonn)
+* Dca
 * Fillano Feng (fillano)
+* Hsu Ping Feng
 * Kevin Shu (Kevin)
 * lyhcode http://about.me/lyhcode
+* MarkLin
+* Yun
 
 Node.js Taiwan 是一個自由開放的技術學習社群，我們歡迎您加入一起學習、研究及分享。
 
@@ -66,26 +71,26 @@ Node.js Taiwan 是一個自由開放的技術學習社群，我們歡迎您加�
 
 線上閱讀本書。
 
-http://book.nodejs.tw/
+https://www.gitbook.com/read/book/y2468101216/node-wiki-book
 
 PDF格式，適合一般電腦及7吋以上平板電腦閱讀
 
-http://contpub.org/download/nodejs-wiki-book.pdf
+https://www.gitbook.com/download/pdf/book/y2468101216/node-wiki-book
 
 EPUB格式，適合 iPad、iPhone 行動裝置閱讀
 
-http://contpub.org/download/nodejs-wiki-book.epub
+https://www.gitbook.com/download/epub/book/y2468101216/node-wiki-book
 
 MOBI格式，適合 Kindle 電子書閱讀器
 
-http://contpub.org/download/nodejs-wiki-book.mobi
+https://www.gitbook.com/download/mobi/book/y2468101216/node-wiki-book
 
-原始碼
+原始碼(目前全部嵌在網頁裡面）
 ======
 
 本書最新的原始碼（中文版）網址如下：
 
-http://github.com/nodejs-tw/nodejs-wiki-book
+https://github.com/y2468101216/node-wiki-gitbook
 
 精選文章收錄流程
 ================
