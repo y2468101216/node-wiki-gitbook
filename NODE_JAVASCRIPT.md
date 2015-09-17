@@ -556,7 +556,6 @@ CPS（Continuation-Passing Style）
 
 cps是callback使用上的特例，形式上就是在函數最後呼叫callback，這樣就好像把函數執行後把結果交給callback繼續運行，所以稱作continuation-passing style。利用cps，可以在非同步執行的情況下，透過傳給callback的這個cps callback來獲知callback執行完畢，或是取得執行結果。例如：
 
-.. code-block html
 
     <html>
     <body>
