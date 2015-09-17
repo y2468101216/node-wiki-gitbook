@@ -14,5 +14,7 @@ Node.js 對於資源的調配有所不同，當程式接收到一筆連線 (conn
 
 基於 callback 特性，目前 Node.js 大多應用於 Comet(long pulling) Request Server，或者是高連線數量的網路服務上，目前也有許多公司將 Node.js 設為內部核心網路服務之一。在 Node.js 也提供了外掛管理 (Node package management)，讓愛好 Node.js 輕易開發更多有趣的服務、外掛，並且提供到 npm 讓全世界使用者快速安裝使用。
 
-本書最後執行測試版本為node.js v4.0.0，相關 API 文件可查詢`http://nodejs.org <http://nodejs.org>`
-本書所有範例均可於 Linux, Windows 上執行，如遇到任何問題歡迎至`http://nodejs.tw <http://nodejs.tw>`，詢問對於 Node.js 相關問題。
+本書最後執行測試版本為node.js v4.0.0，相關 API 文件可查詢
+https://nodejs.org
+
+本書所有範例均可於 Linux, Windows 上執行，如遇到任何問題歡迎至http://nodejs.tw ，詢問對於 Node.js 相關問題，或者可以加入FB社團<a href="https://www.facebook.com/groups/node.js.tw/">node.js台灣</a>
