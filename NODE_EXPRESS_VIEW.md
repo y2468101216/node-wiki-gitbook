@@ -55,7 +55,7 @@ module.exports = function(){
 
 public/index.html:
 
-```
+<pre>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,7 +74,7 @@ public/index.html:
 	</div>
 </body>
 </html>
-```
+</pre>
 
 app.js:
 ```
