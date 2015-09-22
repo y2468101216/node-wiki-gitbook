@@ -28,7 +28,7 @@ MVC是近年來流行的web架構，但這個概念並不限定在web上，連an
 -- b.txt
 - public
 -- index.html
-- express_route.js
+- app.js
 
 bin/download.js:
 ```
@@ -76,6 +76,7 @@ public/index.html:
 </html>
 ```
 
+app.js:
 ```
 /**
  * Name:app.js
