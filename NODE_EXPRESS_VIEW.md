@@ -19,15 +19,16 @@ MVC是近年來流行的web架構，但這個概念並不限定在web上，連an
 *（視圖 View） - html部分，為了輸出Controller的訊息，會需要用到view engine，下面會介紹ejs跟angular.js
 *（模型 Model）- 邏輯處理
 
-# 實例一
+# 實例一 MVC基本範例
 讓我們做個範例，建立一個名叫**node_mvc_1**目錄
+你可以參考 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mvc_1>
 
 ```
 node_mvc_1/
 ├── bin/
 |	├── download.js
 ├── download/
-	├── a.txt
+│	├── a.txt
 │   ├── b.txt
 ├── public/
 │   ├── index.html
@@ -130,3 +131,18 @@ console.log('server is running');
 
 app.listen(8080);
 ```
+
+這是一個下載檔案的範例，在index.html裡有三個超連結分別對應a.txt、b.txt、c.txt。但你可以注意到在download目錄裡
+並沒有c.txt，所以他應該會回傳error，不過今天的重點不在那邊，讓我們回頭來看app.js
+
+app.js把檢查檔案是否存在的邏輯處理抽離另外做成一個class，讓app.js只單純處理controller的問題：轉傳給model，回傳給view。
+
+這樣的好處是你易於維護，不會因為一個程式bug導致整個server crush，當然檔案跟程式碼會變得比較多，但整體而言複雜度是下降的。
+
+#實例二 輸出文字
+在node.js裡面view engine分成兩個：jade跟ejs，我會談跟php想法比較接近的ejs。
+
+如果跟我一樣有做過php的話，那你應該記得php本身即是個view engine這件事，但很可惜的是node.js並不能直接
+這樣輸出，但他有類似的東西可以讓你無痛轉換，沒錯！就是ejs
+
+讓我們來看看以下實例:
