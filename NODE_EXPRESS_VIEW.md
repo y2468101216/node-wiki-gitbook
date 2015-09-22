@@ -19,16 +19,20 @@ MVC是近年來流行的web架構，但這個概念並不限定在web上，連an
 *（視圖 View） - html部分，為了輸出Controller的訊息，會需要用到view engine，下面會介紹ejs跟angular.js
 *（模型 Model）- 邏輯處理
 
+# 實例一
 讓我們做個範例，建立一個名叫**node_mvc_1**目錄
 
-- bin
--- download.js
-- download
--- a.txt
--- b.txt
-- public
--- index.html
-- app.js
+```
+node_mvc_1/
+├── bin/
+|	├── download.js
+├── download/
+	├── a.txt
+│   ├── b.txt
+├── public/
+│   ├── index.html
+└── app.js
+```
 
 bin/download.js:
 ```
@@ -55,26 +59,26 @@ module.exports = function(){
 
 public/index.html:
 
-<pre>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Node MVC 1</title>
-</head>
-<body>
-	<div>
-		<a href="./download/a.txt">download a</a>
-	</div>
-	<div>
-		<a href="./download/b.txt">download b</a>
-	</div>
-	<div>
-		<a href="./download/c.txt">download c</a>
-	</div>
-</body>
-</html>
-</pre>
+```
+&#60;!DOCTYPE html&#62;
+&#60;html&#62;
+&#60;head&#62;
+&#60;meta charset="UTF-8"&#62;
+&#60;title&#62;Node MVC 1&#60;/title&#62;
+&#60;/head&#62;
+&#60;body&#62;
+	&#60;div&#62;
+		&#60;a href="./download/a.txt"&#62;download a&#60;/a&#62;
+	&#60;/div&#62;
+	&#60;div&#62;
+		&#60;a href="./download/b.txt"&#62;download b&#60;/a&#62;
+	&#60;/div&#62;
+	&#60;div&#62;
+		&#60;a href="./download/c.txt"&#62;download c&#60;/a&#62;
+	&#60;/div&#62;
+&#60;/body&#62;
+&#60;/html&#62;
+```
 
 app.js:
 ```

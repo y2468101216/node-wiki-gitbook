@@ -240,22 +240,22 @@ Express GET 應用範例
 我們準備一個使用GET方法傳送資料的表單。
    
 ```
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf8">
-		<title>Node.js菜鳥筆記(1)</title>	
-		<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
-	</head>
-	<body> 
-		<h1>Node.js菜鳥筆記-註冊</h1>
-		<form id="signup" method="GET" action="http://localhost:3000/Signup">
-			<label>使用者名稱：</label><input type="text" id="username" name="username" /><br>
-			<label>電子郵件：</label><input type="text" id="email" name="email" /><br>
-			<input type="submit" value="註冊我的帳號" /><br>
-		</form>
-	</body>
-</html>
+&#60;!DOCTYPE html&#62;
+&#60;html&#62;
+	&#60;head&#62;
+		&#60;meta http-equiv="Content-Type" content="text/html; charset=utf8"&#62;
+		&#60;title&#62;Node.js菜鳥筆記(1)&#60;/title&#62;	
+		&#60;link rel="stylesheet" href="css/style.css" type="text/css" media="all" /&#62;
+	&#60;/head&#62;
+	&#60;body&#62; 
+		&#60;h1&#62;Node.js菜鳥筆記-註冊&#60;/h1&#62;
+		&#60;form id="signup" method="GET" action="http://localhost:3000/Signup"&#62;
+			&#60;label&#62;使用者名稱：&#60;/label&#62;&#60;input type="text" id="username" name="username" /&#62;&#60;br&#62;
+			&#60;label&#62;電子郵件：&#60;/label&#62;&#60;input type="text" id="email" name="email" /&#62;&#60;br&#62;
+			&#60;input type="submit" value="註冊我的帳號" /&#62;&#60;br&#62;
+		&#60;/form&#62;
+	&#60;/body&#62;
+&#60;/html&#62;
 ```
 
 這個表單沒有什麼特別的地方，我們只需要看第9行，form使用的method是GET，然後action是"http://localhost:3000/Signup"，等一下我們要來撰寫/Signup這個URL Path的處理程式。
