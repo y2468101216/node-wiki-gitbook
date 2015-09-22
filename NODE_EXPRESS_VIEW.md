@@ -55,6 +55,7 @@ module.exports = function(){
 
 public/index.html:
 
+
 ```
 <!DOCTYPE html>
 <html>
