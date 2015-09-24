@@ -1,4 +1,4 @@
-# Express_View 介紹
+# 前言
 
 在開始本章節以前先來談談MVC架構
 
@@ -66,24 +66,24 @@ module.exports = function(){
 public/index.html:
 
 ```
-&#60;!DOCTYPE html&#62;
-&#60;html&#62;
-&#60;head&#62;
-&#60;meta charset="UTF-8"&#62;
-&#60;title&#62;Node MVC 1&#60;/title&#62;
-&#60;/head&#62;
-&#60;body&#62;
-	&#60;div&#62;
-		&#60;a href="./download/a.txt"&#62;download a&#60;/a&#62;
-	&#60;/div&#62;
-	&#60;div&#62;
-		&#60;a href="./download/b.txt"&#62;download b&#60;/a&#62;
-	&#60;/div&#62;
-	&#60;div&#62;
-		&#60;a href="./download/c.txt"&#62;download c&#60;/a&#62;
-	&#60;/div&#62;
-&#60;/body&#62;
-&#60;/html&#62;
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Node MVC 1</title>
+</head>
+<body>
+	<div>
+		<a href="./download/a.txt">download a</a>
+	</div>
+	<div>
+		<a href="./download/b.txt">download b</a>
+	</div>
+	<div>
+		<a href="./download/c.txt">download c</a>
+	</div>
+</body>
+</html>
 ```
 
 app.js:
@@ -196,35 +196,35 @@ module.exports = function (){
 
 index.html
 ```
-&#60;!DOCTYPE html&#62;
-&#60;html&#62;
-&#60;head&#62;
-&#60;meta charset="UTF-8"&#62;
-&#60;title&#62;Node MVC 2 EJS&#60;/title&#62;
-&#60;/head&#62;
-&#60;body&#62;
-&#60;form action="/login" method="post"&#62;
-	&#60;div&#62;
-		&#60;div&#62;&#60;label&#62;Account:&#60;/label&#62;&#60;/div&#62;
-		&#60;input type="text" name="account" /&#62;
-	&#60;/div&#62;
-	&#60;div&#62;
-		&#60;div&#62;&#60;label&#62;Password:&#60;/label&#62;&#60;/div&#62;
-		&#60;input type="password" name="password" /&#62;
-	&#60;/div&#62;
-	&#60;div&#62;
-		&#60;button type="submit"&#62;submit&#60;/button&#62;
-	&#60;/div&#62;
-	&#60;% if (message) { %&#62;
-		&#60;% if (error) { %&#62;
-			&#60;label style="color:red;"&#62;&#60;%= message %&#62;&#60;/label&#62;
-		&#60;% } else { %&#62;
-		 	&#60;label style="color:green;"&#62;&#60;%= message %&#62;&#60;/label&#62;
-		 &#60;% } %&#62;
-	 &#60;% } %&#62;
-&#60;/form&#62;	
-&#60;/body&#62;
-&#60;/html&#62;
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Node MVC 2 EJS</title>
+</head>
+<body>
+<form action="/login" method="post">
+	<div>
+		<div><label>Account:</label></div>
+		<input type="text" name="account" />
+	</div>
+	<div>
+		<div><label>Password:</label></div>
+		<input type="password" name="password" />
+	</div>
+	<div>
+		<button type="submit">submit</button>
+	</div>
+	<% if (message) { %>
+		<% if (error) { %>
+			<label style="color:red;"><%= message %></label>
+		<% } else { %>
+		 	<label style="color:green;"><%= message %></label>
+		 <% } %>
+	 <% } %>
+</form>	
+</body>
+</html>
 ```
 
 app.js
@@ -362,33 +362,34 @@ module.exports = function (){
 
 index.html
 ```
-&#60;!DOCTYPE html&#62;
-&#60;html ng-app="node_mvc_app"&#62;
-&#60;head&#62;
-&#60;meta charset="UTF-8"&#62;
-&#60;title&#62;Node MVC 3 angularjs&#60;/title&#62;
-&#60;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"&#62;
-&#60;script src="https://code.jquery.com/jquery-2.1.4.min.js"&#62;&#60;/script&#62;
-&#60;script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular.min.js"&#62;&#60;/script&#62;
-&#60;/head&#62;
-&#60;body ng-controller="node_mvc_controller"&#62;
-&#60;form&#62;
-	&#60;div&#62;
-		&#60;div&#62;&#60;label&#62;Account:&#60;/label&#62;&#60;/div&#62;
-		&#60;input type="text" name="account" ng-model="user.account" /&#62;
-	&#60;/div&#62;
-	&#60;div&#62;
-		&#60;div&#62;&#60;label&#62;Password:&#60;/label&#62;&#60;/div&#62;
-		&#60;input type="password" name="password" ng-model="user.password" /&#62;
-	&#60;/div&#62;
-	&#60;div&#62;
-		&#60;button type="button" ng-click="loginCheck()"&#62;submit&#60;/button&#62;
-	&#60;/div&#62;
+
+<!DOCTYPE html>
+<html ng-app="node_mvc_app">
+<head>
+<meta charset="UTF-8">
+<title>Node MVC 3 angularjs</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<body ng-controller="node_mvc_controller">
+<form>
+	<div>
+		<div><label>Account:</label></div>
+		<input type="text" name="account" ng-model="user.account" />
+	</div>
+	<div>
+		<div><label>Password:</label></div>
+		<input type="password" name="password" ng-model="user.password" />
+	</div>
+	<div>
+		<button type="button" ng-click="loginCheck()">submit</button>
+	</div>
 	
-&#60;/form&#62;
-&#60;label ng-style="messageStyle"&#62;{{message}}&#60;/label&#62;	
-&#60;/body&#62;
-&#60;script type="text/javascript"&#62;
+</form>
+<label ng-style="messageStyle">{{message}}</label>	
+</body>
+<script type="text/javascript">
 var app = angular.module('node_mvc_app', []);
 app.controller('node_mvc_controller',function($scope, $http){
 	$scope.loginCheck = function () {
@@ -410,8 +411,9 @@ app.controller('node_mvc_controller',function($scope, $http){
 		});
 	}
 });
-&#60;/script&#62;
-&#60;/html&#62;
+</script>
+</html>
+
 ```
 
 app.js
