@@ -21,6 +21,7 @@ MVC是近年來流行的web架構，但這個概念並不限定在web上，連an
 
 # 實例一 MVC基本範例
 讓我們做個範例，建立一個名叫**node_mvc_1**目錄
+
 你可以參考 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mvc_1>
 
 ```
@@ -145,4 +146,362 @@ app.js把檢查檔案是否存在的邏輯處理抽離另外做成一個class，
 如果跟我一樣有做過php的話，那你應該記得php本身即是個view engine這件事，但很可惜的是node.js並不能直接
 這樣輸出，但他有類似的東西可以讓你無痛轉換，沒錯！就是ejs
 
-讓我們來看看以下實例:
+讓我們做個範例，建立一個名叫**node_mvc_2_ejs**目錄
+
+你可以參考 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mvc_2_ejs>
+
+```
+node_mvc_2_ejs/
+├── bin/
+|	├── login.js
+├── views/
+│   ├── index.html
+└── app.js
+```
+
+login.js
+```
+/**
+ * Name:login.js
+ * Purpose:ejs login example 
+ * Author:Yun 
+ * Version:1.0 
+ * Update:2015-09-22
+ */
+
+module.exports = function (){
+	this.check = function (account, password, callback){
+		var message = 'login success';
+		var error = false;
+		
+		if(account != 'test' && error == false){
+			message = 'account error';
+			error = true;
+		
+		}
+		
+		if(password != 'test' && error == false){
+			message = 'password error';
+			error = true;
+		}
+		
+		callback(message, error);
+	}
+}
+```
+
+index.html
+```
+&#60;!DOCTYPE html&#62;
+&#60;html&#62;
+&#60;head&#62;
+&#60;meta charset="UTF-8"&#62;
+&#60;title&#62;Node MVC 2 EJS&#60;/title&#62;
+&#60;/head&#62;
+&#60;body&#62;
+&#60;form action="/login" method="post"&#62;
+	&#60;div&#62;
+		&#60;div&#62;&#60;label&#62;Account:&#60;/label&#62;&#60;/div&#62;
+		&#60;input type="text" name="account" /&#62;
+	&#60;/div&#62;
+	&#60;div&#62;
+		&#60;div&#62;&#60;label&#62;Password:&#60;/label&#62;&#60;/div&#62;
+		&#60;input type="password" name="password" /&#62;
+	&#60;/div&#62;
+	&#60;div&#62;
+		&#60;button type="submit"&#62;submit&#60;/button&#62;
+	&#60;/div&#62;
+	&#60;% if (message) { %&#62;
+		&#60;% if (error) { %&#62;
+			&#60;label style="color:red;"&#62;&#60;%= message %&#62;&#60;/label&#62;
+		&#60;% } else { %&#62;
+		 	&#60;label style="color:green;"&#62;&#60;%= message %&#62;&#60;/label&#62;
+		 &#60;% } %&#62;
+	 &#60;% } %&#62;
+&#60;/form&#62;	
+&#60;/body&#62;
+&#60;/html&#62;
+```
+
+app.js
+```
+/**
+ * Name:app.js
+ * Purpose:ejs express example 
+ * Author:Yun 
+ * Version:1.0 
+ * Update:2015-09-22
+ */
+
+var express = require('express');
+var bodyParser = require('body-parser');
+
+var app = express();
+
+//create application/x-www-form-urlencoded parser
+app.use(bodyParser.urlencoded({
+	extended : true
+}));
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
+
+//index page 
+app.get('/', function(req, res) {
+    res.render('index.html',{message:false});
+});
+
+//login 
+app.post('/login',function(req, res){
+	var loginClass = require('./bin/login.js');
+	var login = new loginClass();
+	login.check(req.body.account, req.body.password,function(returnMessage, isError){
+		res.render('index.html',{message:returnMessage,error:isError});
+	});
+});
+
+console.log('server is running');
+
+app.listen(8080);
+```
+
+![](img/zh-tw/node_mvc_2/node_mvc_2_original.png)
+![](img/zh-tw/node_mvc_2/node_mvc_2_account_error.png)
+![](img/zh-tw/node_mvc_2/node_mvc_2_password_error.png)
+![](img/zh-tw/node_mvc_2/node_mvc_2_success.png)
+
+讓我們來討論一下app.js裡面多的東西
+
+```
+app.use(bodyParser.urlencoded({
+	extended : true
+}));
+```
+這段是說如果封包裡的body有東西的話，用qs library去爬，關於要採用qs library還是query string
+請參考以下連結：<http://stackoverflow.com/questions/29175465/body-parser-extended-option-qs-vs-querystring>
+
+```
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
+```
+app.set就是可以設定一些express的常數，讓他知道要去哪找。
+
+第一行設定views的目錄在哪。
+第二行設定要使用的view engine
+第三行設定說，如果是html的話一樣送給ejs解釋。也就是說現在你在目錄擺html跟ejs，都會被掃過看有沒有ejs語法。
+
+#jade與ejs的優缺點
+優點：
+
+1.client端呈現速度快
+2.有學過view engine能夠快速上手
+
+缺點：
+
+1.server端要耗用資源
+2.版面醜陋
+3.做假資料時難度會提升很多
+4.對前端工程師不友善
+5.要多學一種語言
+
+#另一個選擇-使用client side js framework:angular.js or react.js
+
+有鑒於view engine的眾多缺點，逐漸有部分人改採用angular.js跟react.js做為view engine的替代品。
+
+讓我們做個範例，建立一個名叫**node_mvc_3_angularjs**目錄
+
+你可以參考 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mvc_3_angularjs>
+
+```
+node_mvc_3_angularjs/
+├── bin/
+|	├── login.js
+├── public/
+│   ├── index.html
+└── app.js
+```
+
+login.js
+```
+/**
+ * Name:login.js
+ * Purpose:ejs login example 
+ * Author:Yun 
+ * Version:1.0 
+ * Update:2015-09-22
+ */
+
+module.exports = function (){
+	this.check = function (account, password, callback){
+		var message = 'login success';
+		var error = false;
+		
+		if(account != 'test' && error == false){
+			message = 'account error';
+			error = true;
+		}
+		
+		if(password != 'test' && error == false){
+			message = 'password error';
+			error = true;
+		}
+		
+		callback(message, error);
+	}
+}
+```
+
+index.html
+```
+&#60;!DOCTYPE html&#62;
+&#60;html ng-app="node_mvc_app"&#62;
+&#60;head&#62;
+&#60;meta charset="UTF-8"&#62;
+&#60;title&#62;Node MVC 3 angularjs&#60;/title&#62;
+&#60;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"&#62;
+&#60;script src="https://code.jquery.com/jquery-2.1.4.min.js"&#62;&#60;/script&#62;
+&#60;script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular.min.js"&#62;&#60;/script&#62;
+&#60;/head&#62;
+&#60;body ng-controller="node_mvc_controller"&#62;
+&#60;form&#62;
+	&#60;div&#62;
+		&#60;div&#62;&#60;label&#62;Account:&#60;/label&#62;&#60;/div&#62;
+		&#60;input type="text" name="account" ng-model="user.account" /&#62;
+	&#60;/div&#62;
+	&#60;div&#62;
+		&#60;div&#62;&#60;label&#62;Password:&#60;/label&#62;&#60;/div&#62;
+		&#60;input type="password" name="password" ng-model="user.password" /&#62;
+	&#60;/div&#62;
+	&#60;div&#62;
+		&#60;button type="button" ng-click="loginCheck()"&#62;submit&#60;/button&#62;
+	&#60;/div&#62;
+	
+&#60;/form&#62;
+&#60;label ng-style="messageStyle"&#62;{{message}}&#60;/label&#62;	
+&#60;/body&#62;
+&#60;script type="text/javascript"&#62;
+var app = angular.module('node_mvc_app', []);
+app.controller('node_mvc_controller',function($scope, $http){
+	$scope.loginCheck = function () {
+		var req = {
+				 method: 'POST',
+				 url: 'login',
+				 headers: {
+				   'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+				 },
+				 data: $.param($scope.user)
+				}
+		$http(req).success(function(data){
+			if(data.error){
+				$scope.messageStyle = {color:'red'};
+			}else{
+				$scope.messageStyle = {color:'green'};
+			}
+			$scope.message = data.message;
+		});
+	}
+});
+&#60;/script&#62;
+&#60;/html&#62;
+```
+
+app.js
+```
+/**
+ * Name:app.js
+ * Purpose:ejs express example 
+ * Author:Yun 
+ * Version:1.0 
+ * Update:2015-09-22
+ */
+
+var express = require('express');
+var bodyParser = require('body-parser');
+
+var app = express();
+
+var options = {
+		root : __dirname + '/public/',
+		dotfiles : 'deny',
+		headers : {
+			'x-timestamp' : Date.now(),
+			'x-sent' : true
+		}
+	};
+
+//create application/x-www-form-urlencoded parser
+app.use(bodyParser.urlencoded({
+	extended : true
+}));
+
+//index page 
+app.get('/', function(req, res) {
+    res.sendFile('index.html',options,function(err){
+    	if(err){
+    		console.log(err);
+    	}
+    });
+});
+
+//login 
+app.post('/login',function(req, res){
+	var loginClass = require('./bin/login.js');
+	var login = new loginClass();
+	login.check(req.body.account, req.body.password,function(returnMessage, isError){
+		res.send({message:returnMessage,error:isError});
+	});
+});
+
+console.log('server is running');
+
+app.listen(8080);
+```
+
+login.js本身並沒有變動，所以我們直接來看index.html
+
+這邊我們改用ajax去取得是否有登入成功。ajax會給使用者比較好的體驗，不然反覆刷新頁面使用者也很煩，
+而且資料不用多做設定就可以一直留在網頁上，關於angular.js的語法可以參考<a href="https://angularjs.org">官網</a>，這邊就不再多做說明。
+
+app.js因為我們不再使用ejs了，所以我們將app.set的部分全拿掉，這也導致res.render必須拿掉。
+所以我們改成res.sendFile。
+```
+res.sendFile('index.html',options,function(err){
+    	if(err){
+    		console.log(err);
+    	}
+    });
+```
+
+回傳的部分，server丟json出來是最好的，因為javascript對json的支援很好，而且在提供相同資訊的情況下
+json遠比xml來的簡單。
+```
+app.post('/login',function(req, res){
+	var loginClass = require('./bin/login.js');
+	var login = new loginClass();
+	login.check(req.body.account, req.body.password,function(returnMessage, isError){
+		res.send({message:returnMessage,error:isError});
+	});
+});
+```
+
+#client side js framework的優缺點
+優點：
+1.server耗用資源較少。
+2.版面整潔
+3.對前端友善
+4.做假資料時比較輕鬆
+
+缺點：
+1.include page會十分緩慢
+2.必定要先載入該framework
+3.使用者多時ajax可能會對server造成更多負擔
+
+#結語
+如上面所敘，兩種方法都有優缺點，開發時應該依照專案需求去做選擇，甚至可以兩種混用，不要被本篇文章侷限住了。
+
+＃參考資料
+wiki-MVC:<https://zh.wikipedia.org/wiki/MVC>
+angular.js:<https://angularjs.org>
+stackoverflow-qs_vs_querystring:<http://stackoverflow.com/questions/29175465/body-parser-extended-option-qs-vs-querystring>

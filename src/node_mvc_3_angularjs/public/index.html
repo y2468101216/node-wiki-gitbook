@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="node_mvc_app">
+<head>
+<meta charset="UTF-8">
+<title>Node MVC 3 angularjs</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<body ng-controller="node_mvc_controller">
+<form>
+	<div>
+		<div><label>Account:</label></div>
+		<input type="text" name="account" ng-model="user.account" />
+	</div>
+	<div>
+		<div><label>Password:</label></div>
+		<input type="password" name="password" ng-model="user.password" />
+	</div>
+	<div>
+		<button type="button" ng-click="loginCheck()">submit</button>
+	</div>
+	
+</form>
+<label ng-style="messageStyle">{{message}}</label>	
+</body>
+<script type="text/javascript">
+var app = angular.module('node_mvc_app', []);
+app.controller('node_mvc_controller',function($scope, $http){
+	$scope.loginCheck = function () {
+		var req = {
+				 method: 'POST',
+				 url: 'login',
+				 headers: {
+				   'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+				 },
+				 data: $.param($scope.user)
+				}
+		$http(req).success(function(data){
+			if(data.error){
+				$scope.messageStyle = {color:'red'};
+			}else{
+				$scope.messageStyle = {color:'green'};
+			}
+			$scope.message = data.message;
+		});
+	}
+});
+</script>
+</html>

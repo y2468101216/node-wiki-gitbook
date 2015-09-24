@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Node MVC 2 EJS</title>
+</head>
+<body>
+<form action="/login" method="post">
+	<div>
+		<div><label>Account:</label></div>
+		<input type="text" name="account" />
+	</div>
+	<div>
+		<div><label>Password:</label></div>
+		<input type="password" name="password" />
+	</div>
+	<div>
+		<button type="submit">submit</button>
+	</div>
+	<% if (message) { %>
+		<% if (error) { %>
+			<label style="color:red;"><%= message %></label>
+		<% } else { %>
+		 	<label style="color:green;"><%= message %></label>
+		 <% } %>
+	 <% } %>
+</form>	
+</body>
+</html>

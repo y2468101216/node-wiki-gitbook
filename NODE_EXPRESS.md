@@ -382,7 +382,7 @@ node.js 的程式處理邏輯與前面 GET 範例類似，部分程式碼如下�
         });
     }
 
-主要加入了'querystring' 這個moduel，方便我們等一下解析由表單POST回來的資料，另外加入一個formData的變數，用來搜集待等一下表單回傳的資料。前面的GET 範例，我們只從req 拿出url的資料，這次要在利用 req 身上的事件處理。
+主要加入了'querystring' 這個module，方便我們等一下解析由表單POST回來的資料，另外加入一個formData的變數，用來搜集待等一下表單回傳的資料。前面的GET 範例，我們只從req 拿出url的資料，這次要在利用 req 身上的事件處理。
 
 JavaScript在訂閱事件時使用addEventListener，而node.js使用的則是on。這邊加上了監聽 *data* 的事件，會在瀏覽器傳送資料到 Web Server時被執行，參數是它所接收到的資料，型態是字串。
 
