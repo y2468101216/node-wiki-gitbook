@@ -517,7 +517,7 @@ app.post('/login',function(req, res){
 #結語
 如上面所敘，兩種方法都有優缺點，開發時應該依照專案需求去做選擇，甚至可以兩種混用，不要被本篇文章侷限住了。
 
-＃參考資料
+#參考資料
 * wiki-MVC:<https://zh.wikipedia.org/wiki/MVC>
 * angular.js:<https://angularjs.org>
 * stackoverflow-qs_vs_querystring:<http://stackoverflow.com/questions/29175465/body-parser-extended-option-qs-vs-querystring>
