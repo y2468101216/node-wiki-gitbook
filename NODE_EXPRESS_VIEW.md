@@ -9,15 +9,19 @@ MVC是近年來流行的web架構，但這個概念並不限定在web上，連an
 
 在這裡提供wiki看法:
 
-*（控制器 Controller）- 負責轉發請求，對請求進行處理。
-*（視圖 View） - 介面設計人員進行圖形介面設計。
-*（模型 Model） - 程式設計師編寫程式應有的功能（實作演算法等等）、資料庫專家進行資料管理和資料庫設計(可以實作具體的功能)。
+**（控制器 Controller）**- 負責轉發請求，對請求進行處理。
+
+**（視圖 View）** - 介面設計人員進行圖形介面設計。
+
+**（模型 Model）** - 程式設計師編寫程式應有的功能（實作演算法等等）、資料庫專家進行資料管理和資料庫設計(可以實作具體的功能)。
 
 轉換成node.js的說法就是：
 
-*（控制器 Controller）- server(express)，接受參數(POST OR GET)後轉傳至要執行的程式，若有需要則回傳結果。
-*（視圖 View） - html部分，為了輸出Controller的訊息，會需要用到view engine，下面會介紹ejs跟angular.js
-*（模型 Model）- 邏輯處理
+**（控制器 Controller）**- server(express)，接受參數(POST OR GET)後轉傳至要執行的程式，若有需要則回傳結果。
+
+**（視圖 View）** - html部分，為了輸出Controller的訊息，會需要用到view engine，下面會介紹ejs跟angular.js
+
+**（模型 Model）**- 邏輯處理
 
 # 實例一 MVC基本範例
 讓我們做個範例，建立一個名叫**node_mvc_1**目錄
@@ -27,9 +31,9 @@ MVC是近年來流行的web架構，但這個概念並不限定在web上，連an
 ```
 node_mvc_1/
 ├── bin/
-|	├── download.js
+|   ├── download.js
 ├── download/
-│	├── a.txt
+│   ├── a.txt
 │   ├── b.txt
 ├── public/
 │   ├── index.html
@@ -267,8 +271,11 @@ app.listen(8080);
 ```
 
 ![](img/zh-tw/node_mvc_2/node_mvc_2_original.png)
+
 ![](img/zh-tw/node_mvc_2/node_mvc_2_account_error.png)
+
 ![](img/zh-tw/node_mvc_2/node_mvc_2_password_error.png)
+
 ![](img/zh-tw/node_mvc_2/node_mvc_2_success.png)
 
 讓我們來討論一下app.js裡面多的東西
@@ -295,16 +302,16 @@ app.set就是可以設定一些express的常數，讓他知道要去哪找。
 #jade與ejs的優缺點
 優點：
 
-1.client端呈現速度快
-2.有學過view engine能夠快速上手
+1. client端呈現速度快
+2. 有學過view engine能夠快速上手
 
 缺點：
 
-1.server端要耗用資源
-2.版面醜陋
-3.做假資料時難度會提升很多
-4.對前端工程師不友善
-5.要多學一種語言
+1. server端要耗用資源
+2. 版面醜陋
+3. 做假資料時難度會提升很多
+4. 對前端工程師不友善
+5. 要多學一種語言
 
 #另一個選擇-使用client side js framework:angular.js or react.js
 
@@ -317,7 +324,7 @@ app.set就是可以設定一些express的常數，讓他知道要去哪找。
 ```
 node_mvc_3_angularjs/
 ├── bin/
-|	├── login.js
+|   ├── login.js
 ├── public/
 │   ├── index.html
 └── app.js
@@ -458,6 +465,13 @@ console.log('server is running');
 
 app.listen(8080);
 ```
+![](img/zh-tw/node_mvc_3/node_mvc_3_original.png)
+
+![](img/zh-tw/node_mvc_3/node_mvc_3_account_error.png)
+
+![](img/zh-tw/node_mvc_3/node_mvc_3_password_error.png)
+
+![](img/zh-tw/node_mvc_3/node_mvc_3_success.png)
 
 login.js本身並沒有變動，所以我們直接來看index.html
 
@@ -488,15 +502,17 @@ app.post('/login',function(req, res){
 
 #client side js framework的優缺點
 優點：
-1.server耗用資源較少。
-2.版面整潔
-3.對前端友善
-4.做假資料時比較輕鬆
+
+1. server耗用資源較少。
+2. 版面整潔
+3. 對前端友善
+4. 做假資料時比較輕鬆
 
 缺點：
-1.include page會十分緩慢
-2.必定要先載入該framework
-3.使用者多時ajax可能會對server造成更多負擔
+
+1. include page會十分緩慢
+2. 必定要先載入該framework
+3. 使用者多時ajax可能會對server造成更多負擔
 
 #結語
 如上面所敘，兩種方法都有優缺點，開發時應該依照專案需求去做選擇，甚至可以兩種混用，不要被本篇文章侷限住了。
