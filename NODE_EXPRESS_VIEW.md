@@ -28,6 +28,7 @@ MVC是近年來流行的web架構，但這個概念並不限定在web上，連an
 
 你可以參考 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mvc_1>
 
+結構:
 ```
 node_mvc_1/
 ├── bin/
@@ -154,6 +155,12 @@ app.js把檢查檔案是否存在的邏輯處理抽離另外做成一個class，
 
 你可以參考 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mvc_2_ejs>
 
+先安裝ejs:
+```
+npm install ejs
+```
+
+結構:
 ```
 node_mvc_2_ejs/
 ├── bin/
@@ -296,7 +303,9 @@ app.engine('html', require('ejs').renderFile);
 app.set就是可以設定一些express的常數，讓他知道要去哪找。
 
 第一行設定views的目錄在哪。
-第二行設定要使用的view engine
+
+第二行設定要使用的view engine。
+
 第三行設定說，如果是html的話一樣送給ejs解釋。也就是說現在你在目錄擺html跟ejs，都會被掃過看有沒有ejs語法。
 
 #jade與ejs的優缺點
@@ -321,6 +330,7 @@ app.set就是可以設定一些express的常數，讓他知道要去哪找。
 
 你可以參考 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mvc_3_angularjs>
 
+結構：
 ```
 node_mvc_3_angularjs/
 ├── bin/
