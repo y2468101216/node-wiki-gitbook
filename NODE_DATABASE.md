@@ -14,6 +14,7 @@ npm install mysql
 
 1. 範例一:基本範例<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mysql>
 ```
+
 /**
  * Name:mysql.js
  * Purpose:mysql 連接教學
@@ -44,6 +45,7 @@ var connection = mysql.createConnection({
 
 	//結束連線
 	connection.end();
+	
 ```
 
 結果:
@@ -72,6 +74,7 @@ SQL攻擊（SQL injection），簡稱隱碼攻擊，是發生於應用程式之�
 除了安全因素，相比起拼接字串的SQL語句，參數化的查詢往往有效能優勢。因為參數化的查詢能讓不同的資料通過參數到達資料庫，從而公用同一條SQL語句。大多數資料庫會快取解釋SQL語句產生的位元組碼而省下重複解析的開銷。如果採取拼接字串的SQL語句，則會由於運算元據是SQL語句的一部分而非參數的一部分，而反覆大量解釋SQL語句產生不必要的開銷。
 
 ```
+
 /**
  * Name:mysql.js
  * Purpose:mysql Parameterized Query
@@ -101,6 +104,7 @@ var connection = mysql.createConnection({
 
 	//結束連線
 	connection.end();
+	
 ```
 
 你可以注意到只有`connection.query`改變而已，裡面多插入一個陣列，這種寫法在需要大量插入或更新重複的SQL時異常好用，
