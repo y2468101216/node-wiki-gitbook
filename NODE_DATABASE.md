@@ -13,6 +13,7 @@ npm install mysql
 ```
 
 1. 範例一:基本範例<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mysql>
+
 ```
 
 /**
@@ -49,6 +50,7 @@ var connection = mysql.createConnection({
 ```
 
 結果:
+ 
 ```
 The solution is:  2
 ```
