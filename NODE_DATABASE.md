@@ -12,7 +12,9 @@
 npm install mysql
 ```
 
-1. 範例一:基本範例<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mysql>
+# 範例一:基本範例
+
+<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mysql>
 
 ```
 
@@ -60,7 +62,7 @@ The solution is:  2
 
 也就是說他比較像mysqli。
 
-2. 範例二:Parameterized Query
+# 範例二:Parameterized Query
 
 在開始之前先講一下SQL Injection:
 
@@ -74,6 +76,8 @@ SQL攻擊（SQL injection），簡稱隱碼攻擊，是發生於應用程式之�
 參數化查詢（Parameterized Query或Parameterized Statement）是指在設計與資料庫連結並存取資料時，在需要填入數值或資料的地方，使用參數（Parameter）來給值，這個方法目前已被視為最有效可預防SQL資料隱碼攻擊的攻擊手法的防禦方式。
 
 除了安全因素，相比起拼接字串的SQL語句，參數化的查詢往往有效能優勢。因為參數化的查詢能讓不同的資料通過參數到達資料庫，從而公用同一條SQL語句。大多數資料庫會快取解釋SQL語句產生的位元組碼而省下重複解析的開銷。如果採取拼接字串的SQL語句，則會由於運算元據是SQL語句的一部分而非參數的一部分，而反覆大量解釋SQL語句產生不必要的開銷。
+
+<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mysql_parameterized_query>
 
 ```
 
