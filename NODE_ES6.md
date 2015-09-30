@@ -362,15 +362,15 @@ helloTargets.map(function(target){
 // Hello Cindy
 
 // ES6 的代碼變得更簡潔
-var helloTargets = ['Alice'，'Bob'，'Cindy'];
+var helloTargets = ['Alice', 'Bob', 'Cindy'];
 helloTargets.map((target) => console.log('Hello ' + target));
 
 // 第二個例子
 var psyTest = age => doingTest(age);
 var psyTest = (age) => doingTest(age);
 // 用 age => 或 (age) => 都是一樣效果
-var psyTest = age，job => doingTest(age，job); // SyntaxError: Unexpected token =>
-var psyTest = (age，job) => doingTest(age，job);
+var psyTest = age,job => doingTest(age,job); // SyntaxError: Unexpected token =>
+var psyTest = (age,job) => doingTest(age,job);
 // 如果沒有括號是有問題的，建議使用 (age) => 是為了方便日後代碼擴展
 ```
 
@@ -412,13 +412,13 @@ function mother(){
 ES6 所定義的 Promise 有 4 種狀態， 分別是 Pending(待定)， Fulfilled(成功完成)， Rejected(失敗)， Settled(已經完成/失敗)。
 ```javascript
 // 基本語法
-new Promise(function(resolve， reject) { ... });
+new Promise(function(resolve, reject) { ... });
 
 // 例子
-var p1 = new Promise(function(resolve，reject){
+var p1 = new Promise(function(resolve, reject){
     resolve('finished'); // resolve 就是 fullfil promise !
 });
-var p2 = new Promise(function(resolve，reject){
+var p2 = new Promise(function(resolve, reject){
     reject('exception p2'); // reject 就是 reject promise !
 });
 
@@ -474,5 +474,9 @@ for(var i of global.__createIterableObject([1, 2, 3])) { ... }
 for(var i of Object.create(global.__createIterableObject([1, 2, 3]))) { ... }
 ```
 
-##本章結語
-由於 ES6 剛發佈不久，不論前端或後端還是需要一定時間去調試和整合，大家可以去比較不同平台和瀏覽器目前的兼容性([這裡](https://kangax.github.io/compat-table/es6/))，這個文檔也會不停的更新。
+##結語
+由於 ES6 剛發佈不久，不論前端或後端還是需要一定時間去調試和整合，大家可以去比較不同平台和瀏覽器目前的兼容性，這個文檔也會不停的更新。
+
+##參考資料
++ [ECMAScript compatibility table](https://kangax.github.io/compat-table/es6/)
++ [ES6 in Node.js](https://nodejs.org/en/docs/es6/)
