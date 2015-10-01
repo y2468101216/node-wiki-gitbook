@@ -14,7 +14,7 @@ npm install mysql
 
 # 範例一:基本範例
 
-<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mysql>
+<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mysql/mysql.js>
 
 ```
 
@@ -78,7 +78,7 @@ SQL攻擊（SQL injection），簡稱隱碼攻擊，是發生於應用程式之�
 
 除了安全因素，相比起拼接字串的SQL語句，參數化的查詢往往有效能優勢。因為參數化的查詢能讓不同的資料通過參數到達資料庫，從而公用同一條SQL語句。大多數資料庫會快取解釋SQL語句產生的位元組碼而省下重複解析的開銷。如果採取拼接字串的SQL語句，則會由於運算元據是SQL語句的一部分而非參數的一部分，而反覆大量解釋SQL語句產生不必要的開銷。
 
-<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mysql_parameterized_query>
+<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mysql/node_mysql_parameterized_query.js>
 
 ```
 
@@ -119,7 +119,134 @@ var connection = mysql.createConnection({
 
 #NOSQL:MongoDB
 
+NOSQL是最近很火紅的資料庫型態，特徵是不使用任何SQL語言、不需要規劃table架構，是一個新興的資料庫型態。
+我會花比較多篇幅講這個，因為這是一個從觀念上完全不一樣的東西。
+
+* 插入資料<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mongodb/mongodb_insert.js>
+
+```
+
+/**
+ * Name:mongodb.js 
+ * Purpose:connect & insert mongodb 
+ * Author:Yun 
+ * Version:1.0
+ * Update:2015-09-30
+ */
+
+var MongoClient = require('mongodb').MongoClient;// mongodb client
+var assert = require('assert');// 測試工具
+
+var url = 'mongodb://localhost:27017/test';// mongodb://登入url/db名稱
+
+//插入資料到
+var insertDocument = function(db, callback) {
+	// 打開集合（沒有的話會自動建一個)->插入一筆資料
+	db.collection('restaurants').insertOne({
+		"address" : {
+			"street" : "2 Avenue",
+			"zipcode" : "10075",
+			"building" : "1480",
+			"coord" : [ -73.9557413, 40.7720266 ]
+		},
+		"borough" : "Manhattan",
+		"cuisine" : "Italian",
+		"grades" : [ {
+			"date" : new Date("2014-10-01T00:00:00Z"),
+			"grade" : "A",
+			"score" : 11
+		}, {
+			"date" : new Date("2014-01-16T00:00:00Z"),
+			"grade" : "B",
+			"score" : 17
+		} ],
+		"name" : "Vella",
+		"restaurant_id" : "41704620"
+	}, function(err, result) {
+		assert.equal(err, null);// 如果不是期望值(null)，則throw error
+		console.log("Inserted a document into the restaurants collection.");
+		callback(result);
+	});
+};
+
+//進行連線
+MongoClient.connect(url, function(err, db) {
+	assert.equal(null, err);// 如果不是期望值(null)，則throw error
+	insertDocument(db, function() {
+		db.close();//關閉連線
+	});
+});
+
+```
+
+執行後印出
+```
+Inserted a document into the restaurants collection.
+```
+
+你可以注意到在存資料時他的擴展性很強(注意grades)，不同於一般的資料庫。
+
+* 查詢資料<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mongodb/mongodb_query.js>
+
+```
+
+/**
+ * Name:mongodb.js 
+ * Purpose:connect & insert mongodb 
+ * Author:Yun 
+ * Version:1.0
+ * Update:2015-10-01
+ */
+
+var MongoClient = require('mongodb').MongoClient;//mongodb client
+var assert = require('assert');// 測試工具
+var url = 'mongodb://localhost:27017/test';// mongodb://登入url/db名稱
+
+//查詢資料
+var findRestaurants = function(findCondition, db, callback) {
+	   var cursor =db.collection('restaurants').find(findCondition);
+	   cursor.each(function(err, doc) {
+	      assert.equal(err, null);
+	      if (doc != null) {
+	    	 console.dir('find:');
+	    	 console.log(findCondition);
+	         console.dir(doc);
+	      } else {
+	         callback();
+	      }
+	   });
+	};
+	
+	//列出全部的集合裡的資料
+	MongoClient.connect(url, function(err, db) {
+		  assert.equal(null, err);
+		  findRestaurants(null, db, function() {
+		      db.close();
+		  });
+		});
+	
+	//尋找address.zipcode等於10075的
+	MongoClient.connect(url, function(err, db) {
+		  assert.equal(null, err);
+		  findRestaurants({ "address.zipcode": "10075" }, db, function() {
+		      db.close();
+		  });
+		});
+	
+	//尋找address.zipcode等於10076的
+	MongoClient.connect(url, function(err, db) {
+		  assert.equal(null, err);
+		  findRestaurants({ "address.zipcode": "10076" }, db, function() {
+		      db.close();
+		  });
+		});	
+
+```
+
+執行結果
+
 # 參考資料
 * wiki-SQL injection:<https://zh.wikipedia.org/wiki/SQL資料隱碼攻擊>
 * wiki-Parameterized Query:<https://zh.wikipedia.org/wiki/參數化查詢>
-node-mysql:<https://github.com/felixge/node-mysql/#preparing-queries>
+* node-mysql:<https://github.com/felixge/node-mysql/#preparing-queries>
+* NOSQL:https://zh.wikipedia.org/wiki/NoSQL
