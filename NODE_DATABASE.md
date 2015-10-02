@@ -205,11 +205,14 @@ var url = 'mongodb://localhost:27017/test';// mongodb://登入url/db名稱
 //查詢資料
 var findRestaurants = function(findCondition, db, callback) {
 	   var cursor =db.collection('restaurants').find(findCondition);
+	   //將每筆資料倒出來
 	   cursor.each(function(err, doc) {
 	      assert.equal(err, null);
 	      if (doc != null) {
+	    	 //列印查詢條件
 	    	 console.dir('find:');
 	    	 console.log(findCondition);
+	    	 //列印資料
 	         console.dir(doc);
 	      } else {
 	         callback();
@@ -239,14 +242,293 @@ var findRestaurants = function(findCondition, db, callback) {
 		  findRestaurants({ "address.zipcode": "10076" }, db, function() {
 		      db.close();
 		  });
-		});	
+		});		
 
 ```
 
-執行結果
+執行結果:
 
+```
+'find:'
+
+{ _id: { _bsontype: 'ObjectID', id: 'V\fß¨8ßZ×Bo;\\' },
+  address: 
+   { street: '2 Avenue',
+     zipcode: '10075',
+     building: '1480',
+     coord: [ -73.9557413, 40.7720266 ] },
+  borough: 'Manhattan',
+  cuisine: 'Italian',
+  grades: 
+   [ { date: Wed Oct 01 2014 08:00:00 GMT+0800 (CST),
+       grade: 'A',
+       score: 11 },
+     { date: Thu Jan 16 2014 08:00:00 GMT+0800 (CST),
+       grade: 'B',
+       score: 17 } ],
+  name: 'Vella',
+  restaurant_id: '41704620' }
+'find:'
+{ 'address.zipcode': '10075' }
+{ _id: { _bsontype: 'ObjectID', id: 'V\fß¨8ßZ×Bo;\\' },
+  address: 
+   { street: '2 Avenue',
+     zipcode: '10075',
+     building: '1480',
+     coord: [ -73.9557413, 40.7720266 ] },
+  borough: 'Manhattan',
+  cuisine: 'Italian',
+  grades: 
+   [ { date: Wed Oct 01 2014 08:00:00 GMT+0800 (CST),
+       grade: 'A',
+       score: 11 },
+     { date: Thu Jan 16 2014 08:00:00 GMT+0800 (CST),
+       grade: 'B',
+       score: 17 } ],
+  name: 'Vella',
+  restaurant_id: '41704620' }
+  
+  'find:'
+  { 'address.zipcode': '10076' }
+
+```
+
+你可以注意到mongodb插入的時候多插了一個_id，那是mongodb的主鍵，不重複唯一，
+mongodb用它來分別每一筆資料。
+
+find其實就相當SQL裡的where，但他比where強的地方是在於說他可以查詢dot notation(EX:address.zipcode)。
+這點是SQL所做不到的
+
+* 更新資料<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mongodb/mongodb_query.js>
+
+```
+
+/**
+ * Name:mongodb.js 
+ * Purpose:connect & insert mongodb 
+ * Author:Yun 
+ * Version:1.0
+ * Update:2015-10-02
+ */
+
+var MongoClient = require('mongodb').MongoClient;// mongodb client
+var assert = require('assert');// 測試工具
+
+var url = 'mongodb://localhost:27017/test';// mongodb://登入url/db名稱
+
+var updateRestaurants = function(db, callback) {
+	   db.collection('restaurants').updateOne(
+	      { "name" : "Vella" },//設定條件
+	      {
+	        $set: { "cuisine": "American (New)" },
+	        $currentDate: { "lastModified": true }
+	      }, //設定更新項目
+	      function(err, results) {
+	      console.log(results);//印出更新結果
+	      callback();
+	   });
+	};
+	
+	MongoClient.connect(url, function(err, db) {
+		  assert.equal(null, err);
+
+		  updateRestaurants(db, function() {
+		      db.close();
+		  });
+		});
+
+```
+
+執行結果:
+
+```
+
+{ result: { ok: 1, nModified: 1, n: 1 },
+  connection: 
+   { domain: null,
+     _events: 
+      { close: [Object],
+        error: [Object],
+        timeout: [Object],
+        parseError: [Object],
+        connect: [Function] },
+     _maxListeners: undefined,
+     options: 
+      { socketOptions: {},
+        auto_reconnect: true,
+        host: 'localhost',
+        port: 27017,
+        cursorFactory: [Object],
+        reconnect: true,
+        emitError: true,
+        size: 5,
+        disconnectHandler: [Object],
+        bson: {},
+        messageHandler: [Function],
+        wireProtocolHandler: {} },
+     id: 2,
+     logger: { className: 'Connection' },
+     bson: {},
+     tag: undefined,
+     messageHandler: [Function],
+     maxBsonMessageSize: 67108864,
+     port: 27017,
+     host: 'localhost',
+     keepAlive: true,
+     keepAliveInitialDelay: 0,
+     noDelay: true,
+     connectionTimeout: 0,
+     socketTimeout: 0,
+     destroyed: false,
+     domainSocket: false,
+     singleBufferSerializtion: true,
+     serializationFunction: 'toBinUnified',
+     ca: null,
+     cert: null,
+     key: null,
+     passphrase: null,
+     ssl: false,
+     rejectUnauthorized: false,
+     responseOptions: { promoteLongs: true },
+     flushing: false,
+     queue: [],
+     connection: 
+      { _connecting: false,
+        _hadError: false,
+        _handle: [Object],
+        _parent: null,
+        _host: 'localhost',
+        _readableState: [Object],
+        readable: true,
+        domain: null,
+        _events: [Object],
+        _maxListeners: undefined,
+        _writableState: [Object],
+        writable: true,
+        allowHalfOpen: false,
+        destroyed: false,
+        bytesRead: 71,
+        _bytesDispatched: 223,
+        _pendingData: null,
+        _pendingEncoding: '',
+        _idleNext: null,
+        _idlePrev: null,
+        _idleTimeout: -1,
+        read: [Function],
+        _consuming: true },
+     writeStream: null,
+     buffer: null,
+     sizeOfMessage: 0,
+     bytesRead: 0,
+     stubBuffer: null },
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedId: null,
+  upsertedCount: 0 }
+
+```
+
+這樣只會更新第一筆找到的資料。
+跟查詢一樣，你可以使用dot notation作為更新條件
+
+* 刪除資料
+
+```
+
+{ result: { ok: 1, nModified: 1, n: 1 },
+  connection: 
+   { domain: null,
+     _events: 
+      { close: [Object],
+        error: [Object],
+        timeout: [Object],
+        parseError: [Object],
+        connect: [Function] },
+     _maxListeners: undefined,
+     options: 
+      { socketOptions: {},
+        auto_reconnect: true,
+        host: 'localhost',
+        port: 27017,
+        cursorFactory: [Object],
+        reconnect: true,
+        emitError: true,
+        size: 5,
+        disconnectHandler: [Object],
+        bson: {},
+        messageHandler: [Function],
+        wireProtocolHandler: {} },
+     id: 2,
+     logger: { className: 'Connection' },
+     bson: {},
+     tag: undefined,
+     messageHandler: [Function],
+     maxBsonMessageSize: 67108864,
+     port: 27017,
+     host: 'localhost',
+     keepAlive: true,
+     keepAliveInitialDelay: 0,
+     noDelay: true,
+     connectionTimeout: 0,
+     socketTimeout: 0,
+     destroyed: false,
+     domainSocket: false,
+     singleBufferSerializtion: true,
+     serializationFunction: 'toBinUnified',
+     ca: null,
+     cert: null,
+     key: null,
+     passphrase: null,
+     ssl: false,
+     rejectUnauthorized: false,
+     responseOptions: { promoteLongs: true },
+     flushing: false,
+     queue: [],
+     connection: 
+      { _connecting: false,
+        _hadError: false,
+        _handle: [Object],
+        _parent: null,
+        _host: 'localhost',
+        _readableState: [Object],
+        readable: true,
+        domain: null,
+        _events: [Object],
+        _maxListeners: undefined,
+        _writableState: [Object],
+        writable: true,
+        allowHalfOpen: false,
+        destroyed: false,
+        bytesRead: 71,
+        _bytesDispatched: 223,
+        _pendingData: null,
+        _pendingEncoding: '',
+        _idleNext: null,
+        _idlePrev: null,
+        _idleTimeout: -1,
+        read: [Function],
+        _consuming: true },
+     writeStream: null,
+     buffer: null,
+     sizeOfMessage: 0,
+     bytesRead: 0,
+     stubBuffer: null },
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedId: null,
+  upsertedCount: 0 }
+
+```
+
+這樣只會刪除一筆，跟update其實沒差多少
+
+# 結語
+
+MongoDB跟node.js就跟mysql之於php一樣，天生一對，但這並不代表你不能用其他的資料庫。
+根據專案選擇你要的才是正確的。
 # 參考資料
 * wiki-SQL injection:<https://zh.wikipedia.org/wiki/SQL資料隱碼攻擊>
 * wiki-Parameterized Query:<https://zh.wikipedia.org/wiki/參數化查詢>
 * node-mysql:<https://github.com/felixge/node-mysql/#preparing-queries>
-* NOSQL:https://zh.wikipedia.org/wiki/NoSQL
+* NOSQL:<https://zh.wikipedia.org/wiki/NoSQL>
+* MONGODB:<https://docs.mongodb.org/getting-started/node/>

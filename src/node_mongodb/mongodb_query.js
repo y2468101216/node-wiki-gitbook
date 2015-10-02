@@ -28,13 +28,13 @@ var findRestaurants = function(findCondition, db, callback) {
 	   });
 	};
 	
-//	//列出全部的集合裡的資料
-//	MongoClient.connect(url, function(err, db) {
-//		  assert.equal(null, err);
-//		  findRestaurants(null, db, function() {
-//		      db.close();
-//		  });
-//		});
+	//列出全部的集合裡的資料
+	MongoClient.connect(url, function(err, db) {
+		  assert.equal(null, err);
+		  findRestaurants(null, db, function() {
+		      db.close();
+		  });
+		});
 	
 	//尋找address.zipcode等於10075的
 	MongoClient.connect(url, function(err, db) {
@@ -47,7 +47,7 @@ var findRestaurants = function(findCondition, db, callback) {
 	//尋找address.zipcode等於10076的
 	MongoClient.connect(url, function(err, db) {
 		  assert.equal(null, err);
-		  findRestaurants({ "address.zipcode": "10076" }, db, function() {
+		  findRestaurants({ "name": "Vella" }, db, function() {
 		      db.close();
 		  });
 		});	
