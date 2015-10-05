@@ -16,7 +16,7 @@ npm install mysql
 
 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mysql/mysql.js>
 
-```
+```javascript
 
 /**
  * Name:mysql.js
@@ -80,7 +80,7 @@ SQL攻擊（SQL injection），簡稱隱碼攻擊，是發生於應用程式之�
 
 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mysql/node_mysql_parameterized_query.js>
 
-```
+```javascript
 
 /**
  * Name:mysql.js
@@ -122,12 +122,18 @@ var connection = mysql.createConnection({
 NOSQL是最近很火紅的資料庫型態，特徵是不使用任何SQL語言、不需要規劃table架構，是一個新興的資料庫型態。
 我會花比較多篇幅講這個，因為這是一個從觀念上完全不一樣的東西。
 
-* 插入資料<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mongodb/mongodb_insert.js>
+首先須先安裝mongodb套件:
 
 ```
+npm install mongodb
+```
+
+* 插入資料<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mongodb/mongodb_insert.js>
+
+```javascript
 
 /**
- * Name:mongodb.js 
+ * Name:mongodb_update.js 
  * Purpose:connect & insert mongodb 
  * Author:Yun 
  * Version:1.0
@@ -188,10 +194,10 @@ Inserted a document into the restaurants collection.
 
 * 查詢資料<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mongodb/mongodb_query.js>
 
-```
+```javascript
 
 /**
- * Name:mongodb.js 
+ * Name:mongodb_query.js 
  * Purpose:connect & insert mongodb 
  * Author:Yun 
  * Version:1.0
@@ -301,10 +307,10 @@ find其實就相當SQL裡的where，但他比where強的地方是在於說他可
 
 * 更新資料<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mongodb/mongodb_query.js>
 
-```
+```javascript
 
 /**
- * Name:mongodb.js 
+ * Name:mongodb_update.js 
  * Purpose:connect & insert mongodb 
  * Author:Yun 
  * Version:1.0
@@ -432,6 +438,41 @@ var updateRestaurants = function(db, callback) {
 跟查詢一樣，你可以使用dot notation作為更新條件
 
 * 刪除資料
+
+```javascript
+
+/**
+ * Name:mongodb_delete.js 
+ * Purpose:connect & update mongodb 
+ * Author:Yun 
+ * Version:1.0
+ * Update:2015-10-02
+ */
+
+var MongoClient = require('mongodb').MongoClient;// mongodb client
+var assert = require('assert');// 測試工具
+
+var url = 'mongodb://localhost:27017/test';// mongodb://登入url/db名稱
+
+var removeRestaurants = function(db, callback) {
+	   db.collection('restaurants').deleteOne(
+	      { "borough": "Queens" },//設定條件
+	      function(err, results) {
+	         console.log(results);//印出更新結果
+	         callback();
+	      }
+	   );
+	};
+	
+	MongoClient.connect(url, function(err, db) {
+		  assert.equal(null, err);
+
+		  removeRestaurants(db, function() {
+		      db.close();
+		  });
+		});
+
+```
 
 ```
 

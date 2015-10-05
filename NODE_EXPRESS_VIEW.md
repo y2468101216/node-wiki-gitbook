@@ -29,6 +29,7 @@ MVC是近年來流行的web架構，但這個概念並不限定在web上，連an
 你可以參考 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mvc_1>
 
 結構:
+
 ```
 node_mvc_1/
 ├── bin/
@@ -42,7 +43,8 @@ node_mvc_1/
 ```
 
 bin/download.js:
-```
+
+```javascript
 /**
  * Name:download.js
  * Purpose:Model download example 
@@ -66,7 +68,7 @@ module.exports = function(){
 
 public/index.html:
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,7 +90,8 @@ public/index.html:
 ```
 
 app.js:
-```
+
+```javascript
 /**
  * Name:app.js
  * Purpose:controller express example 
@@ -156,6 +159,7 @@ app.js把檢查檔案是否存在的邏輯處理抽離另外做成一個class，
 你可以參考 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mvc_2_ejs>
 
 先安裝ejs:
+
 ```
 npm install ejs
 ```
@@ -164,14 +168,15 @@ npm install ejs
 ```
 node_mvc_2_ejs/
 ├── bin/
-|	├── login.js
+|   ├── login.js
 ├── views/
 │   ├── index.html
 └── app.js
 ```
 
-login.js
-```
+login.js:
+
+```javascript
 /**
  * Name:login.js
  * Purpose:ejs login example 
@@ -201,8 +206,9 @@ module.exports = function (){
 }
 ```
 
-index.html
-```
+index.html:
+
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -234,8 +240,10 @@ index.html
 </html>
 ```
 
-app.js
-```
+app.js:
+
+```javascript
+
 /**
  * Name:app.js
  * Purpose:ejs express example 
@@ -275,19 +283,20 @@ app.post('/login',function(req, res){
 console.log('server is running');
 
 app.listen(8080);
+
 ```
 
-![](img/zh-tw/node_mvc_2/node_mvc_2_original.png)
+![node_mvc_2_original.png](img/zh-tw/node_mvc_2/node_mvc_2_original.png)
 
-![](img/zh-tw/node_mvc_2/node_mvc_2_account_error.png)
+![node_mvc_2_account_error.png](img/zh-tw/node_mvc_2/node_mvc_2_account_error.png)
 
-![](img/zh-tw/node_mvc_2/node_mvc_2_password_error.png)
+![node_mvc_2_password_error.png](img/zh-tw/node_mvc_2/node_mvc_2_password_error.png)
 
-![](img/zh-tw/node_mvc_2/node_mvc_2_success.png)
+![node_mvc_2_success.png](img/zh-tw/node_mvc_2/node_mvc_2_success.png)
 
 讓我們來討論一下app.js裡面多的東西
 
-```
+```javascript
 app.use(bodyParser.urlencoded({
 	extended : true
 }));
@@ -295,7 +304,7 @@ app.use(bodyParser.urlencoded({
 這段是說如果封包裡的body有東西的話，用qs library去爬，關於要採用qs library還是query string
 請參考以下連結：<http://stackoverflow.com/questions/29175465/body-parser-extended-option-qs-vs-querystring>
 
-```
+```javascript
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
@@ -331,6 +340,7 @@ app.set就是可以設定一些express的常數，讓他知道要去哪找。
 你可以參考 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mvc_3_angularjs>
 
 結構：
+
 ```
 node_mvc_3_angularjs/
 ├── bin/
@@ -340,8 +350,10 @@ node_mvc_3_angularjs/
 └── app.js
 ```
 
-login.js
-```
+login.js:
+
+```javascript
+
 /**
  * Name:login.js
  * Purpose:ejs login example 
@@ -368,10 +380,12 @@ module.exports = function (){
 		callback(message, error);
 	}
 }
+
 ```
 
-index.html
-```
+index.html:
+
+```html
 
 <!DOCTYPE html>
 <html ng-app="node_mvc_app">
@@ -426,8 +440,10 @@ app.controller('node_mvc_controller',function($scope, $http){
 
 ```
 
-app.js
-```
+app.js:
+
+```javascript
+
 /**
  * Name:app.js
  * Purpose:ejs express example 
@@ -476,14 +492,15 @@ app.post('/login',function(req, res){
 console.log('server is running');
 
 app.listen(8080);
+
 ```
-![](img/zh-tw/node_mvc_3/node_mvc_3_original.png)
+![node_mvc_3_original.png](img/zh-tw/node_mvc_3/node_mvc_3_original.png)
 
-![](img/zh-tw/node_mvc_3/node_mvc_3_account_error.png)
+![node_mvc_3_account_error.png](img/zh-tw/node_mvc_3/node_mvc_3_account_error.png)
 
-![](img/zh-tw/node_mvc_3/node_mvc_3_password_error.png)
+![node_mvc_3_password_error.png](img/zh-tw/node_mvc_3/node_mvc_3_password_error.png)
 
-![](img/zh-tw/node_mvc_3/node_mvc_3_success.png)
+![node_mvc_3_success.png](img/zh-tw/node_mvc_3/node_mvc_3_success.png)
 
 login.js本身並沒有變動，所以我們直接來看index.html
 
@@ -492,17 +509,22 @@ login.js本身並沒有變動，所以我們直接來看index.html
 
 app.js因為我們不再使用ejs了，所以我們將app.set的部分全拿掉，這也導致res.render必須拿掉。
 所以我們改成res.sendFile。
-```
+
+```javascript
+
 res.sendFile('index.html',options,function(err){
     	if(err){
     		console.log(err);
     	}
     });
+	
 ```
 
 回傳的部分，server丟json出來是最好的，因為javascript對json的支援很好，而且在提供相同資訊的情況下
 json遠比xml來的簡單。
-```
+
+```javascript
+
 app.post('/login',function(req, res){
 	var loginClass = require('./bin/login.js');
 	var login = new loginClass();
@@ -510,6 +532,7 @@ app.post('/login',function(req, res){
 		res.send({message:returnMessage,error:isError});
 	});
 });
+
 ```
 
 #client side js framework的優缺點

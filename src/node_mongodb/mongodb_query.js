@@ -1,5 +1,5 @@
 /**
- * Name:mongodb.js 
+ * Name:mongodb_query.js 
  * Purpose:connect & insert mongodb 
  * Author:Yun 
  * Version:1.0

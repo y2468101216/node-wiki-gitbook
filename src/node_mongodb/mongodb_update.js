@@ -1,5 +1,5 @@
 /**
- * Name:mongodb.js 
+ * Name:mongodb_update.js 
  * Purpose:connect & update mongodb 
  * Author:Yun 
  * Version:1.0
