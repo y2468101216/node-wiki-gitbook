@@ -1,7 +1,7 @@
 關於本書
 =======
 
-這是一本關於 Node.js 技術的開放源碼電子書，我們使用 GitBook 維護電子書內容，並交由 GitBook自動線上發佈。本書提供 PDF、EPUB、MOBI 及 HTML 等格式，您除了可以在網站檢視本書所有內容，也可以將電子書下載至閱讀器保存。
+這是一本關於 Node.js 技術的開放源碼電子書，我們使用 GitBook 維護電子書內容，並交由 GitBook 自動線上發佈。本書提供 PDF、EPUB、MOBI 及 HTML 等格式，您除了可以在網站檢視本書所有內容，也可以將電子書下載至閱讀器保存。
 
 本書的線上閱讀網址，與 GitBook 資料同步更新。
 
@@ -13,7 +13,7 @@ https://www.gitbook.com/book/y2468101216/node-wiki-book/details
 
 本書適合 Node.js 初學者至進階開發者，也歡迎您在學習時一起參與本書內容撰寫。
 
-有興趣者請來信y2468101216@gmail.com
+有興趣者請來信 y2468101216@gmail.com
 
 編寫語法與規範
 ============
@@ -26,12 +26,12 @@ https://www.gitbook.com/book/y2468101216/node-wiki-book/details
 根目錄結構
 =======
 
- * SUMMARY.md -> 本書編排列表
+ * [SUMMARY.md](SUMMARY.md) -> 本書編排列表
  * cover.jpg -> 本書封面(徵求封面設計者）
- * LINKS.md -> 外部連結
- * README.md -> 本書說明
- * zh-tw -> 內含各章節詳細資料，編排方式可參考 SUMMARY.md
- * src -> 範例程式碼擺放位置(目前全部嵌在網頁裡面）
+ * [LINKS.md](LINKS.md) -> 外部連結
+ * [README.md](README.md) -> 本書說明
+ * zh-tw -> 內含各章節詳細資料，編排方式可參考 [SUMMARY.md](SUMMARY.md)
+ * [src](src) -> 範例程式碼擺放位置(目前全部嵌在網頁裡面）
 
 授權
 ====
