@@ -1,6 +1,6 @@
 ##前言
 
-有慣常留意 NodeJS 社群的開發者們應該都知道剛剛有一個重大更新，現時最新的版本到了 v4.1。然而根據 NodeJS 在發佈 v4.0 的時候釋放的官方文檔，指出剛在六月正式發佈 ECMAScript 6 (下稱 ES6) 會分三個階段納入最新的版本當中。它們分別是:
+有慣常留意 Node.js 社群的開發者們應該都知道剛剛有一個重大更新，現時最新的版本到了 v4.1。然而根據 Node.js 在發佈 v4.0 的時候釋放的官方文檔，指出剛在六月正式發佈 ECMAScript 6 (下稱 ES6) 會分三個階段納入最新的版本當中。它們分別是:
 
 + Shipping features: 
 已經完成整合並且被 V8 開發團隊視為穩定
@@ -9,13 +9,13 @@
 + In progress features
 僅用於測試
 
-(註: 在 NodeJS v4.0 或更新版本的環境中)
+(註: 在 Node.js v4.0 或更新版本的環境中)
 
 除了 Shipping features 以外，開發者如要使用其他的語法特性需要自行承擔風險。
 
-##如何在 NodeJS 啟用對 ES6 的支援
+##如何在 Node.js 啟用對 ES6 的支援
 ###在 v4.0 及其以後的更新版本
-+ Shipping features 並不需要加上 runtime flag 已經可以直接在最新版本的 NodeJS 環境中使用
++ Shipping features 並不需要加上 runtime flag 已經可以直接在最新版本的 Node.js 環境中使用
 + Staged features 需要加上 runtime flag (`--es_staging` 或 `--harmony`) 才可以使用
 + In progress features 需要加上 runtime flag `--harmony_<name>`, 在 harmony_ 後面的是那語法特性的名稱,如果開發者想知道有甚麼是正在整合當中的話,可以使用`node --v8-options | grep "in progress"`去查詢
 
@@ -35,7 +35,7 @@
 ```
 
 ###在 v4.0 以前的版本
-由於在 v4.0 以前的版本並不原生支援 ES6 的語法特性,所以我們需要一個 JavaScript 編譯器,把 ES6 的語法轉換成 ES5 的版本。Babel 是一個開源專案,如果需要在舊的 NodeJS 環境中寫 ES6 的語法就可以用到它,使用的方法很容易,先用 npm 把它安裝起來。
+由於在 v4.0 以前的版本並不原生支援 ES6 的語法特性,所以我們需要一個 JavaScript 編譯器,把 ES6 的語法轉換成 ES5 的版本。Babel 是一個開源專案,如果需要在舊的 Node.js 環境中寫 ES6 的語法就可以用到它,使用的方法很容易,先用 npm 把它安裝起來。
 
 `$npm install babel -g`
 
@@ -407,7 +407,7 @@ function mother(){
 ```
 
 ###[Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-相信有寫過異步代碼 (Asynchronous) 的開發者對 Promise 應該不會陌生。它對於簡化代碼，解決 Callback hell， try/catch 無法抓到回調異常 (callback exception) 的問題的效果十分顯著。在先前的 NodeJS 版本 (0.12) 已經有原生支持，當然還可以透過基於 [Prmoises/A+](https://promisesaplus.com/) 標準所開發的第三方框架去實作起來， (例如 [Q](https://github.com/kriskowal/q)， [bluebird](https://github.com/petkaantonov/bluebird) 等)。
+相信有寫過異步代碼 (Asynchronous) 的開發者對 Promise 應該不會陌生。它對於簡化代碼，解決 Callback hell， try/catch 無法抓到回調異常 (callback exception) 的問題的效果十分顯著。在先前的 Node.js 版本 (0.12) 已經有原生支持，當然還可以透過基於 [Prmoises/A+](https://promisesaplus.com/) 標準所開發的第三方框架去實作起來， (例如 [Q](https://github.com/kriskowal/q)， [bluebird](https://github.com/petkaantonov/bluebird) 等)。
 
 ES6 所定義的 Promise 有 4 種狀態， 分別是 Pending(待定)， Fulfilled(成功完成)， Rejected(失敗)， Settled(已經完成/失敗)。
 ```javascript
