@@ -20,7 +20,7 @@ npm 不僅可用於安裝新的套件，它也支援搜尋、列出已安裝模�
 安裝 NPM
 ========
 
-nvm在安裝node.js時即會內建npm，請先參考NODE_INSTALL
+nvm在安裝Node.js時即會內建npm，請先參考NODE_INSTALL
 
 NPM 安裝後測試
 -------------

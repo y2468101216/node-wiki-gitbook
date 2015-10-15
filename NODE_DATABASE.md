@@ -565,7 +565,7 @@ var removeRestaurants = function(db, callback) {
 
 # 結語
 
-MongoDB跟node.js就跟mysql之於php一樣，天生一對，但這並不代表你不能用其他的資料庫。
+MongoDB跟Node.js就跟mysql之於php一樣，天生一對，但這並不代表你不能用其他的資料庫。
 根據專案選擇你要的才是正確的。
 # 參考資料
 * wiki-SQL injection:<https://zh.wikipedia.org/wiki/SQL資料隱碼攻擊>

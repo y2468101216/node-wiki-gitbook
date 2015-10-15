@@ -401,11 +401,11 @@ cps、currying、flow control是更進階的技巧與應用。
 Event Loop
 ==========
 
-可能很多人在寫Javascript時，並不知道他是怎麼被執行的。這個時候可以參考一下jQuery作者John Resig一篇好文章，介紹事件及timer怎麼在瀏覽器中執行：How JavaScript Timers Work。通常在網頁中，所有的Javascript執行完畢後（這部份全部都在global scope跑，除非執行函數），接下來就是如John Resig解釋的這樣，所有的事件處理函數，以及timer執行的函數，會排在一個queue結構中，利用一個無窮迴圈，不斷從queue中取出函數來執行。這個就是event loop。
+可能很多人在寫JavaScript時，並不知道他是怎麼被執行的。這個時候可以參考一下jQuery作者John Resig一篇好文章，介紹事件及timer怎麼在瀏覽器中執行：How JavaScript Timers Work。通常在網頁中，所有的JavaScript執行完畢後（這部份全部都在global scope跑，除非執行函數），接下來就是如John Resig解釋的這樣，所有的事件處理函數，以及timer執行的函數，會排在一個queue結構中，利用一個無窮迴圈，不斷從queue中取出函數來執行。這個就是event loop。
 
-（除了John Resig的那篇文章，Nicholas C. Zakas的 "Professional Javascript for Web Developer 2nd edition" 有一個試閱本：http://yuiblog.com/assets/pdf/zakas-projs-2ed-ch18.pdf，598頁剛好也有簡短的說明）
+（除了John Resig的那篇文章，Nicholas C. Zakas的 "Professional JavaScript for Web Developer 2nd edition" 有一個試閱本：http://yuiblog.com/assets/pdf/zakas-projs-2ed-ch18.pdf，598頁剛好也有簡短的說明）
 
-所以在Javascript中，雖然有非同步，但是他並不是使用執行緒。所有的事件或是非同步執行的函數，都是在同一個執行緒中，利用event loop的方式在執行。至於一些比較慢的動作例如I/O、網頁render, reflow等，實際動作會在其他執行緒跑，等到有結果時才利用事件來觸發處理函數來處理。這樣的模型有幾個好處：
+所以在JavaScript中，雖然有非同步，但是他並不是使用執行緒。所有的事件或是非同步執行的函數，都是在同一個執行緒中，利用event loop的方式在執行。至於一些比較慢的動作例如I/O、網頁render, reflow等，實際動作會在其他執行緒跑，等到有結果時才利用事件來觸發處理函數來處理。這樣的模型有幾個好處：
 沒有執行緒的額外成本，所以反應速度很快
 不會有任何程式同時用到同一個變數，不必考慮lock，也不會產生dead lock
 所以程式撰寫很簡單
@@ -414,7 +414,7 @@ Event Loop
 在多核心硬體普遍的現在，無法用單一的應用程式instance發揮所有的硬體能力
 用Node.js撰寫伺服器程式，碰到的也是一樣的狀況。要讓系統發揮event loop的效能，就要盡量利用事件的方式來組織程式架構。另外，對於一些有可能較為耗時的操作，可以考慮使用 process.nextTick 函數來讓他以非同步的方式執行，避免在同一個函數中執行太久，擋住所有函數的執行。
 
-如果想要測試event loop怎樣在「瀏覽器」中運行，可以在函數中呼叫alert()，這樣會讓所有Javascript的執行停下來，尤其會干擾所有使用timer的函數執行。有一個簡單的例子，這是一個會依照設定的時間間隔嚴格執行動作的動畫，如果時間過了就會跳過要執行的動作。點按圖片以後，人物會快速旋轉，但是在旋轉執行完畢前按下「delay」按鈕，讓alert訊息等久一點，接下來的動畫就完全不會出現了。
+如果想要測試event loop怎樣在「瀏覽器」中運行，可以在函數中呼叫alert()，這樣會讓所有JavaScript的執行停下來，尤其會干擾所有使用timer的函數執行。有一個簡單的例子，這是一個會依照設定的時間間隔嚴格執行動作的動畫，如果時間過了就會跳過要執行的動作。點按圖片以後，人物會快速旋轉，但是在旋轉執行完畢前按下「delay」按鈕，讓alert訊息等久一點，接下來的動畫就完全不會出現了。
 
 Scope 與 Closure
 ================
@@ -440,11 +440,11 @@ var b = a(4);//執行inner函數，執行時上下文已經在outter函數之外
 
 console.log(b);//結果10
 
-在Javascript中，scope最主要的單位是函數（另外有global及eval），所以有可能製造出closure的狀況，通常在形式上都是有巢狀的函數定義，而且內側的函數使用到定義在外側函數裡面的變數。
+在JavaScript中，scope最主要的單位是函數（另外有global及eval），所以有可能製造出closure的狀況，通常在形式上都是有巢狀的函數定義，而且內側的函數使用到定義在外側函數裡面的變數。
 
 Closure有可能會造成記憶體洩漏，主要是因為被參考的變數無法被垃圾收集機制處理，造成佔用的資源無法釋放，所以使用上必須考慮清楚，不要造成意外的記憶體洩漏。（在上面的例子中，如果a一直未執行，使用到的記憶體就不會被釋放）
 
-跟透過函數的參數把變數傳給函數比較起來，Javascript Engine會比較難對Closure進行最佳化。如果有效能上的考量，這一點也需要注意。
+跟透過函數的參數把變數傳給函數比較起來，JavaScript Engine會比較難對Closure進行最佳化。如果有效能上的考量，這一點也需要注意。
 
 Callback
 ========
@@ -452,9 +452,9 @@ Callback
 要介紹 Callback 之前，
 要先提到 JavaScript 的特色。
 
-JavaScript 是一種函數式語言（functional language），所有Javascript語言內的函數，都是高階函數(higher order function，這是數學名詞，計算機用語好像是first class function，意指函數使用沒有任何限制，與其他物件一樣)。也就是說，函數可以作為函數的參數傳給函數，也可以當作函數的返回值。這個特性，讓Javascript的函數，使用上非常有彈性，而且功能強大。
+JavaScript 是一種函數式語言（functional language），所有JavaScript語言內的函數，都是高階函數(higher order function，這是數學名詞，計算機用語好像是first class function，意指函數使用沒有任何限制，與其他物件一樣)。也就是說，函數可以作為函數的參數傳給函數，也可以當作函數的返回值。這個特性，讓JavaScript的函數，使用上非常有彈性，而且功能強大。
 
-callback在形式上，其實就是把函數傳給函數，然後在適當的時機呼叫傳入的函數。Javascript使用的事件系統，通常就是使用這種形式。Node.js中，有一個物件叫做EventEmitter，這是Node.js事件處理的核心物件，所有會使用事件處理的函數，都會「繼承」這個物件。（這裡說的繼承，實作上應該像是mixin）他的使用很簡單：
+callback在形式上，其實就是把函數傳給函數，然後在適當的時機呼叫傳入的函數。JavaScript使用的事件系統，通常就是使用這種形式。Node.js中，有一個物件叫做EventEmitter，這是Node.js事件處理的核心物件，所有會使用事件處理的函數，都會「繼承」這個物件。（這裡說的繼承，實作上應該像是mixin）他的使用很簡單：
 可以使用 物件.on(事件名稱, callback函數) 或是 物件.addListener(事件名稱, callback函數) 把你想要處理事件的函數傳入
 在 物件 中，可以使用 物件.emit(事件名稱, 參數...) 呼叫傳入的callback函數
 這是Observer Pattern的簡單實作，而且跟在網頁中使用DOM的addEventListener使用上很類似，也很容易上手。不過Node.js是大量使用非同步方式執行的應用，所以程式邏輯幾乎都是寫在callback函數中，當邏輯比較複雜時，大量的callback會讓程式看起來很複雜，也比較難單元測試。舉例來說：
@@ -669,7 +669,7 @@ add這個函數，必須同時輸入兩個參數，才有辦法執行。如果�
 * http://howtonode.org/control-flow-part-iii
 * http://blog.mixu.net/2011/02/02/essential-node-js-patterns-and-snippets
 
-這幾篇都是非常經典的Node.js/Javascript流程控制好文章（阿，mixu是在介紹一些pattern時提到這方面的主題）。不過我還是用幾個簡單的程式介紹一下做法跟概念：
+這幾篇都是非常經典的Node.js/JavaScript流程控制好文章（阿，mixu是在介紹一些pattern時提到這方面的主題）。不過我還是用幾個簡單的程式介紹一下做法跟概念：
 
 
 並發與等待

@@ -4,7 +4,7 @@
 
 # What's nvm
 
-nvm是一種node.js的版本管理工具，在現在node.js已經分成了stable跟develop，適時的切換版本是必須的。因為你有可能需要預先開發develop上的功能，但還是要維護stable上的bug，
+nvm是一種Node.js的版本管理工具，在現在Node.js已經分成了stable跟develop，適時的切換版本是必須的。因為你有可能需要預先開發develop上的功能，但還是要維護stable上的bug，
 且你使用nvm切換版本時npm也會一併安裝或切換。
 
 Linux
@@ -66,7 +66,7 @@ nvm install stable
 
 ```   
 
-這個指令是使用node.js必須先做的，因為在安裝完nvm後node.js並沒有被安裝。
+這個指令是使用Node.js必須先做的，因為在安裝完nvm後Node.js並沒有被安裝。
 你可以看到他可以帶兩種參數，一個是版本號、一個是stable or unstable。
 
 版本號除了第一位必填以外，其他都選填，沒填的情況下會自動抓該版本下最新的。

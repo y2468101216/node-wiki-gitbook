@@ -8,13 +8,13 @@ JavaScript 是功能強大的物件導向程式語言，但是在 JavaScript 的
 
 瀏覽器的 JavaScript 與實現 CommonJS 規範的 Node.js 有何不同呢？瀏覽器的 JavaScript 提供 XMLHttpRequest ，讓程式可以和網頁伺服器建立資料傳輸連線，但這通常只能適用於網站開發的需求，因為我們只能用 XMLHttpRequest 與網頁伺服器通訊，卻無法利用它建立其他類型如 Telnet / FTP / NTP 的伺服器通訊。如果我們想開發網路服務程式，例如 SMTP 電子郵件伺服器，就必須使用 Sockets 建立 TCP (某些服務則用 UDP) 監聽及連線，其他程式語言如 PHP 、 Java 、 Python 、 Perl 及 Ruby 等，在標準開發環境中皆有提供 Sockets API ，而瀏覽器的 JavaScript 基於安全及貼近網站設計需求的考量下，並未將 Sockets 列入標準函式庫之中。而 CommonJS 的規範就填補了這種基礎函式庫功能的空缺，遵循 CommonJS 規範的 Node.js 可以直接使用 Sockets API 建立各種網路服務程式，也能夠讓更多同好基於 JavaScript 開發符合 Node.js 的外掛模組 (Module)。
 
-開發人員所編寫出來的 Javascript 腳本程式，怎麼可能會比其他語言寫出來的網路程式還要快上許多呢？以前的網路程式原理是將使用者每次的連線 (connection) 都開啟一個執行緒 (thread)，當連線爆增的時候將會快速耗盡系統效能，並且容易產生阻塞 (block)。
+開發人員所編寫出來的 JavaScript 腳本程式，怎麼可能會比其他語言寫出來的網路程式還要快上許多呢？以前的網路程式原理是將使用者每次的連線 (connection) 都開啟一個執行緒 (thread)，當連線爆增的時候將會快速耗盡系統效能，並且容易產生阻塞 (block)。
 
 Node.js 對於資源的調配有所不同，當程式接收到一筆連線 (connection)，會通知作業系統透過epoll, kqueue, /dev/poll或select將連線保留，並且放入heap中配置，先讓連線進入休眠 (sleep) 狀態，當系統通知時才會觸發連線的 callback。這種處理連線方式只會佔用掉記憶體，並不會使用到CPU資源。另外因為採用 JavaScript 語言的特性，每個 request 都會有一個 callback，如此可以避免發生 block。
 
 基於 callback 特性，目前 Node.js 大多應用於 Comet(long pulling) Request Server，或者是高連線數量的網路服務上，目前也有許多公司將 Node.js 設為內部核心網路服務之一。在 Node.js 也提供了外掛管理 (Node package management)，讓愛好 Node.js 輕易開發更多有趣的服務、外掛，並且提供到 npm 讓全世界使用者快速安裝使用。
 
-本書最後執行測試版本為node.js v4.0.0，相關 API 文件可查詢
+本書最後執行測試版本為Node.js v4.0.0，相關 API 文件可查詢
 https://nodejs.org
 
-本書所有範例均可於 Linux, Windows 上執行，如遇到任何問題歡迎至http://nodejs.tw ，詢問對於 Node.js 相關問題，或者可以加入FB社團<a href="https://www.facebook.com/groups/node.js.tw/">node.js台灣</a>
+本書所有範例均可於 Linux, Windows 上執行，如遇到任何問題歡迎至http://nodejs.tw ，詢問對於 Node.js 相關問題，或者可以加入FB社團<a href="https://www.facebook.com/groups/node.js.tw/">Node.js台灣</a>
