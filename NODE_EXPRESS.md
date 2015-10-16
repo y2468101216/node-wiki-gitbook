@@ -1,8 +1,8 @@
 # Express 介紹
 
-在前面的node.js 基礎當中介紹許多許多開設http 的使用方法及介紹，以及許多基本的node.js 基本應用。
+在前面的Node.js 基礎當中介紹許多許多開設http 的使用方法及介紹，以及許多基本的Node.js 基本應用。
 
-接下來要介紹一個套件稱為express [Express](http://expressjs.com/) ，這個套件主要幫忙解決許多node.js http server 所需要的基本服務，讓開發http service 變得更為容易，不需要像之前需要透過層層模組（module）才有辦法開始編寫自己的程式。
+接下來要介紹一個套件稱為express [Express](http://expressjs.com/) ，這個套件主要幫忙解決許多Node.js http server 所需要的基本服務，讓開發http service 變得更為容易，不需要像之前需要透過層層模組（module）才有辦法開始編寫自己的程式。
 
 這個套件是由TJ Holowaychuk 製作而成的套件，裡面包含基本的路由處理(route)，http 資料處理（GET/POST/PUT），另外還與樣板套件（js html template engine）搭配，同時也可以處理許多複雜化的問題。
 
@@ -35,7 +35,7 @@ express 的使用也十分簡單，先來建立一個基本的hello world ，
 
 	console.log('start express server\n');
 
-可以從上面的程式碼發現，基本操作與node.js http 的建立方式沒有太大差異，主要差在當我們設定路由時，可以直接透過 app.get 方式設定回應與接受方式。
+可以從上面的程式碼發現，基本操作與Node.js http 的建立方式沒有太大差異，主要差在當我們設定路由時，可以直接透過 app.get 方式設定回應與接受方式。
 
 Express 路由處理
 ================
@@ -296,9 +296,9 @@ Express GET 應用範例
 
 action 變數作為記錄pathname，這是我們稍後要來判斷目前網頁的動作是什麼。接著先將 html 表頭資訊 (Header)準備好，再來判斷路徑邏輯，如果是 */Signup* 這個動作，就把urlData.query裡的資料指定給user，然後輸出user.username和user.email，把使用者從表單註冊的資料顯示於頁面中。
 
-最後進行程式測試，啟動 node.js 主程式之後，開啟瀏覽器就會看到表單，填寫完畢按下送出，就可以看到結果了。
+最後進行程式測試，啟動 Node.js 主程式之後，開啟瀏覽器就會看到表單，填寫完畢按下送出，就可以看到結果了。
 
-完整 node.js 程式碼如下，
+完整 Node.js 程式碼如下，
 
 ```
 var http = require('http'),
@@ -362,7 +362,7 @@ Express POST 應用範例
 
 ```
 
-node.js 的程式處理邏輯與前面 GET 範例類似，部分程式碼如下，
+Node.js 的程式處理邏輯與前面 GET 範例類似，部分程式碼如下，
 
 
 
@@ -384,7 +384,7 @@ node.js 的程式處理邏輯與前面 GET 範例類似，部分程式碼如下�
 
 主要加入了'querystring' 這個module，方便我們等一下解析由表單POST回來的資料，另外加入一個formData的變數，用來搜集待等一下表單回傳的資料。前面的GET 範例，我們只從req 拿出url的資料，這次要在利用 req 身上的事件處理。
 
-JavaScript在訂閱事件時使用addEventListener，而node.js使用的則是on。這邊加上了監聽 *data* 的事件，會在瀏覽器傳送資料到 Web Server時被執行，參數是它所接收到的資料，型態是字串。
+JavaScript在訂閱事件時使用addEventListener，而Node.js使用的則是on。這邊加上了監聽 *data* 的事件，會在瀏覽器傳送資料到 Web Server時被執行，參數是它所接收到的資料，型態是字串。
 
 接著再增加 *end* 的事件，當瀏覽器的請求事件結束時，它就會動作。
 
@@ -405,7 +405,7 @@ JavaScript在訂閱事件時使用addEventListener，而node.js使用的則是on
 
 一旦轉成物件並指定給user之後，其他的事情就和GET方法時操作的一樣，寫response的表頭，將內容回傳，並將user.username和user.email代入到內容中。
 
-修改完成後，接著執行 node.js 程式，啟動 web server ，開啟瀏覽器進入表單測試看看，POST 的方式能否順利運作。
+修改完成後，接著執行 Node.js 程式，啟動 web server ，開啟瀏覽器進入表單測試看看，POST 的方式能否順利運作。
 
 完整程式碼如下，
    
@@ -497,7 +497,7 @@ HTML 頁面上準備了一個表單，用來傳送註冊資料。接著直接引
 
 經過以上的處理後，一個Ajax的表單的基本功能已經完成。
 
-接著進行 node.js 主要程式的編輯，部分程式碼如下，
+接著進行 Node.js 主要程式的編輯，部分程式碼如下，
 
 
 
@@ -529,9 +529,9 @@ HTML 頁面上準備了一個表單，用來傳送註冊資料。接著直接引
  * 增加了msg這個變數，存放將user物件JSON文字化的結果。JSON.stringify這個轉換函式是V8引擎所提供的，如果你好奇的話。
  * 大重點來了，我們要告訴Client端，這次回傳的資料格式是JSON，所在Content-type和Content-Length要提供給Client。
 
-Server很輕鬆就完成任務了，最後進行程式測試，啟動 node.js 主程式之後，開啟瀏覽器就會看到表單，填寫完畢按下送出，就可以看到結果了。
+Server很輕鬆就完成任務了，最後進行程式測試，啟動 Node.js 主程式之後，開啟瀏覽器就會看到表單，填寫完畢按下送出，就可以看到結果了。
 
-最後 node.js 本篇範例程式碼如下，
+最後 Node.js 本篇範例程式碼如下，
    
 ```
 var http = require('http'),

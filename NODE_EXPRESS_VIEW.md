@@ -15,7 +15,7 @@ MVC是近年來流行的web架構，但這個概念並不限定在web上，連an
 
 **（模型 Model）** - 程式設計師編寫程式應有的功能（實作演算法等等）、資料庫專家進行資料管理和資料庫設計(可以實作具體的功能)。
 
-轉換成node.js的說法就是：
+轉換成Node.js的說法就是：
 
 **（控制器 Controller）**- server(express)，接受參數(POST OR GET)後轉傳至要執行的程式，若有需要則回傳結果。
 
@@ -149,9 +149,9 @@ app.js把檢查檔案是否存在的邏輯處理抽離另外做成一個class，
 這樣的好處是你易於維護，不會因為一個程式bug導致整個server crush，當然檔案跟程式碼會變得比較多，但整體而言複雜度是下降的。
 
 #實例二 輸出文字
-在node.js裡面view engine分成兩個：jade跟ejs，我會談跟php想法比較接近的ejs。
+在Node.js裡面view engine分成兩個：jade跟ejs，我會談跟php想法比較接近的ejs。
 
-如果跟我一樣有做過php的話，那你應該記得php本身即是個view engine這件事，但很可惜的是node.js並不能直接
+如果跟我一樣有做過php的話，那你應該記得php本身即是個view engine這件事，但很可惜的是Node.js並不能直接
 這樣輸出，但他有類似的東西可以讓你無痛轉換，沒錯！就是ejs
 
 讓我們做個範例，建立一個名叫**node_mvc_2_ejs**目錄
@@ -520,7 +520,7 @@ res.sendFile('index.html',options,function(err){
 	
 ```
 
-回傳的部分，server丟json出來是最好的，因為javascript對json的支援很好，而且在提供相同資訊的情況下
+回傳的部分，server丟json出來是最好的，因為JavaScript對json的支援很好，而且在提供相同資訊的情況下
 json遠比xml來的簡單。
 
 ```javascript
