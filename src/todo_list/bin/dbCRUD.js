@@ -10,14 +10,7 @@ module.exports = function () {
 
 	this.select = function (findCondition, db, callback) {
 		var cursor = db.collection('event').find(findCondition);
-		cursor.count(function(err, count){
-			if(err == null){
-				if(count == 0){
-					err = 'nothing to found';
-				}
-			}
-			callback(err, cursor);
-		});
+		callback(cursor);
 	}
 	
 	this.insert = function (insertObject, db, callback) {

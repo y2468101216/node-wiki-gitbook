@@ -2,13 +2,22 @@ var dbConnect = require('../bin/dbConnect.js');
 var dbConnectTest = new dbConnect();
 var crud = require('../bin/dbCRUD.js');
 var crudTest = new crud();
+var assert = require('assert');
 
 describe('dbTest', function () {
-	it('connect', function (done) {
+	before(function(done){
+		dbConnectTest.dropCollection('event',function(err, result){
+			db.close();
+			assert.equal(null, err);
+			done();
+		})	
+	});
+	
+	it('connectShouldBeSuccess', function (done) {
 		dbConnectTest.connect(function (db) {
 			db.admin().serverInfo(function (err, results) {
 				db.close();
-				if (err) throw err;
+				assert.equal(null, err);
 				done();
 			});
 		});
@@ -16,10 +25,14 @@ describe('dbTest', function () {
 
 	it('select', function (done) {
 		dbConnectTest.connect(function (db) {
-			crudTest.select(null, db, function (err, results) {
-				db.close();
-				if (err) throw err;
-				done();
+			crudTest.select(null, db, function (cursor) {
+				cursor.count(function(err, count){
+					db.close();
+					assert.equal(null, err);
+					assert.notEqual(count,0);
+					done();
+				});
+				
 			});
 		});
 	});
