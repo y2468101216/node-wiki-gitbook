@@ -7,5 +7,10 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <ul>
+    <% cursor.forEach(function(data){ %>
+      <%= data.event %>
+    <% }); %>
+  </ul>
   </body>
 </html>

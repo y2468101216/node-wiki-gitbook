@@ -121,7 +121,7 @@ npm install
 
 # 安裝測試工具-mocha
 
-我們是好孩子，所以要寫tdd，詳細的介紹在NODE_TEST裡
+我們是好孩子，所以要寫unit test，詳細的介紹在NODE_TEST裡
 
 ```
 
@@ -136,35 +136,37 @@ MongoDB CRUD
 
 新增一個test目錄並建立一個dbCRUDTest.js的檔案，程式碼如下:
 
-```
+```javascript
 
 var dbConnect = require('../bin/dbConnect.js');
 var dbConnectTest = new dbConnect();
 var crud = require('../bin/dbCRUD.js');
 var crudTest = new crud();
+var assert = require('assert');
 
 describe('dbTest', function () {
-	it('connect', function (done) {
+	before('create Test Collection', function (done) {
+		console.log('createTestCollection');
+		dbConnectTest.connect(function (db) {
+			db.createCollection('event', function (err, results) {
+				db.close();
+				assert.equal(null, err);
+				done();
+			});
+		});
+	});
+
+	it('connect Should Be Success', function (done) {
 		dbConnectTest.connect(function (db) {
 			db.admin().serverInfo(function (err, results) {
 				db.close();
-				if (err) throw err;
+				assert.equal(null, err);
 				done();
 			});
 		});
 	});
-
-	it('select', function (done) {
-		dbConnectTest.connect(function (db) {
-			crudTest.select(null, db, function (err, results) {
-				db.close();
-				if (err) throw err;
-				done();
-			});
-		});
-	});
-
-	it('insert', function (done) {
+		
+	it('insert Should Be Success', function (done) {
 		dbConnectTest.connect(function (db) {
 			crudTest.insert({ userId: '1234', event: 'test' }, db, function (err, results) {
 				db.close();
@@ -174,24 +176,52 @@ describe('dbTest', function () {
 		});
 	});
 
-	it('update', function (done) {
+	it('select Should Not Be 0', function (done) {
 		dbConnectTest.connect(function (db) {
-			crudTest.update({ _id: 1, event: 'test2', userId:'1234' }, db, function (err, results) {
+			crudTest.select(null, db, function (cursor) {
+				cursor.count(function (err, count) {
+					db.close();
+					assert.equal(null, err);
+					assert.notEqual(count, 0);
+					done();
+				});
+
+			});
+		});
+	});
+
+	it('update Should Be Success. But Update Nothing', function (done) {
+		dbConnectTest.connect(function (db) {
+			crudTest.update({ _id: 1, event: 'test2', userId: '1234' }, db, function (err, results) {
 				db.close();
-				if (err) throw err;
+				assert.equal(null, err);
+				assert.equal(0,results.modifiedCount)
 				done();
 			});
 		});
 	});
 
-	it('delete', function (done) {
+	it('delete Should Be Success. But Delete Nothing', function (done) {
 		dbConnectTest.connect(function (db) {
-			crudTest.delete({ _id: 1, userId:'1234' }, db, function (err, results) {
+			crudTest.delete({ _id: 1, userId: '1234' }, db, function (err, results) {
 				db.close();
-				if (err) throw err;
+				assert.equal(null, err);
+				assert.equal(0,results.deletedCount)
 				done();
 			});
 		});
+	});
+
+	after('drop Test Collection', function (done) {
+		console.log('dropTestCollection');
+		dbConnectTest.connect(function (db) {
+			db.dropCollection('event', function (err, results) {
+				db.close();
+				assert.equal(null, err);
+				done();
+			});
+		});
+		
 	});
 });
 
@@ -208,7 +238,7 @@ $ mongod
 
 在bin/下新增一個檔案叫做 dbConnect.js 來設定 MongoDB
 
-```
+```javascript
 
 /**
  * Name:dbConnect.js 
@@ -237,7 +267,7 @@ module.exports = function () {
 
 在bin/下新增一個檔案叫做 dbCRUD.js，這是給todo_list讀寫資料庫用的。
 
-```
+```javascript
 
 /**
  * Name:dbCRUD.js 
@@ -267,7 +297,7 @@ $ mocha test/dbCRUDTest.js
 
 修改dbCRUD.js如下
 
-```
+```javascript
 
 /**
  * Name:dbCRUD.js 
@@ -324,27 +354,95 @@ $ mocha test/dbCRUDTest.js
 
 這次就全數通過了。
 
-修改 index view
+* 備註
+
+這個測試，有兩個不好的地方。
+
+1. connect跟所有相依在一起了
+2. insert跟select相依在一起了
+
+理論上應該要新增一個假的db instance去做測試，但是因為作者懶惰的關係，所以決定這樣寫。
+
+修改 index.js 使他可以查詢
 ---------------
 
-我們需要一個 text input 來新增待辦事項. 在這裡我們用 POST form 來傳送資料.
-views/index.ejs
+我們需要調整index.js，讓他可以帶查詢的結果
+
+index.js修改程式碼如下：
+
+```javascript
+
+/**
+ * Name:index.js 
+ * Purpose:show index.html
+ * Author:Yun 
+ * Version:1.0
+ * Update:2015-10-20
+ */
+
+var express = require('express');
+var router = express.Router();
+
+var dbConnect = require('../bin/dbConnect.js');
+var dbConn = new dbConnect();
+
+var dbCRUD = require('../bin/dbCRUD.js');
+var dbCRUDMethod = new dbCRUD();
+
+/* GET home page. */
+router.get('/', function (req, res, next) {
+  dbConn.connect(function (db) {
+    dbCRUDMethod.select(null,db,function(cursor){
+      res.render('index', { title: 'Express', cursor:cursor });    
+    });
+  })
+  
+});
+
+module.exports = router;
 
 
+```
 
+修改index.ejs如下:
+
+```html
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
     <h1><%= title %></h1>
-    <form action="/create" method="post" accept-charset="utf-8">
-      <input type="text" name="content" />
-    </form>
+    <p>Welcome to <%= title %></p>
+    <ul>
+    <% cursor.forEach(function(data){ %>
+      <%= data.event %>
+    <% }); %>
+  </ul>
+  </body>
+</html>
 
-新增待辦事項以及存檔，routes/index.js，首先先 require mongoose 和 Todo model.
+
+```
+
+執行:
+
+```
+DEBUG=myapp npm start
+```
+
+連<http://localhost:3000/>即可看到成果
+
+![](img/zh-tw/todo_list/todo_listTestIndex.png)
+
+這時還沒任何顯示任何資料，因為資料庫裡尚未儲存任何資料。
+
+# 修改index.ejs使其有新增介面
 
 
-
-    var mongoose = require( 'mongoose' );
-    var Todo     = mongoose.model( 'Todo' );
-
-新增成功後將頁面導回首頁.
 
 
 
