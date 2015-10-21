@@ -18,11 +18,19 @@ var dbCRUDMethod = new dbCRUD();
 /* GET home page. */
 router.get('/', function (req, res, next) {
   dbConn.connect(function (db) {
-    dbCRUDMethod.select(null,db,function(cursor){
-      res.render('index', { title: 'Express', cursor:cursor });    
+    dbCRUDMethod.select(null, db, function (cursor) {
+      var data = [];
+      cursor.forEach(function(result){
+        data.push(result);
+        db.close();
+      },function(err){
+        if(err) throw err;
+        res.render('index', { title: 'Express', cursor: data });
+      });
+     
     });
-  })
-  
+  });
+
 });
 
 module.exports = router;

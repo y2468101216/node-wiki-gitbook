@@ -392,15 +392,22 @@ var dbCRUDMethod = new dbCRUD();
 /* GET home page. */
 router.get('/', function (req, res, next) {
   dbConn.connect(function (db) {
-    dbCRUDMethod.select(null,db,function(cursor){
-      res.render('index', { title: 'Express', cursor:cursor });    
+    dbCRUDMethod.select(null, db, function (cursor) {
+      var data = [];
+      cursor.forEach(function(result){
+        data.push(result);
+        db.close();
+      },function(err){
+        if(err) throw err;
+        res.render('index', { title: 'Express', cursor: data });
+      });
+     
     });
-  })
-  
+  });
+
 });
 
 module.exports = router;
-
 
 ```
 
@@ -431,7 +438,7 @@ module.exports = router;
 執行:
 
 ```
-DEBUG=myapp npm start
+DEBUG=todo_list npm start
 ```
 
 連<http://localhost:3000/>即可看到成果
@@ -440,376 +447,157 @@ DEBUG=myapp npm start
 
 這時還沒任何顯示任何資料，因為資料庫裡尚未儲存任何資料。
 
-# 修改index.ejs使其有新增介面
+# 修改todo_list使其有新增功能
 
+```html
 
+<!DOCTYPE html>
+<html>
 
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
 
+<body>
+  <p>Welcome to <%= title %></p>
+  <form method="post" action="insert">
+    <input type="text" value="" placeholder="請輸入代辦事項" />
+    <button type="submit" value="">送出</button>
+  </form>
+  <ul>
+    <% cursor.forEach(function(data){ %>
+      <%= data.event %>
+        <% }); %>
+  </ul>
+</body>
 
-    exports.create = function ( req, res ){
-      new Todo({
-        content    : req.body.content,
-        updated_at : Date.now()
-      }).save( function( err, todo, count ){
-        res.redirect( '/' );
-      });
-    };
+</html>
 
-將這個新增的動作加到 routes 裡.
+```
 
-app.js
+app.js:
 
+```javascript
 
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
-    // 新增下列語法到 routes
-    app.post( '/create', routes.create );
+var routes = require('./routes/index');
+var users = require('./routes/users');
 
-顯示待辦事項
-routes/index.js
+var app = express();
 
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-    // 查詢資料庫來取得所有待辦是事項.
-    exports.index = function ( req, res ){
-      Todo.find( function ( err, todos, count ){
-        res.render( 'index', {
-            title : 'Express Todo Example',
-            todos : todos
-        });
-      });
-    };
+app.use('/', routes);
+app.use('/users', users);
+app.use('/control/:method', control);
 
-views/index.ejs
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
+// error handlers
 
-
-    // 在最下面跑回圈來秀出所有待辦事項.
-    <% todos.forEach( function( todo ){ %>
-      <p><%= todo.content %></p>
-    <% }); %>
-
-刪除待辦事項
-在每一個待辦事項的旁邊加一個刪除的連結.
-routes/index.js
-
-
-
-    // 根据待辦事項的 id 来移除他
-    exports.destroy = function ( req, res ){
-      Todo.findById( req.params.id, function ( err, todo ){
-        todo.remove( function ( err, todo ){
-          res.redirect( '/' );
-        });
-      });
-    };
-
-views/index.ejs
-
-
-
-    // 在迴圈裡加一個删除連結
-    <% todos.forEach( function ( todo ){ %>
-      <p>
-        <span>
-          <%= todo.content %>
-        </code>
-        <span>
-          <a href="/destroy/<%= todo._id %>" title="Delete this todo item">Delete</a>
-        </code>
-      </p>
-    <% }); %>
-
-將這個刪除的動作加到 routes 裡.
-app.js
-
-
-
-    // 新增下列語法到 routes
-    app.get( '/destroy/:id', routes.destroy );
-
-編輯待辦事項
-當滑鼠點擊待辦事項時將他轉成一個 text input.
-routes/index.js
-
-
-
-    exports.edit = function ( req, res ){
-      Todo.find( function ( err, todos ){
-        res.render( 'edit', {
-            title   : 'Express Todo Example',
-            todos   : todos,
-            current : req.params.id
-        });
-      });
-    };
-
-Edit view 基本上和 index view 差不多, 唯一的不同是在選取的那個待辦事項變成 text input.
-views/edit.ejs
-
-
-
-    <h1><%= title %></h1>
-    <form action="/create" method="post" accept-charset="utf-8">
-      <input type="text" name="content" />
-    </form>
-     
-    <% todos.forEach( function ( todo ){ %>
-      <p>
-        <span>
-          <% if( todo._id == current ){ %>
-          <form action="/update/<%= todo._id %>" method="post" accept-charset="utf-8">
-            <input type="text" name="content" value="<%= todo.content %>" />
-          </form>
-          <% }else{ %>
-            <a href="/edit/<%= todo._id %>" title="Update this todo item"><%= todo.content %></a>
-          <% } %>
-        </code>
-        <span>
-          <a href="/destroy/<%= todo._id %>" title="Delete this todo item">Delete</a>
-        </code>
-      </p>
-    <% }); %>
-
-將待辦事項包在一個 link 裡, link 可以連到 edit 動作.
-views/index.ejs
-
-
-
-    <h1><%= title %></h1>
-    <form action="/create" method="post" accept-charset="utf-8">
-      <input type="text" name="content" />
-    </form>
-     
-    <% todos.forEach( function ( todo ){ %>
-      <p>
-        <span>
-          <a href="/edit/<%= todo._id %>" title="Update this todo item"><%= todo.content %></a>
-        </code>
-        <span>
-          <a href="/destroy/<%= todo._id %>" title="Delete this todo item">Delete</a>
-        </code>
-      </p>
-    <% }); %>
-
-將這個編輯的動作加到 routes 裡.
-app.js
-
-
-
-    // 新增下列語法到 routes
-    app.get( '/edit/:id', routes.edit );
-
-更新待辦事項
-新增一個 update 動作來更新待辦事項.
-routes/index.js
-
-
-
-    // 結束後重新導回首頁
-    exports.update = function ( req, res ){
-      Todo.findById( req.params.id, function ( err, todo ){
-        todo.content    = req.body.content;
-        todo.updated_at = Date.now();
-        todo.save( function ( err, todo, count ){
-          res.redirect( '/' );
-        });
-      });
-    };
-
-將這個更新的動作加到 routes 裡.
-app.js
-
-
-
-    // 新增下列語法到 routes
-    app.post( '/update/:id', routes.update );
-
-排序
-現在待辦事項是最早產生的排最前面, 我們要將他改為最晚產生的放最前面.
-routes/index.js
-
-
-
-    exports.index = function ( req, res ){
-      Todo.
-        find().
-        sort( '-updated_at' ).
-        exec( function ( err, todos ){
-          res.render( 'index', {
-              title : 'Express Todo Example',
-              todos : todos
-          });
-        });
-    };
-     
-    exports.edit = function ( req, res ){
-      Todo.
-        find().
-        sort( '-updated_at' ).
-        exec( function ( err, todos ){
-          res.render( 'edit', {
-              title   : 'Express Todo Example',
-              todos   : todos,
-              current : req.params.id
-          });
-        });
-    };
-
-多重使用者
-現在所有使用者看到的都是同一份資料. 意思就是說每一個人的 todo list 都長得一樣, 資料都有可能被其他人修改. 我們可以用 cookie 來記錄使用者資訊讓每個人有自己的 todo list. Express 已經有內建的 cookie, 只要在 app.js 新增一個 middleware 就好. 另外我們也會需要新增一個依據 cookie 來抓取當下的使用者的 middleware.
-app.js
-
-
-
-    var express = require( 'express' );
-     
-    var app = module.exports = express.createServer();
-     
-    // 設定 mongoose
-    require( './db' );
-     
-    // 將 routes 移到 middlewares 設定上面
-    var routes = require( './routes' );
-     
-    // 設定 middleware
-    // 移除 methodOverride, 新增 favicon, logger 並將 static middleware 往上移
-    app.configure( function (){
-      app.set( 'views', __dirname + '/views' );
-      app.set( 'view engine', 'ejs' );
-      app.use( express.favicon());
-      app.use( express.static( __dirname + '/public' ));
-      app.use( express.logger());
-      app.use( express.cookieParser());
-      app.use( express.bodyParser());
-      app.use( routes.current_user );
-      app.use( app.router );
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
     });
-     
-    app.configure( 'development', function (){
-      app.use( express.errorHandler({ dumpExceptions : true, showStack : true }));
-    });
-     
-    app.configure( 'production', function (){
-      app.use( express.errorHandler());
-    });
-     
-    // Routes
-    app.get( '/', routes.index );
-    app.post( '/create', routes.create );
-    app.get( '/destroy/:id', routes.destroy );
-    app.get( '/edit/:id', routes.edit );
-    app.post( '/update/:id', routes.update );
-     
-    app.listen( 3000, function (){
-      console.log( 'Express server listening on port %d in %s mode', app.address().port, app.settings.env );
-    });
+  });
+}
 
-routes/index.js
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
 
 
+module.exports = app;
 
-    var mongoose = require( 'mongoose' );
-    var Todo     = mongoose.model( 'Todo' );
-    var utils    = require( 'connect' ).utils;
-     
-    exports.index = function ( req, res, next ){
-      Todo.
-        find({ user_id : req.cookies.user_id }).
-        sort( '-updated_at' ).
-        exec( function ( err, todos, count ){
-          if( err ) return next( err );
-     
-          res.render( 'index', {
-              title : 'Express Todo Example',
-              todos : todos
-          });
+```
+
+新增一個control.js檔案在routes底下
+
+```javascript
+/**
+ * Name:control.js 
+ * Purpose:update insert delete todo_list
+ * Author:Yun 
+ * Version:1.0
+ * Update:2015-10-21
+ */
+
+var express = require('express');
+var router = express.Router();
+
+/* insert home page. */
+router.post('/', function (req, res, next) {
+  var Db = require('../bin/DbConnect.js');
+  var dbConn = new Db();
+  var dbCRUD = require('../bin/dbCRUD.js');
+  var dbCRUDControl = new dbCRUD();
+  dbConn.connect(function (db) {
+    switch (req.query.method) {
+      case 'insert':
+        dbCRUDControl.insert({ event: req.body.event, userId: 1234 }, db, function (err, results) {
+          if (err) throw err;
+          db.close();
+          res.redirect('/');
         });
-    };
-     
-    exports.create = function ( req, res, next ){
-      new Todo({
-          user_id    : req.cookies.user_id,
-          content    : req.body.content,
-          updated_at : Date.now()
-      }).save( function ( err, todo, count ){
-        if( err ) return next( err );
-     
-        res.redirect( '/' );
-      });
-    };
-     
-    exports.destroy = function ( req, res, next ){
-      Todo.findById( req.params.id, function ( err, todo ){
-        if( todo.user_id !== req.cookies.user_id ){
-          return utils.forbidden( res );
-        }
-     
-        todo.remove( function ( err, todo ){
-          if( err ) return next( err );
-     
-          res.redirect( '/' );
-        });
-      });
-    };
-     
-    exports.edit = function( req, res, next ){
-      Todo.
-        find({ user_id : req.cookies.user_id }).
-        sort( '-updated_at' ).
-        exec( function ( err, todos ){
-          if( err ) return next( err );
-     
-          res.render( 'edit', {
-            title   : 'Express Todo Example',
-            todos   : todos,
-            current : req.params.id
-          });
-        });
-    };
-     
-    exports.update = function( req, res, next ){
-      Todo.findById( req.params.id, function ( err, todo ){
-        if( todo.user_id !== req.cookies.user_id ){
-          return utils.forbidden( res );
-        }
-     
-        todo.content    = req.body.content;
-        todo.updated_at = Date.now();
-        todo.save( function ( err, todo, count ){
-          if( err ) return next( err );
-     
-          res.redirect( '/' );
-        });
-      });
-    };
-     
-    // ** 注意!! express 會將 cookie key 轉成小寫 **
-    exports.current_user = function ( req, res, next ){
-      if( !req.cookies.user_id ){
-        res.cookie( 'user_id', utils.uid( 32 ));
-      }
-     
-      next();
-    };
+        break;
+      default:
+        res.redirect('/');
+        break;
+    }
+  });
+});
 
+module.exports = router;
 
-Error handling
-==============
+```
 
-要處理錯誤我們需要新增 next 參數到每個 action 裡. 一旦錯誤發生遍將他傳給下一個 middleware 去處理.
-routes/index.js
+執行:
+
+```
+DEBUG=todo_list npm start
+```
+
+連<http://localhost:3000/>即可看到成果
+
+![](img/zh-tw/todo_list/todo_listTestShowData.png)
 
 
 
-    ... function ( req, res, next ){
-      // ...
-    };
-     
-    ...( function( err, todo, count ){
-      if( err ) return next( err );
-     
-      // ...
-    });
 
 Run application
 ===============

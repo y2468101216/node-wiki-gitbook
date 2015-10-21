@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <ul>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <p>Welcome to <%= title %></p>
+  <form method="post" action="control?method=insert">
+    <input type="text" name="event" value="" placeholder="請輸入代辦事項" />
+    <button type="submit" value="">送出</button>
+  </form>
+  <ul>
     <% cursor.forEach(function(data){ %>
       <%= data.event %>
-    <% }); %>
+        <% }); %>
   </ul>
-  </body>
+</body>
+
 </html>
