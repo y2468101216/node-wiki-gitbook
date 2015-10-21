@@ -74,19 +74,19 @@ Node.js Taiwan 是一個自由開放的技術學習社群，我們歡迎您加�
 
 https://www.gitbook.com/read/book/y2468101216/node-wiki-book
 
-PDF格式，適合一般電腦及7吋以上平板電腦閱讀
+PDF 格式，適合一般電腦及7吋以上平板電腦閱讀
 
 https://www.gitbook.com/download/pdf/book/y2468101216/node-wiki-book
 
-EPUB格式，適合 iPad、iPhone 行動裝置閱讀
+EPUB 格式，適合 iPad、iPhone 行動裝置閱讀
 
 https://www.gitbook.com/download/epub/book/y2468101216/node-wiki-book
 
-MOBI格式，適合 Kindle 電子書閱讀器
+MOBI 格式，適合 Kindle 電子書閱讀器
 
 https://www.gitbook.com/download/mobi/book/y2468101216/node-wiki-book
 
-原始碼(目前全部嵌在網頁裡面）
+原始碼（目前全部嵌在網頁裡面）
 ======
 
 本書最新的原始碼（中文版）網址如下：
