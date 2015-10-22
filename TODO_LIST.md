@@ -873,11 +873,11 @@ $ npm install
 
 如果你想要提供給其他人登入的話必須將下圖的電子郵件填寫完畢後
 
-![](img/zh-tw/todo_list/facebookPulicFirstStep.png)
+![](img/zh-tw/todo_list/facebookPublicFirstStep.png)
 
 status & Review 中的 status 點選No使其變成Yes
 
-![](img/zh-tw/todo_list/facebookPulicSecondStep.png)
+![](img/zh-tw/todo_list/facebookPublicSecondStep.png)
 
 app.js:
 
