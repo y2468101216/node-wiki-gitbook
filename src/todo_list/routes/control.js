@@ -15,20 +15,38 @@ router.post('/', function (req, res, next) {
   var dbConn = new Db();
   var dbCRUD = require('../bin/dbCRUD.js');
   var dbCRUDControl = new dbCRUD();
-  dbConn.connect(function (db) {
-    switch (req.query.method) {
-      case 'insert':
-        dbCRUDControl.insert({ event: req.body.event, userId: 1234 }, db, function (err, results) {
-          if (err) throw err;
-          db.close();
+  if (typeof req.user != 'undefined') {
+    dbConn.connect(function (db) {
+      switch (req.query.method) {
+        case 'insert':
+          dbCRUDControl.insert({ event: req.body.event, userId: req.user.id }, db, function (err, results) {
+            if (err) throw err;
+            db.close();
+            res.redirect('/');
+          });
+          break;
+        case 'update':
+          dbCRUDControl.update({ event: req.body.updateImportEventText, id: req.body.updateImportEventId, userId: req.user.id }, db, function (err, results) {
+            if (err) throw err;
+            db.close();
+            res.redirect('/');
+          });
+          break;
+        case 'delete':
+          dbCRUDControl.delete({ id: req.body.deleteImportEventId, userId: req.user.id }, db, function (err, results) {
+            if (err) throw err;
+            db.close();
+            res.redirect('/');
+          });
+          break;
+        default:
           res.redirect('/');
-        });
-        break;
-      default:
-        res.redirect('/');
-        break;
-    }
-  });
+          break;
+      }
+    });
+  } else {
+    res.redirect('/');
+  }
 });
 
 module.exports = router;

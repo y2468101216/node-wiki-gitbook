@@ -106,8 +106,27 @@ todo_list
 
 打開package.json，在dependencies插入兩行
 
-```
- "mongodb": "~2.0.0"
+```json
+
+ {
+  "name": "todo_list",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "ejs": "~2.3.3",
+    "express": "~4.13.1",
+    "morgan": "~1.6.1",
+    "serve-favicon": "~2.3.0",
+    "mongodb": "~2.0.0"
+  }
+}
+ 
 ```
 
 然後npm會自動讀取package.json
@@ -311,14 +330,7 @@ module.exports = function () {
 
 	this.select = function (findCondition, db, callback) {
 		var cursor = db.collection('event').find(findCondition);
-		cursor.count(function(err, count){
-			if(err == null){
-				if(count == 0){
-					err = 'nothing to found';
-				}
-			}
-			callback(err, cursor);
-		});
+		callback(cursor);
 	}
 	
 	this.insert = function (insertObject, db, callback) {
@@ -328,13 +340,17 @@ module.exports = function () {
 	}
 
 	this.update = function (updateObject, db, callback) {
-		db.collection('event').updateOne({event:updateObject.event}, {_id:updateObject.id, userId:updateObject.userId}, function (err, results) {
+		var ObjectID = require('mongodb').ObjectID
+		var id = new ObjectID(updateObject.id);
+		db.collection('event').updateOne({_id:id, userId:updateObject.userId}, {$set:{event:updateObject.event}} ,function (err, results) {
 			callback(err, results);
 		});
 	}
 	
 	this.delete = function (deleteObject, db, callback) {
-		db.collection('event').deleteOne({_id:deleteObject.id, userId:deleteObject.userId}, function (err, results) {
+		var ObjectID = require('mongodb').ObjectID
+		var id = new ObjectID(deleteObject.id);
+		db.collection('event').deleteOne({_id:id, userId:deleteObject.userId}, function (err, results) {
 			callback(err, results);
 		});
 	}
@@ -596,15 +612,670 @@ DEBUG=todo_list npm start
 
 ![](img/zh-tw/todo_list/todo_listTestShowData.png)
 
+# 完成修改、刪除功能。
+
+index.ejs:
+
+```html
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+  <!-- Latest jquery  -->
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="row">
+    <p>Welcome to
+      <%= title %>
+    </p>
+  </div>
+  <div class="row">
+    <form method="post" action="control?method=insert" class="form-inline">
+      <input type="text" name="event" value="" placeholder="請輸入代辦事項" />
+      <button type="submit" class="btn btn-primary" value="">送出</button>
+    </form>
+  </div>
+  <div class="row">
+    <table class="table">
+      <thead>
+        <tr>
+          <td>待辦事項</td>
+          <td>功能</td>
+        </tr>
+      </thead>
+      <tbody
+      <% cursor.forEach(function(data){ %>
+        <tr>
+          <td>
+            <%= data.event %>
+          </td>
+          <td>
+            <button type="button" class="btn btn-default" onclick="showModal('<%= data.event %>','<%= data._id %>','update')">修改</button>
+            <button type="button" class="btn btn-default" onclick="showModal('','<%= data._id %>','delete')">刪除</button>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- modal for update -->
+  <div class="modal fade" id="updateModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">修改代辦事項</h4>
+        </div>
+        <form method="post" action="control?method=update">
+          <div class="modal-body">
+            <input type="text" value="" name="updateImportEventText" id="updateImportEventText" />
+            <input type="hidden" value="" name="updateImportEventId" id="updateImportEventId" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-warning">Save</button>
+          </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+  <!-- modal for delete -->
+  <div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">刪除代辦事項</h4>
+        </div>
+        <form method="post" action="control?method=delete">
+          <div class="modal-body">
+            <label>是否刪除</label>
+            <input type="hidden" value="" name="deleteImportEventId" id="deleteImportEventId" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+            <button type="submit" class="btn btn-warning">是</button>
+          </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</body>
+
+<script>
+  function showModal(event, id, method){
+    switch (method){
+      case 'update':
+      $('#updateImportEventId').val(id);
+      $('#updateImportEventText').val(event);
+      $('#updateModal').modal('show');
+      break;
+      case 'delete':
+      $('#deleteImportEventId').val(id);
+      $('#deleteModal').modal('show');
+      break;
+    }
+  }
+
+</script>
+
+</html>
+
+```
+
+control.js:
+
+```javascript
+
+/**
+ * Name:control.js 
+ * Purpose:update insert delete todo_list
+ * Author:Yun 
+ * Version:1.0
+ * Update:2015-10-21
+ */
+
+var express = require('express');
+var router = express.Router();
+
+/* insert home page. */
+router.post('/', function (req, res, next) {
+  var Db = require('../bin/DbConnect.js');
+  var dbConn = new Db();
+  var dbCRUD = require('../bin/dbCRUD.js');
+  var dbCRUDControl = new dbCRUD();
+  dbConn.connect(function (db) {
+    switch (req.query.method) {
+      case 'insert':
+        dbCRUDControl.insert({ event: req.body.event, userId: 1234 }, db, function (err, results) {
+          if (err) throw err;
+          db.close();
+          res.redirect('/');
+        });
+        break;
+      case 'update':
+        dbCRUDControl.update({ event: req.body.updateImportEventText, id: req.body.updateImportEventId, userId: 1234 }, db, function (err, results) {
+          if (err) throw err;
+          db.close();
+          res.redirect('/');
+        });
+        break;
+      case 'delete':
+        dbCRUDControl.delete({ id: req.body.deleteImportEventId, userId: 1234 }, db, function (err, results) {
+          if (err) throw err;
+          db.close();
+          res.redirect('/');
+        });
+        break;
+      default:
+        res.redirect('/');
+        break;
+    }
+  });
+});
+
+module.exports = router;
+
+```
+
+我在html裡引入了bootstrap跟jquery以增進使用者體驗跟美化。
+並且在control.js裡增加了delete跟update方法。
+
+你可以試著運行看看結果如何。
+
+![](img/zh-tw/todo_list/todo_listTestCRUD.png)
+
+# passport.js 安裝
+
+你可以注意到我們的userid都是寫死的，這樣無法區別使用者，所以這邊我們將運用passport.js做facebook登入。
+
+修改package.json:
+
+```json
+
+{
+  "name": "todo_list",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "ejs": "~2.3.3",
+    "express": "~4.13.1",
+    "morgan": "~1.6.1",
+    "serve-favicon": "~2.3.0",
+    "mongodb": "~2.0.0",
+    "cookie-session":"~2.0.0",
+    "passport":"~0.3.0",
+    "passport-facebook":"2.0.0"
+  }
+}
+
+```
+
+passport需要session儲存使用者資訊，這裡我們選擇cookie-session，還需要擴充模組以支援facebook登入
+
+執行:
+
+```
+
+$ npm install
+
+```
+
+* facebook APP申請
+
+登入<https://developers.facebook.com>，點選上方選單的My apps->Add a New App
+
+![](img/zh-tw/todo_list/facebookApplyFirstStep.png)
+![](img/zh-tw/todo_list/facebookApplySecondStep.png)
+![](img/zh-tw/todo_list/facebookApplyThirdStep.png)
+
+點選Settings，切換到上方的Advanced分頁。
+
+![](img/zh-tw/todo_list/facebookApplyForthStep.png)
+
+往下尋找Valid OAuth redirect URIs，填寫如圖
+
+![](img/zh-tw/todo_list/facebookApplyFifthStep.png)
+
+拉到最下按save就完成了。
+
+* 附註
+
+如果你想要提供給其他人登入的話必須將下圖的電子郵件填寫完畢後
+
+![](img/zh-tw/todo_list/facebookPulicFirstStep.png)
+
+status & Review 中的 status 點選No使其變成Yes
+
+![](img/zh-tw/todo_list/facebookPulicSecondStep.png)
+
+app.js:
+
+```javascript
+
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var cookieSession = require('cookie-session');
+
+//facebbok login
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook').Strategy
+
+var FACEBOOK_APP_ID = "--insert-facebook-app-id-here--"
+var FACEBOOK_APP_SECRET = "--insert-facebook-app-secret-here--";
+
+// Passport session setup.
+//   To support persistent login sessions, Passport needs to be able to
+//   serialize users into and deserialize users out of the session.  Typically,
+//   this will be as simple as storing the user ID when serializing, and finding
+//   the user by ID when deserializing.  However, since this example does not
+//   have a database of user records, the complete Facebook profile is serialized
+//   and deserialized.
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (obj, done) {
+  done(null, obj);
+});
 
 
+// Use the FacebookStrategy within Passport.
+//   Strategies in Passport require a `verify` function, which accept
+//   credentials (in this case, an accessToken, refreshToken, and Facebook
+//   profile), and invoke a callback with a user object.
+passport.use(new FacebookStrategy({
+  clientID: FACEBOOK_APP_ID,
+  clientSecret: FACEBOOK_APP_SECRET,
+  callbackURL: "http://localhost:3000/auth/facebook/callback"
+},
+  function (accessToken, refreshToken, profile, done) {
+    // asynchronous verification, for effect...
+    process.nextTick(function () {
+      
+      // To keep the example simple, the user's Facebook profile is returned to
+      // represent the logged-in user.  In a typical application, you would want
+      // to associate the Facebook account with a user record in your database,
+      // and return that user instead.
+      return done(null, profile);
+    });
+  }
+  ));
 
-Run application
+var routes = require('./routes/index');
+var users = require('./routes/users');
+var control = require('./routes/control');
+
+var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(cookieSession({ secret: 'I am your FATHER' }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+app.use('/', routes);
+app.use('/users', users);
+app.use('/control', control);
+
+// GET /auth/facebook
+app.get('/auth/facebook',
+  passport.authenticate('facebook'),
+  function (req, res) {
+    // The request will be redirected to Facebook for authentication, so this
+    // function will not be called.
+  });
+
+// GET /auth/facebook/callback
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/' }),
+  function (req, res) {
+    res.redirect('/');
+  });
+
+app.get('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
+
+module.exports = app;
+
+```
+
+index.ejs
+
+```html
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    待辦事項
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+  <!-- Latest jquery  -->
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <% if (name) { %>
+  <div class="row">
+    <label>Welcome to <%= name %></label><a class="btn btn-warning btn-xs" href="/logout">登出</a>
+  </div>
+  <div class="row">
+    <form method="post" action="control?method=insert" class="form-inline">
+      <input type="text" name="event" value="" placeholder="請輸入待辦事項" />
+      <button type="submit" id="submit" class="btn btn-default" value="">送出</button>
+    </form>
+  </div>
+  <% }else{ %>
+  <div class="row" id="LoginMessage">
+    <div>請先登入FB</div>
+    <div>
+      <a class="btn btn-primary" href="/auth/facebook">
+      Facebook Login
+      </a>
+    </div>
+  </div>
+  <% } %>
+  <div class="row">
+    <table class="table">
+      <thead>
+        <tr>
+          <td>待辦事項</td>
+          <td>功能</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (cursor) { %>
+        <% cursor.forEach(function(data){ %>
+        <tr>
+          <td>
+            <%= data.event %>
+          </td>
+          <td>
+            <button type="button" class="btn btn-default" onclick="showModal('<%= data.event %>','<%= data._id %>','update')">修改</button>
+            <button type="button" class="btn btn-default" onclick="showModal('','<%= data._id %>','delete')">刪除</button>
+          </td>
+        </tr>
+        <% }); %>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- modal for update -->
+  <div class="modal fade" id="updateModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">修改代辦事項</h4>
+        </div>
+        <form method="post" action="control?method=update">
+          <div class="modal-body">
+            <input type="text" value="" name="updateImportEventText" id="updateImportEventText" />
+            <input type="hidden" value="" name="updateImportEventId" id="updateImportEventId" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-warning">Save</button>
+          </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+  <!-- modal for delete -->
+  <div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">刪除代辦事項</h4>
+        </div>
+        <form method="post" action="control?method=delete">
+          <div class="modal-body">
+            <label>是否刪除</label>
+            <input type="hidden" value="" name="deleteImportEventId" id="deleteImportEventId" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+            <button type="submit" class="btn btn-warning">是</button>
+          </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</body>
+
+<script>
+  function showModal(event, id, method){
+    switch (method){
+      case 'update':
+      $('#updateImportEventId').val(id);
+      $('#updateImportEventText').val(event);
+      $('#updateModal').modal('show');
+      break;
+      case 'delete':
+      $('#deleteImportEventId').val(id);
+      $('#deleteModal').modal('show');
+      break;
+    }
+  }
+
+</script>
+
+</html>
+
+```
+
+index.js
+
+```javascript
+
+/**
+ * Name:index.js 
+ * Purpose:show index.html
+ * Author:Yun 
+ * Version:1.0
+ * Update:2015-10-20
+ */
+
+var express = require('express');
+var router = express.Router();
+
+var dbConnect = require('../bin/dbConnect.js');
+var dbConn = new dbConnect();
+
+var dbCRUD = require('../bin/dbCRUD.js');
+var dbCRUDMethod = new dbCRUD();
+
+
+/* GET home page. */
+router.get('/', function (req, res) {
+  dbConn.connect(function (db) {
+    if (typeof req.user == 'undefined') {
+      res.render('index', { name: false, cursor: false });
+    } else {
+      dbCRUDMethod.select({userId:req.user.id}, db, function (cursor) {
+        var data = [];
+        cursor.forEach(function (result) {
+          data.push(result);
+          db.close();
+        }, function (err) {
+          if (err) throw err;
+          res.render('index', { name: req.user.displayName, cursor: data });
+
+        });
+
+      });
+    }
+
+  });
+
+});
+
+module.exports = router;
+
+```
+
+control.js
+
+```javascript
+
+/**
+ * Name:control.js 
+ * Purpose:update insert delete todo_list
+ * Author:Yun 
+ * Version:1.0
+ * Update:2015-10-21
+ */
+
+var express = require('express');
+var router = express.Router();
+
+/* insert home page. */
+router.post('/', function (req, res, next) {
+  var Db = require('../bin/DbConnect.js');
+  var dbConn = new Db();
+  var dbCRUD = require('../bin/dbCRUD.js');
+  var dbCRUDControl = new dbCRUD();
+  if (typeof req.user != 'undefined') {
+    dbConn.connect(function (db) {
+      switch (req.query.method) {
+        case 'insert':
+          dbCRUDControl.insert({ event: req.body.event, userId: req.user.id }, db, function (err, results) {
+            if (err) throw err;
+            db.close();
+            res.redirect('/');
+          });
+          break;
+        case 'update':
+          dbCRUDControl.update({ event: req.body.updateImportEventText, id: req.body.updateImportEventId, userId: req.user.id }, db, function (err, results) {
+            if (err) throw err;
+            db.close();
+            res.redirect('/');
+          });
+          break;
+        case 'delete':
+          dbCRUDControl.delete({ id: req.body.deleteImportEventId, userId: req.user.id }, db, function (err, results) {
+            if (err) throw err;
+            db.close();
+            res.redirect('/');
+          });
+          break;
+        default:
+          res.redirect('/');
+          break;
+      }
+    });
+  } else {
+    res.redirect('/');
+  }
+});
+
+module.exports = router;
+
+```
+
+最後畫面:
+
+![](img/zh-tw/todo_list/todo_listFinalIsNotLogin.png)
+![](img/zh-tw/todo_list/todo_listFinalIsLogin.png)
+
+完成
 ===============
 
-
-
-    $ node app.js
-
-到此為止我們已經完成了大部分的功能了. 原始碼裡有多加了一點 css 讓他看起來更美觀. 趕快開啟你的 server 來玩玩看吧 :)
-
+恭喜你，你已經跨出了node.js的第一步，歡迎你加入node.js這個大社群。

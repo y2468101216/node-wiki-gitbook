@@ -15,22 +15,31 @@ var dbConn = new dbConnect();
 var dbCRUD = require('../bin/dbCRUD.js');
 var dbCRUDMethod = new dbCRUD();
 
+
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
   dbConn.connect(function (db) {
-    dbCRUDMethod.select(null, db, function (cursor) {
-      var data = [];
-      cursor.forEach(function(result){
-        data.push(result);
-        db.close();
-      },function(err){
-        if(err) throw err;
-        res.render('index', { title: 'Express', cursor: data });
+    if (typeof req.user == 'undefined') {
+      res.render('index', { name: false, cursor: false });
+    } else {
+      dbCRUDMethod.select({userId:req.user.id}, db, function (cursor) {
+        var data = [];
+        cursor.forEach(function (result) {
+          data.push(result);
+          db.close();
+        }, function (err) {
+          if (err) throw err;
+          res.render('index', { name: req.user.displayName, cursor: data });
+
+        });
+
       });
-     
-    });
+    }
+
   });
 
 });
 
 module.exports = router;
+
+

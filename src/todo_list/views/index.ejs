@@ -3,22 +3,135 @@
 
 <head>
   <title>
-    <%= title %>
+    待辦事項
   </title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+  <!-- Latest jquery  -->
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-  <p>Welcome to <%= title %></p>
-  <form method="post" action="control?method=insert">
-    <input type="text" name="event" value="" placeholder="請輸入代辦事項" />
-    <button type="submit" value="">送出</button>
-  </form>
-  <ul>
-    <% cursor.forEach(function(data){ %>
-      <%= data.event %>
+  <% if (name) { %>
+  <div class="row">
+    <label>Welcome to <%= name %></label><a class="btn btn-warning btn-xs" href="/logout">登出</a>
+  </div>
+  <div class="row">
+    <form method="post" action="control?method=insert" class="form-inline">
+      <input type="text" name="event" value="" placeholder="請輸入待辦事項" />
+      <button type="submit" id="submit" class="btn btn-default" value="">送出</button>
+    </form>
+  </div>
+  <% }else{ %>
+  <div class="row" id="LoginMessage">
+    <div>請先登入FB</div>
+    <div>
+      <a class="btn btn-primary" href="/auth/facebook">
+      Facebook Login
+      </a>
+    </div>
+  </div>
+  <% } %>
+  <div class="row">
+    <table class="table">
+      <thead>
+        <tr>
+          <td>待辦事項</td>
+          <td>功能</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (cursor) { %>
+        <% cursor.forEach(function(data){ %>
+        <tr>
+          <td>
+            <%= data.event %>
+          </td>
+          <td>
+            <button type="button" class="btn btn-default" onclick="showModal('<%= data.event %>','<%= data._id %>','update')">修改</button>
+            <button type="button" class="btn btn-default" onclick="showModal('','<%= data._id %>','delete')">刪除</button>
+          </td>
+        </tr>
         <% }); %>
-  </ul>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- modal for update -->
+  <div class="modal fade" id="updateModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">修改代辦事項</h4>
+        </div>
+        <form method="post" action="control?method=update">
+          <div class="modal-body">
+            <input type="text" value="" name="updateImportEventText" id="updateImportEventText" />
+            <input type="hidden" value="" name="updateImportEventId" id="updateImportEventId" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-warning">Save</button>
+          </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+  <!-- modal for delete -->
+  <div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">刪除代辦事項</h4>
+        </div>
+        <form method="post" action="control?method=delete">
+          <div class="modal-body">
+            <label>是否刪除</label>
+            <input type="hidden" value="" name="deleteImportEventId" id="deleteImportEventId" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+            <button type="submit" class="btn btn-warning">是</button>
+          </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
 </body>
+
+<script>
+  function showModal(event, id, method){
+    switch (method){
+      case 'update':
+      $('#updateImportEventId').val(id);
+      $('#updateImportEventText').val(event);
+      $('#updateModal').modal('show');
+      break;
+      case 'delete':
+      $('#deleteImportEventId').val(id);
+      $('#deleteModal').modal('show');
+      break;
+    }
+  }
+
+</script>
 
 </html>

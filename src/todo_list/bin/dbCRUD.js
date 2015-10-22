@@ -20,13 +20,17 @@ module.exports = function () {
 	}
 
 	this.update = function (updateObject, db, callback) {
-		db.collection('event').updateOne({event:updateObject.event}, {_id:updateObject.id, userId:updateObject.userId}, function (err, results) {
+		var ObjectID = require('mongodb').ObjectID
+		var id = new ObjectID(updateObject.id);
+		db.collection('event').updateOne({_id:id, userId:updateObject.userId}, {$set:{event:updateObject.event}} ,function (err, results) {
 			callback(err, results);
 		});
 	}
 	
 	this.delete = function (deleteObject, db, callback) {
-		db.collection('event').deleteOne({_id:deleteObject.id, userId:deleteObject.userId}, function (err, results) {
+		var ObjectID = require('mongodb').ObjectID
+		var id = new ObjectID(deleteObject.id);
+		db.collection('event').deleteOne({_id:id, userId:deleteObject.userId}, function (err, results) {
 			callback(err, results);
 		});
 	}
