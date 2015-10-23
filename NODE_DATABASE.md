@@ -17,12 +17,11 @@ npm install mysql
 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mysql/mysql.js>
 
 ```javascript
-
 /**
  * Name:mysql.js
  * Purpose:mysql 連接教學
- * Author:Yun 
- * Version:1.0 
+ * Author:Yun
+ * Version:1.0
  * Update:2015-09-25
  */
 
@@ -30,29 +29,28 @@ var mysql = require('mysql');
 
 //建立連線資料
 var connection = mysql.createConnection({
-	  host     : 'localhost',//資料庫IP
-	  user     : 'root',//使用者名稱
-	  password : 'root',//使用者密碼
-	  database : 'localhost'//資料庫名稱
-	});
+  host     : 'localhost',//資料庫IP
+  user     : 'root',//使用者名稱
+  password : 'root',//使用者密碼
+  database : 'localhost'//資料庫名稱
+});
 
-	//嘗試連線
-	connection.connect();
+//嘗試連線
+connection.connect();
 
-	//倒出SQL結果
-	connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-	  if (err) throw err;
+//倒出SQL結果
+connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+  if (err) throw err;
 
-	  console.log('The solution is: ', rows[0].solution);
-	});
+  console.log('The solution is: ', rows[0].solution);
+});
 
-	//結束連線
-	connection.end();
-	
+//結束連線
+connection.end();
 ```
 
 結果:
- 
+
 ```
 The solution is:  2
 ```
@@ -81,37 +79,35 @@ SQL攻擊（SQL injection），簡稱隱碼攻擊，是發生於應用程式之�
 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mysql/node_mysql_parameterized_query.js>
 
 ```javascript
-
 /**
  * Name:mysql.js
  * Purpose:mysql Parameterized Query
- * Author:Yun 
- * Version:1.0 
+ * Author:Yun
+ * Version:1.0
  * Update:2015-09-25
  */
 
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
-	  host     : 'localhost',//資料庫IP
-	  user     : 'root',//使用者名稱
-	  password : 'root',//使用者密碼
-	  database : 'localhost'//資料庫名稱
-	});
+  host     : 'localhost',//資料庫IP
+  user     : 'root',//使用者名稱
+  password : 'root',//使用者密碼
+  database : 'localhost'//資料庫名稱
+});
 
-	//嘗試連線
-	connection.connect();
+//嘗試連線
+connection.connect();
 
-	//倒出SQL結果
-	connection.query('SELECT ? + ? AS solution',[1,2], function(err, rows, fields) {
-	  if (err) throw err;
+//倒出SQL結果
+connection.query('SELECT ? + ? AS solution',[1,2], function(err, rows, fields) {
+  if (err) throw err;
 
-	  console.log('The solution is: ', rows[0].solution);
-	});
+  console.log('The solution is: ', rows[0].solution);
+});
 
-	//結束連線
-	connection.end();
-	
+//結束連線
+connection.end();
 ```
 
 你可以注意到只有`connection.query`改變而已，裡面多插入一個陣列，這種寫法在需要大量插入或更新重複的SQL時異常好用，
@@ -131,11 +127,10 @@ npm install mongodb
 * 插入資料<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mongodb/mongodb_insert.js>
 
 ```javascript
-
 /**
- * Name:mongodb_update.js 
- * Purpose:connect & insert mongodb 
- * Author:Yun 
+ * Name:mongodb_update.js
+ * Purpose:connect & insert mongodb
+ * Author:Yun
  * Version:1.0
  * Update:2015-09-30
  */
@@ -182,10 +177,10 @@ MongoClient.connect(url, function(err, db) {
 		db.close();//關閉連線
 	});
 });
-
 ```
 
 執行後印出
+
 ```
 Inserted a document into the restaurants collection.
 ```
@@ -195,11 +190,10 @@ Inserted a document into the restaurants collection.
 * 查詢資料<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mongodb/mongodb_query.js>
 
 ```javascript
-
 /**
- * Name:mongodb_query.js 
- * Purpose:connect & insert mongodb 
- * Author:Yun 
+ * Name:mongodb_query.js
+ * Purpose:connect & insert mongodb
+ * Author:Yun
  * Version:1.0
  * Update:2015-10-01
  */
@@ -210,46 +204,45 @@ var url = 'mongodb://localhost:27017/test';// mongodb://登入url/db名稱
 
 //查詢資料
 var findRestaurants = function(findCondition, db, callback) {
-	   var cursor =db.collection('restaurants').find(findCondition);
-	   //將每筆資料倒出來
-	   cursor.each(function(err, doc) {
-	      assert.equal(err, null);
-	      if (doc != null) {
-	    	 //列印查詢條件
-	    	 console.dir('find:');
-	    	 console.log(findCondition);
-	    	 //列印資料
-	         console.dir(doc);
-	      } else {
-	         callback();
-	      }
-	   });
-	};
-	
-	//列出全部的集合裡的資料
-	MongoClient.connect(url, function(err, db) {
-		  assert.equal(null, err);
-		  findRestaurants(null, db, function() {
-		      db.close();
-		  });
-		});
-	
-	//尋找address.zipcode等於10075的
-	MongoClient.connect(url, function(err, db) {
-		  assert.equal(null, err);
-		  findRestaurants({ "address.zipcode": "10075" }, db, function() {
-		      db.close();
-		  });
-		});
-	
-	//尋找address.zipcode等於10076的
-	MongoClient.connect(url, function(err, db) {
-		  assert.equal(null, err);
-		  findRestaurants({ "address.zipcode": "10076" }, db, function() {
-		      db.close();
-		  });
-		});		
+	var cursor =db.collection('restaurants').find(findCondition);
+	//將每筆資料倒出來
+	cursor.each(function(err, doc) {
+	assert.equal(err, null);
+	if (doc != null) {
+	 	//列印查詢條件
+	 	console.dir('find:');
+	 	console.log(findCondition);
+	 	//列印資料
+	  console.dir(doc);
+	} else {
+	  callback();
+	}
+	});
+};
 
+//列出全部的集合裡的資料
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+  findRestaurants(null, db, function() {
+    db.close();
+  });
+});
+
+//尋找address.zipcode等於10075的
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+  findRestaurants({ "address.zipcode": "10075" }, db, function() {
+    db.close();
+  });
+});
+
+//尋找address.zipcode等於10076的
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+  findRestaurants({ "address.zipcode": "10076" }, db, function() {
+    db.close();
+  });
+});		
 ```
 
 執行結果:
@@ -258,14 +251,14 @@ var findRestaurants = function(findCondition, db, callback) {
 'find:'
 
 { _id: { _bsontype: 'ObjectID', id: 'V\fß¨8ßZ×Bo;\\' },
-  address: 
+  address:
    { street: '2 Avenue',
      zipcode: '10075',
      building: '1480',
      coord: [ -73.9557413, 40.7720266 ] },
   borough: 'Manhattan',
   cuisine: 'Italian',
-  grades: 
+  grades:
    [ { date: Wed Oct 01 2014 08:00:00 GMT+0800 (CST),
        grade: 'A',
        score: 11 },
@@ -277,26 +270,25 @@ var findRestaurants = function(findCondition, db, callback) {
 'find:'
 { 'address.zipcode': '10075' }
 { _id: { _bsontype: 'ObjectID', id: 'V\fß¨8ßZ×Bo;\\' },
-  address: 
-   { street: '2 Avenue',
-     zipcode: '10075',
-     building: '1480',
-     coord: [ -73.9557413, 40.7720266 ] },
-  borough: 'Manhattan',
-  cuisine: 'Italian',
-  grades: 
-   [ { date: Wed Oct 01 2014 08:00:00 GMT+0800 (CST),
-       grade: 'A',
-       score: 11 },
-     { date: Thu Jan 16 2014 08:00:00 GMT+0800 (CST),
-       grade: 'B',
-       score: 17 } ],
-  name: 'Vella',
-  restaurant_id: '41704620' }
-  
-  'find:'
-  { 'address.zipcode': '10076' }
+address:
+ { street: '2 Avenue',
+   zipcode: '10075',
+   building: '1480',
+   coord: [ -73.9557413, 40.7720266 ] },
+borough: 'Manhattan',
+cuisine: 'Italian',
+grades:
+[ { date: Wed Oct 01 2014 08:00:00 GMT+0800 (CST),
+   grade: 'A',
+   score: 11 },
+ { date: Thu Jan 16 2014 08:00:00 GMT+0800 (CST),
+   grade: 'B',
+   score: 17 } ],
+name: 'Vella',
+restaurant_id: '41704620' }
 
+'find:'
+{ 'address.zipcode': '10076' }
 ```
 
 你可以注意到mongodb插入的時候多插了一個_id，那是mongodb的主鍵，不重複唯一，
@@ -308,11 +300,10 @@ find其實就相當SQL裡的where，但他比where強的地方是在於說他可
 * 更新資料<https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_mongodb/mongodb_query.js>
 
 ```javascript
-
 /**
- * Name:mongodb_update.js 
- * Purpose:connect & insert mongodb 
- * Author:Yun 
+ * Name:mongodb_update.js
+ * Purpose:connect & insert mongodb
+ * Author:Yun
  * Version:1.0
  * Update:2015-10-02
  */
@@ -323,43 +314,41 @@ var assert = require('assert');// 測試工具
 var url = 'mongodb://localhost:27017/test';// mongodb://登入url/db名稱
 
 var updateRestaurants = function(db, callback) {
-	   db.collection('restaurants').updateOne(
-	      { "name" : "Vella" },//設定條件
-	      {
-	        $set: { "cuisine": "American (New)" },
-	        $currentDate: { "lastModified": true }
-	      }, //設定更新項目
-	      function(err, results) {
-	      console.log(results);//印出更新結果
-	      callback();
-	   });
-	};
-	
-	MongoClient.connect(url, function(err, db) {
-		  assert.equal(null, err);
+	db.collection('restaurants').updateOne(
+	  { "name" : "Vella" },//設定條件
+	  {
+	    $set: { "cuisine": "American (New)" },
+	    $currentDate: { "lastModified": true }
+	  }, //設定更新項目
+	  function(err, results) {
+	  console.log(results);//印出更新結果
+	  callback();
+	});
+};
 
-		  updateRestaurants(db, function() {
-		      db.close();
-		  });
-		});
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
 
+  updateRestaurants(db, function() {
+    db.close();
+  });
+});
 ```
 
 執行結果:
 
-```
-
+```javascript
 { result: { ok: 1, nModified: 1, n: 1 },
-  connection: 
+  connection:
    { domain: null,
-     _events: 
+     _events:
       { close: [Object],
         error: [Object],
         timeout: [Object],
         parseError: [Object],
         connect: [Function] },
      _maxListeners: undefined,
-     options: 
+     options:
       { socketOptions: {},
         auto_reconnect: true,
         host: 'localhost',
@@ -398,7 +387,7 @@ var updateRestaurants = function(db, callback) {
      responseOptions: { promoteLongs: true },
      flushing: false,
      queue: [],
-     connection: 
+     connection:
       { _connecting: false,
         _hadError: false,
         _handle: [Object],
@@ -431,7 +420,6 @@ var updateRestaurants = function(db, callback) {
   modifiedCount: 1,
   upsertedId: null,
   upsertedCount: 0 }
-
 ```
 
 這樣只會更新第一筆找到的資料。
@@ -440,11 +428,10 @@ var updateRestaurants = function(db, callback) {
 * 刪除資料
 
 ```javascript
-
 /**
- * Name:mongodb_delete.js 
- * Purpose:connect & update mongodb 
- * Author:Yun 
+ * Name:mongodb_delete.js
+ * Purpose:connect & update mongodb
+ * Author:Yun
  * Version:1.0
  * Update:2015-10-02
  */
@@ -455,38 +442,37 @@ var assert = require('assert');// 測試工具
 var url = 'mongodb://localhost:27017/test';// mongodb://登入url/db名稱
 
 var removeRestaurants = function(db, callback) {
-	   db.collection('restaurants').deleteOne(
-	      { "borough": "Queens" },//設定條件
-	      function(err, results) {
-	         console.log(results);//印出更新結果
-	         callback();
-	      }
-	   );
-	};
-	
-	MongoClient.connect(url, function(err, db) {
-		  assert.equal(null, err);
+	db.collection('restaurants').deleteOne(
+	  { "borough": "Queens" },//設定條件
+	  function(err, results) {
+			console.log(results);//印出更新結果
+			callback();
+	  }
+	);
+};
 
-		  removeRestaurants(db, function() {
-		      db.close();
-		  });
-		});
+MongoClient.connect(url, function(err, db) {
+	assert.equal(null, err);
 
-```
+	removeRestaurants(db, function() {
+	  db.close();
+	});
+});
 
 ```
 
+```javascript
 { result: { ok: 1, nModified: 1, n: 1 },
-  connection: 
+  connection:
    { domain: null,
-     _events: 
+     _events:
       { close: [Object],
         error: [Object],
         timeout: [Object],
         parseError: [Object],
         connect: [Function] },
      _maxListeners: undefined,
-     options: 
+     options:
       { socketOptions: {},
         auto_reconnect: true,
         host: 'localhost',
@@ -525,7 +511,7 @@ var removeRestaurants = function(db, callback) {
      responseOptions: { promoteLongs: true },
      flushing: false,
      queue: [],
-     connection: 
+     connection:
       { _connecting: false,
         _hadError: false,
         _handle: [Object],
@@ -558,7 +544,6 @@ var removeRestaurants = function(db, callback) {
   modifiedCount: 1,
   upsertedId: null,
   upsertedCount: 0 }
-
 ```
 
 這樣只會刪除一筆，跟update其實沒差多少
