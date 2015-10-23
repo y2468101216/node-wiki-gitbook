@@ -92,6 +92,8 @@ $ mocha firsrTest.js
 
 # 比較object & array
 
+arrayTest.js
+
 ```javascript
 
 var actual;
