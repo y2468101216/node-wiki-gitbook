@@ -10,7 +10,7 @@
 功能
 ====
 
-* 使用facebook登入, 用 session 來辨別每一問使用者
+* 使用 facebook 登入, 用 session 來辨別每一問使用者
 * 可以新增, 讀取, 更新, 刪除待辦事項( todo item )
 
 開發環境
@@ -22,7 +22,7 @@
 Node.js 套件
 ============
 
-本次我們將使用node.js, Express, MongoDB, express-generator, ejs來開發
+本次我們將使用 Node.js, Express, MongoDB, express-generator, ejs 來開發
 
 步驟
 ====
@@ -36,7 +36,7 @@ $ express todo_list -e --git
 
 ```
 
-(只適用mac使用者)在專案根目錄修改 .gitignore，在最後一行加入
+(只適用 Mac 使用者)在專案根目錄修改 .gitignore，在最後一行加入
  
 ```
 
@@ -102,9 +102,9 @@ todo_list
 * app.js - 包含設定, middlewares, 和 routes 的分配.
 * package.json - 相關套件的設定檔.
 
-# 安裝mongoDB
+# 安裝 mongoDB
 
-打開package.json，在dependencies插入兩行
+打開 package.json，在 dependencies 插入兩行
 
 ```json
 
@@ -129,18 +129,18 @@ todo_list
  
 ```
 
-然後npm會自動讀取package.json
+然後 npm 會自動讀取 package.json
 ```
 
 npm install
 
 ```
 
-就會幫我們mongoDB裝好了
+就會幫我們 mongoDB 裝好了
 
 # 安裝測試工具-mocha
 
-我們是好孩子，所以要寫unit test，詳細的介紹在NODE_TEST裡
+我們是好孩子，所以要寫 unit test，詳細的介紹在 NODE_TEST 裡
 
 ```
 
@@ -151,9 +151,9 @@ $ npm install -g mocha
 MongoDB CRUD
 =========================
 
-我們需要先寫CRUD的測試
+我們需要先寫 CRUD 的測試
 
-新增一個test目錄並建立一個dbCRUDTest.js的檔案，程式碼如下:
+新增一個 test 目錄並建立一個 dbCRUDTest.js 的檔案，程式碼如下:
 
 ```javascript
 
@@ -245,7 +245,7 @@ describe('dbTest', function () {
 });
 
 ```
-做測試之前我們需要先把mongodb打開
+做測試之前我們需要先把 mongodb 打開
 
 在 Ubuntu 上 MongoDB 開機後便會自動開啟. 在 Mac 上你需要手動輸入下面的指令.
 
@@ -284,7 +284,7 @@ module.exports = function () {
 
 ```
 
-在bin/下新增一個檔案叫做 dbCRUD.js，這是給todo_list讀寫資料庫用的。
+在 bin/ 下新增一個檔案叫做 dbCRUD.js，這是給 todo_list 讀寫資料庫用的。
 
 ```javascript
 
@@ -302,7 +302,7 @@ module.exports = function () {
  
 ```
 
-進行第一次測試，請切換到todo_list目錄底下，執行以下指令
+進行第一次測試，請切換到 todo_list 目錄底下，執行以下指令
 
 ```
 
@@ -312,9 +312,9 @@ $ mocha test/dbCRUDTest.js
 
 ![](img/zh-tw/todo_list/dbCRUDTestFirst.png)
 
-如上圖所示，你可以注意到雖然connect過了，但是CRUD沒有過，因為我們還未定義dbCRUD.js的function，讓我們把洞補起來。
+如上圖所示，你可以注意到雖然 connect 過了，但 是CRUD 沒有過，因為我們還未定義 dbCRUD.js 的 function，讓我們把洞補起來。
 
-修改dbCRUD.js如下
+修改 dbCRUD.js 如下
 
 ```javascript
 
@@ -374,17 +374,17 @@ $ mocha test/dbCRUDTest.js
 
 這個測試，有兩個不好的地方。
 
-1. connect跟所有相依在一起了
-2. insert跟select相依在一起了
+1. connect 跟所有相依在一起了
+2. insert 跟 select 相依在一起了
 
-理論上應該要新增一個假的db instance去做測試，但是因為作者懶惰的關係，所以決定這樣寫。
+理論上應該要新增一個假的 db instance 去做測試，但是因為作者懶惰的關係，所以決定這樣寫。
 
 修改 index.js 使他可以查詢
 ---------------
 
-我們需要調整index.js，讓他可以帶查詢的結果
+我們需要調整 index.js，讓他可以帶查詢的結果
 
-index.js修改程式碼如下：
+index.js 修改程式碼如下：
 
 ```javascript
 
@@ -427,7 +427,7 @@ module.exports = router;
 
 ```
 
-修改index.ejs如下:
+修改 index.ejs 如下:
 
 ```html
 
@@ -608,7 +608,7 @@ module.exports = router;
 DEBUG=todo_list npm start
 ```
 
-連<http://localhost:3000/>即可看到成果
+連 <http://localhost:3000/> 即可看到成果
 
 ![](img/zh-tw/todo_list/todo_listTestShowData.png)
 
@@ -802,8 +802,8 @@ module.exports = router;
 
 ```
 
-我在html裡引入了bootstrap跟jquery以增進使用者體驗跟美化。
-並且在control.js裡增加了delete跟update方法。
+我在 HTML 裡引入了 bootstrap 跟 jquery 以增進使用者體驗跟美化。
+並且在 control.js 裡增加了 delete 跟 update 方法。
 
 你可以試著運行看看結果如何。
 
@@ -811,9 +811,9 @@ module.exports = router;
 
 # passport.js 安裝
 
-你可以注意到我們的userid都是寫死的，這樣無法區別使用者，所以這邊我們將運用passport.js做facebook登入。
+你可以注意到我們的 userid 都是寫死的，這樣無法區別使用者，所以這邊我們將運用 passport.js 做 facebook 登入。
 
-修改package.json:
+修改 package.json:
 
 ```json
 
@@ -841,7 +841,7 @@ module.exports = router;
 
 ```
 
-passport需要session儲存使用者資訊，這裡我們選擇cookie-session，還需要擴充模組以支援facebook登入
+passport 需要 session 儲存使用者資訊，這裡我們選擇 cookie-session，還需要擴充模組以支援 facebook 登入
 
 執行:
 
@@ -851,23 +851,23 @@ $ npm install
 
 ```
 
-* facebook APP申請
+* facebook APP 申請
 
-登入<https://developers.facebook.com>，點選上方選單的My apps->Add a New App
+登入 <https://developers.facebook.com>，點選上方選單的 My apps->Add a New App
 
 ![](img/zh-tw/todo_list/facebookApplyFirstStep.png)
 ![](img/zh-tw/todo_list/facebookApplySecondStep.png)
 ![](img/zh-tw/todo_list/facebookApplyThirdStep.png)
 
-點選Settings，切換到上方的Advanced分頁。
+點選 Settings，切換到上方的 Advanced 分頁。
 
 ![](img/zh-tw/todo_list/facebookApplyForthStep.png)
 
-往下尋找Valid OAuth redirect URIs，填寫如圖
+往下尋找 Valid OAuth redirect URIs，填寫如圖
 
 ![](img/zh-tw/todo_list/facebookApplyFifthStep.png)
 
-拉到最下按save就完成了。
+拉到最下按 save 就完成了。
 
 * 附註
 
@@ -875,7 +875,7 @@ $ npm install
 
 ![](img/zh-tw/todo_list/facebookPublicFirstStep.png)
 
-status & Review 中的 status 點選No使其變成Yes
+status & Review 中的 status 點選 No 使其變成 Yes
 
 ![](img/zh-tw/todo_list/facebookPublicSecondStep.png)
 
@@ -1278,4 +1278,4 @@ module.exports = router;
 完成
 ===============
 
-恭喜你，你已經跨出了node.js的第一步，歡迎你加入node.js這個大社群。
+恭喜你，你已經跨出了 Node.js 的第一步，歡迎你加入 Node.js 這個大社群。
