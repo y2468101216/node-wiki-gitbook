@@ -243,3 +243,7 @@ describe('firstTest', function () {
 
 好測試，不寫嗎？
 
+# 參考資料
+
+* mocha.js:<https://mochajs.org>
+* tdd vs bdd:<http://www.toptal.com/freelance/your-boss-won-t-appreciate-tdd-try-bdd>
