@@ -14,16 +14,12 @@ Linux
 
 可以使用curl
 ```
-
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
-
 ```
 
 或者Wget
 ```
-
 wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
-
 ```
 
 來執行這些install script，安裝完以後請重新連結你的vps或者重開你的server
@@ -52,7 +48,7 @@ installer link:<https://github.com/coreybutler/nvm-windows/releases>
 選擇最新版nvm-setup.zip進行下載，解壓縮開了以後選擇nvm-setup.exe進行安裝，遵循指示下一步即可。
 
 注意更新的時候只要重複安裝的步驟，安裝目錄選擇一樣就好。
-   
+
 # nvm指令簡介
 
 這些nvm的指令皆可在<https://github.com/creationix/nvm>裡找到
@@ -60,10 +56,8 @@ installer link:<https://github.com/coreybutler/nvm-windows/releases>
 * install
 
 ```
-
 nvm install 4.2.1
 nvm install stable
-
 ```   
 
 這個指令是使用Node.js必須先做的，因為在安裝完nvm後Node.js並沒有被安裝。
@@ -77,18 +71,14 @@ stable or unstable一個是安裝穩定版、一個是安裝最新版，不過�
 * use
 
 ```
-
 npm use 4.2.1
 npm use stable
-
 ```
 
 此指令會切換node的版本，你可以在cmd或者terminal打：
 
 ```
-
 node -v
-
 ```
 
 查看現在版本，參數的設定同install。
@@ -96,10 +86,8 @@ node -v
 * run
 
 ```
-
 nvm run 4.2.1 [node file or node command]
 nvm run stable [node file or node command]
-
 ```
 
 要求nvm以特定版本運行node file或者node command，在測試ES6跟非ES6的code此功能十分重要。
@@ -114,10 +102,8 @@ EX:假設妳現在系統版本是4.1.1
 * ls
 
 ```
-
 nvm ls
 nvm ls-remote
-
 ```
 
 ls可以讓你查看"本地端"安裝的所有版本
@@ -126,10 +112,8 @@ ls-remote可以讓你查看，現在官方放出的所有版本。
 * 設定node預設使用版本
 
 ```
-
 nvm alias default stable
 nvm alias default 4.2.1
-
 ```
 
 此指令可以讓你設定每次開啟terminal的node預設版本是多少

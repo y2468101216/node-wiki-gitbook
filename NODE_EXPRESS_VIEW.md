@@ -47,7 +47,7 @@ bin/download.js:
 ```javascript
 /**
  * Name:download.js
- * Purpose:Model download example 
+ * Purpose:Model download example
  * Author:Yun
  * Version:1.0
  * Update:2015-09-22
@@ -94,9 +94,9 @@ app.js:
 ```javascript
 /**
  * Name:app.js
- * Purpose:controller express example 
- * Author:Yun 
- * Version:1.0 
+ * Purpose:controller express example
+ * Author:Yun
+ * Version:1.0
  * Update:2015-09-22
  */
 
@@ -112,7 +112,7 @@ app.get('/', function(req, res) {
 			'x-sent' : true
 		}
 	};
-	
+
 	res.sendFile('index.html', options, function(err) {
 		if (err) {
 			res.status(err.status).end();
@@ -165,6 +165,7 @@ npm install ejs
 ```
 
 結構:
+
 ```
 node_mvc_2_ejs/
 ├── bin/
@@ -179,9 +180,9 @@ login.js:
 ```javascript
 /**
  * Name:login.js
- * Purpose:ejs login example 
- * Author:Yun 
- * Version:1.0 
+ * Purpose:ejs login example
+ * Author:Yun
+ * Version:1.0
  * Update:2015-09-22
  */
 
@@ -189,18 +190,18 @@ module.exports = function (){
 	this.check = function (account, password, callback){
 		var message = 'login success';
 		var error = false;
-		
+
 		if(account != 'test' && error == false){
 			message = 'account error';
 			error = true;
-		
+
 		}
-		
+
 		if(password != 'test' && error == false){
 			message = 'password error';
 			error = true;
 		}
-		
+
 		callback(message, error);
 	}
 }
@@ -235,7 +236,7 @@ index.html:
 		 	<label style="color:green;"><%= message %></label>
 		 <% } %>
 	 <% } %>
-</form>	
+</form>
 </body>
 </html>
 ```
@@ -243,12 +244,11 @@ index.html:
 app.js:
 
 ```javascript
-
 /**
  * Name:app.js
- * Purpose:ejs express example 
- * Author:Yun 
- * Version:1.0 
+ * Purpose:ejs express example
+ * Author:Yun
+ * Version:1.0
  * Update:2015-09-22
  */
 
@@ -266,12 +266,12 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
-//index page 
+//index page
 app.get('/', function(req, res) {
     res.render('index.html',{message:false});
 });
 
-//login 
+//login
 app.post('/login',function(req, res){
 	var loginClass = require('./bin/login.js');
 	var login = new loginClass();
@@ -283,7 +283,6 @@ app.post('/login',function(req, res){
 console.log('server is running');
 
 app.listen(8080);
-
 ```
 
 ![node_mvc_2_original.png](img/zh-tw/node_mvc_2/node_mvc_2_original.png)
@@ -301,6 +300,7 @@ app.use(bodyParser.urlencoded({
 	extended : true
 }));
 ```
+
 這段是說如果封包裡的body有東西的話，用qs library去爬，關於要採用qs library還是query string
 請參考以下連結：<http://stackoverflow.com/questions/29175465/body-parser-extended-option-qs-vs-querystring>
 
@@ -309,6 +309,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 ```
+
 app.set就是可以設定一些express的常數，讓他知道要去哪找。
 
 第一行設定views的目錄在哪。
@@ -353,12 +354,11 @@ node_mvc_3_angularjs/
 login.js:
 
 ```javascript
-
 /**
  * Name:login.js
- * Purpose:ejs login example 
- * Author:Yun 
- * Version:1.0 
+ * Purpose:ejs login example
+ * Author:Yun
+ * Version:1.0
  * Update:2015-09-22
  */
 
@@ -366,27 +366,25 @@ module.exports = function (){
 	this.check = function (account, password, callback){
 		var message = 'login success';
 		var error = false;
-		
+
 		if(account != 'test' && error == false){
 			message = 'account error';
 			error = true;
 		}
-		
+
 		if(password != 'test' && error == false){
 			message = 'password error';
 			error = true;
 		}
-		
+
 		callback(message, error);
 	}
 }
-
 ```
 
 index.html:
 
 ```html
-
 <!DOCTYPE html>
 <html ng-app="node_mvc_app">
 <head>
@@ -409,22 +407,22 @@ index.html:
 	<div>
 		<button type="button" ng-click="loginCheck()">submit</button>
 	</div>
-	
+
 </form>
-<label ng-style="messageStyle">{{message}}</label>	
+<label ng-style="messageStyle">{{message}}</label>
 </body>
 <script type="text/javascript">
 var app = angular.module('node_mvc_app', []);
 app.controller('node_mvc_controller',function($scope, $http){
 	$scope.loginCheck = function () {
 		var req = {
-				 method: 'POST',
-				 url: 'login',
-				 headers: {
-				   'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-				 },
-				 data: $.param($scope.user)
-				}
+			method: 'POST',
+			url: 'login',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+			},
+			data: $.param($scope.user)
+		}
 		$http(req).success(function(data){
 			if(data.error){
 				$scope.messageStyle = {color:'red'};
@@ -443,12 +441,11 @@ app.controller('node_mvc_controller',function($scope, $http){
 app.js:
 
 ```javascript
-
 /**
  * Name:app.js
- * Purpose:ejs express example 
- * Author:Yun 
- * Version:1.0 
+ * Purpose:ejs express example
+ * Author:Yun
+ * Version:1.0
  * Update:2015-09-22
  */
 
@@ -471,7 +468,7 @@ app.use(bodyParser.urlencoded({
 	extended : true
 }));
 
-//index page 
+//index page
 app.get('/', function(req, res) {
     res.sendFile('index.html',options,function(err){
     	if(err){
@@ -480,7 +477,7 @@ app.get('/', function(req, res) {
     });
 });
 
-//login 
+//login
 app.post('/login',function(req, res){
 	var loginClass = require('./bin/login.js');
 	var login = new loginClass();
@@ -492,8 +489,8 @@ app.post('/login',function(req, res){
 console.log('server is running');
 
 app.listen(8080);
-
 ```
+
 ![node_mvc_3_original.png](img/zh-tw/node_mvc_3/node_mvc_3_original.png)
 
 ![node_mvc_3_account_error.png](img/zh-tw/node_mvc_3/node_mvc_3_account_error.png)
@@ -511,13 +508,11 @@ app.js因為我們不再使用ejs了，所以我們將app.set的部分全拿掉�
 所以我們改成res.sendFile。
 
 ```javascript
-
 res.sendFile('index.html',options,function(err){
-    	if(err){
-    		console.log(err);
-    	}
-    });
-	
+	if(err){
+		console.log(err);
+	}
+});
 ```
 
 回傳的部分，server丟json出來是最好的，因為JavaScript對json的支援很好，而且在提供相同資訊的情況下

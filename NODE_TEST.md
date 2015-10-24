@@ -40,9 +40,7 @@ TDD會比較傾向程式語言的描述，BDD會比較人性化。
 使用npm安裝
 
 ```
-
 $ npm install -g mocha
-
 ```
 
 # mocha.js常用語法
@@ -62,7 +60,6 @@ afterEach:每個測試後先執行
 firsrTest.js
 
 ```javascript
-
 var a;
 var b;
 var assert = require('assert');
@@ -77,15 +74,12 @@ describe('firstTest', function () {
 		assert.equal(a + b, 3);
 	});
 });
-
 ```
 
 切換到該檔案目錄底下執行:
 
 ```
-
 $ mocha firsrTest.js
-
 ```
 
 ![](img/zh-tw/node_test/firstTest.png)
@@ -95,7 +89,6 @@ $ mocha firsrTest.js
 arrayTest.js
 
 ```javascript
-
 var actual;
 var exected;
 var assert = require('assert');
@@ -114,7 +107,6 @@ describe('arrayTest', function () {
 		assert.deepEqual(actual, exected);
 	});
 });
-
 ```
 
 第一個是一定不會過的，因為他們是兩個不同的array。
@@ -123,10 +115,8 @@ describe('arrayTest', function () {
 * 附註
 
 ```javascript
-
 actual = [1,2,3];
 exected = actual;
-
 ```
 
 這樣的話equal就會過，因為兩個是一樣的object了。
@@ -136,7 +126,6 @@ exected = actual;
 asyncTest.js
 
 ```javascript
-
 var assert = require('assert');
 
 describe('asyncTest', function () {
@@ -163,10 +152,7 @@ describe('asyncTest', function () {
 			done();
 		});
 	});
-
-
-}); 
-
+});
 ```
 
 因為javascript的async特性，所以在做這種async的操作要記得放done()，確保不會立即回傳測試結果。
@@ -181,7 +167,6 @@ describe('asyncTest', function () {
 interfaceTest.js:
 
 ```javascript
-
 var dbConn = {};
 var assert = require('assert');
 var order = require('./bin/order.js');
@@ -211,7 +196,7 @@ describe('firstTest', function () {
 		var actual = orderTest.priceTotal();
 		assert.equal(actual, expected);
 	});
-	
+
 	it('price total should be 0', function () {
 		var cursor = dbConn.Memberselect(null);
 		orderTest.setOrder(cursor);
@@ -220,7 +205,6 @@ describe('firstTest', function () {
 		assert.equal(actual, expected);
 	});
 });
-
 ```
 
 我設計了一個計算訂單總金額的功能，這個訂單會從DB裡面被撈出來，但ORM還沒寫好。

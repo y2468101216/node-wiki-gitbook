@@ -30,23 +30,23 @@ npm 是指令列工具（command-line tool），
 
 測試 npm 安裝與設定是否正確，請輸入指令如下：
 
-
-
-    npm -v
+```
+npm -v
+```
 
 或是：
 
-
-
-    npm --version
+```
+npm --version
+```
 
 如果 npm 已經正確安裝設定，就會顯示版本訊息：
 
 * 執行結果（範例）
 
-
-
-        1.1.0-2
+```
+1.1.0-2
+```
 
 使用 NPM 安裝套件
 ================
@@ -66,7 +66,9 @@ http://search.npmjs.org/
 
 例如，以下的指令同樣可以找出 coffee-script 相關套件。
 
-    npm search coffee-script
+```
+npm search coffee-script
+```
 
 以下是搜尋結果的參考畫面：
 
@@ -74,8 +76,9 @@ http://search.npmjs.org/
 
 找到需要的套件後（例如 express），即可使用以下指令安裝：
 
-
+```
     npm install coffee-script
+```
 
 值得注意的一點是，使用 ``npm install`` 會將指定的套件，
 安裝在工作目錄（Working Directory）的 ``node_modules`` 資料夾下。
@@ -123,17 +126,20 @@ express 套件提供 ``express`` 這個指令，
 我們可以在 ``npm install`` 加上 ``-g`` 或 ``--global`` 參數，
 啟用 global 安裝模式。例如：
 
-
+```
     npm install -g coffee-script
     npm install -g express
+```
 
 使用 global 安裝模式，
 需要注意執行權限與搜尋路徑的問題，
 若權限不足，可能會出現類似以下的錯誤訊息：
 
+```
     npm ERR! Error: EACCES, permission denied '...'
-    npm ERR! 
+    npm ERR!
     npm ERR! Please try running this command again as root/Administrator.
+```
 
 要獲得足夠得執行權限，請參考以下說明：
 
@@ -141,7 +147,7 @@ express 套件提供 ``express`` 這個指令，
   選擇「以系統管理員身分執行」，
   執行 npm 指令時就會具有 Administrator 身分。
 * Mac OS X 或 Linux 系統，可以使用 ``sudo`` 指令，例如：
-  
+
   ``sudo npm install -g express``
 * Linux 系統可以使用 root 權限登入，或是以「 ``sudo su -`` 」切換成 root 身分。
   （使用 root 權限操作系統相當危險，因此並不建議使用這種方式。）
@@ -149,20 +155,19 @@ express 套件提供 ``express`` 這個指令，
 若加上 ``-g`` 參數，使用 ``npm install -g coffee-script`` 完成安裝後，
 就可以在終端機執行 ``coffee`` 指令。例如：
 
-
-    coffee -v
-
+```
+coffee -v
+```
 * 執行結果（範例）
 
-
-        CoffeeScript version 1.2.0
+```
+CoffeeScript version 1.2.0
+```
 
 若未將 Node.js 套件安裝路徑加入環境變數 NODE_PATH，在引入時會回報錯誤。
 
 * 報錯範例
 
-
-    
 ```
 module.js:340
     throw err;
@@ -178,12 +183,13 @@ Error: Cannot find module 'express'
     at Module.load (module.js:356:32)
     at Function.Module._load (module.js:312:12)
     at Module.runMain (module.js:492:10)
-    ```
+```
 
 * 使用 ubuntu PPA 安裝 Node.js 的設定範例
 
-    
-        echo 'NODE_PATH="/usr/lib/node_modules"' | sudo tee -a /etc/environment
+```
+echo 'NODE_PATH="/usr/lib/node_modules"' | sudo tee -a /etc/environment
+```
 
 套件的更新及維護
 ==============
@@ -193,58 +199,74 @@ npm 還提供其他許多指令（commands）。
 
 使用 ``npm help`` 可以查詢可用的指令。
 
-    npm help
+```
+npm help
+```
 
 * 執行結果（部分）
 
 
-
-        where <command> is one of:
-            adduser, apihelp, author, bin, bugs, c, cache, completion,
-            config, deprecate, docs, edit, explore, faq, find, get,
-            help, help-search, home, i, info, init, install, la, link,
-            list, ll, ln, login, ls, outdated, owner, pack, prefix,
-            prune, publish, r, rb, rebuild, remove, restart, rm, root,
-            run-script, s, se, search, set, show, star, start, stop,
-            submodule, tag, test, un, uninstall, unlink, unpublish,
-            unstar, up, update, version, view, whoami
+```
+where <command> is one of:
+    adduser, apihelp, author, bin, bugs, c, cache, completion,
+    config, deprecate, docs, edit, explore, faq, find, get,
+    help, help-search, home, i, info, init, install, la, link,
+    list, ll, ln, login, ls, outdated, owner, pack, prefix,
+    prune, publish, r, rb, rebuild, remove, restart, rm, root,
+    run-script, s, se, search, set, show, star, start, stop,
+    submodule, tag, test, un, uninstall, unlink, unpublish,
+    unstar, up, update, version, view, whoami
+```
 
 使用 ``npm help command`` 可以查詢指令的詳細用法。例如：
 
-    npm help list
+```
+npm help list
+```
 
 接下來，本節要介紹開發過程常用的 npm 指令。
 
 使用 ``list`` 可以列出已安裝套件：
 
-    npm list
+```
+npm list
+```
 
 * 執行結果（範例）
 
-
-        ├── coffee-script@1.2.0 
-        └─┬ express@2.5.6 
-          ├─┬ connect@1.8.5 
-          │ └── formidable@1.0.8 
-          ├── mime@1.2.4 
-          ├── mkdirp@0.0.7 
-          └── qs@0.4.1 
+```
+├── coffee-script@1.2.0
+└─┬ express@2.5.6
+  ├─┬ connect@1.8.5
+  │ └── formidable@1.0.8
+  ├── mime@1.2.4
+  ├── mkdirp@0.0.7
+  └── qs@0.4.1
+```
 
 檢視某個套件的詳細資訊，例如：
 
-    npm show express
+```
+npm show express
+```
 
 升級所有套件（如果該套件已發佈更新版本）：
 
-    npm update
+```
+npm update
+```
 
 升級指定的套件：
 
-    npm update express
+```
+npm update express
+```
 
 移除指定的套件：
 
-    npm uninstall express
+```
+npm uninstall express
+```
 
 使用 package.json
 =================
@@ -254,31 +276,31 @@ npm 還提供其他許多指令（commands）。
 檔案內容參考範例如下：
 
  package.json（範例）
-
-        {
-            "name": "application-name"
-          , "version": "0.0.1"
-          , "private": true
-          , "dependencies": {
-              "express": "2.5.5"
-            , "coffee-script": "latest"
-            , "mongoose": ">= 2.5.3"
-          }
-        }
-
+```json
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "2.5.5",
+    "coffee-script": "latest",
+    "mongoose": ">= 2.5.3"
+  }
+}
+```
 其中 ``name`` 與 ``version`` 依照專案的需求設置。
 
 需要注意的是 ``dependencies`` 的設定，
 它用於指定專案相依的套件名稱及版本：
 
 * ``"express": "2.5.5"``
-  
+
   //代表此專案相依版本 2.5.5 的 express 套件
 * ``"coffee-script": "latest"``
-  
+
   //使用最新版的 coffee-script 套件（每次更新都會檢查新版）
 * ``"mongoose": ">= 2.5.3"``
-  
+
   //使用版本大於 2.5.3 的 mongoose 套件
 
 假設某個套件的新版可能造成專案無法正常運作，
