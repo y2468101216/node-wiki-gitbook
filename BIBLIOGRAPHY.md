@@ -4,9 +4,6 @@
 
 Node.js 英文書籍
 ============
-* <a href="http://shop.oreilly.com/product/9781934356890.do">Programming Node.js</a>, April
-   2012 (est.), Travis Swicegood, Pragmatic Bookshelf
-
 * <a href="http://shop.oreilly.com/product/0636920024309.do">The Little Book on CoffeeScript</a>,January 2012, Alex MacCaw, O'Reilly Media
 
 * <a href="http://shop.oreilly.com/product/0636920023258.do">Node for Front-End
@@ -30,9 +27,9 @@ Node.js 英文書籍
 * <a href="http://shop.oreilly.com/product/0636920015956.do">Node: Up and Running</a>, May
    2011, Tom Hughes-Croucher, Mike Wilson, O'Reilly Media
 
-* <a href="http://nodetuts.com/handson-nodejs-book.html">Hands-on Node.js</a>, The Node.js introduction and API reference, May 2011, Pedro Teixeira, LeanPub
+* <a href="http://www.goodreads.com/book/show/12397071-hands-on-node-js">Hands-on Node.js</a>, The Node.js introduction and API reference, May 2011, Pedro Teixeira, LeanPub
 
-* <a href="The Node Beginner Book">The Node Beginner Book</a>, Manuel Kiessling
+* <a href="http://www.nodebeginner.org/">The Node Beginner Book</a>, Manuel Kiessling
 
 * <a href="http://visionmedia.github.com/masteringnode/">Mastering Node.js</a>,visionmedia
 
@@ -64,9 +61,3 @@ Node.js 教學網站
 
 Node.js 課程
 ============
-
-
-
-* <a href="http://codelesson.com/courses/view/introduction-to-node-js">Introduction To
-   Node.js </a>,
-   Van Nguyen, CodeLesson

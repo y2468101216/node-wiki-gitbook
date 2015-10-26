@@ -406,7 +406,7 @@ Event Loop
 
 可能很多人在寫JavaScript時，並不知道他是怎麼被執行的。這個時候可以參考一下jQuery作者John Resig一篇好文章，介紹事件及timer怎麼在瀏覽器中執行：How JavaScript Timers Work。通常在網頁中，所有的JavaScript執行完畢後（這部份全部都在global scope跑，除非執行函數），接下來就是如John Resig解釋的這樣，所有的事件處理函數，以及timer執行的函數，會排在一個queue結構中，利用一個無窮迴圈，不斷從queue中取出函數來執行。這個就是event loop。
 
-（除了John Resig的那篇文章，Nicholas C. Zakas的 "Professional JavaScript for Web Developer 2nd edition" 有一個試閱本：http://yuiblog.com/assets/pdf/zakas-projs-2ed-ch18.pdf，598頁剛好也有簡短的說明）
+（除了John Resig的那篇文章，Nicholas C. Zakas的 "Professional JavaScript for Web Developer 2nd edition"， 在 598 頁剛好也有簡短的說明）
 
 所以在JavaScript中，雖然有非同步，但是他並不是使用執行緒。所有的事件或是非同步執行的函數，都是在同一個執行緒中，利用event loop的方式在執行。至於一些比較慢的動作例如I/O、網頁render, reflow等，實際動作會在其他執行緒跑，等到有結果時才利用事件來觸發處理函數來處理。這樣的模型有幾個好處：
 沒有執行緒的額外成本，所以反應速度很快
