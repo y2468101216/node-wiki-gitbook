@@ -380,7 +380,7 @@ console.log(`${a} + ${b} equals to ${a+b}`);
 不過這裡會衍生安全性問題,由於 `${...}` 的寫法可以訪問變量內容,所以不能夠直接用作處理用戶端的輸入。
 
 ###[Arrow Functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
-這並不是一種新的概念,這種匿名函數其實一直都在使用:
+這並不是一種新的概念,這種匿名函數其實一直都在使用。
 
 ```javascript
 // Before ES6
@@ -405,7 +405,13 @@ var psyTest = (age,job) => doingTest(age,job);
 // 如果沒有括號是有問題的，建議使用 (age) => 是為了方便日後代碼擴展
 ```
 
-單從代碼去看或者會認為這只是一種語法糖而已，但事實卻不然。除了是匿名函數的實現之外，它還省卻了寫 `this` 的麻煩與迷思，因為已經預設作用域並非函數的本身，而是定義時所在的函數裡頭，簡單來說就是預設綁定了 `this`。
+另外， `=>` 跟 `function` 有以下的不同：
+
++ 傳統的 `function` 可以利用 `new` 來構造， `=>` 生成的函數就不能用 `new` 來構造。
++ Lexical `this`, `super`, `arguments`, `new.target`
++ `.bind` 對於 `=>` 是無效的
+
+由此可見，它省卻了寫 `this` 的麻煩與迷思。
 
 ```javascript
 // Before ES6
@@ -418,16 +424,18 @@ function mother(){
   });
 }
 
-// 需要使用 bind 去解決這個問題
-// ...
-this.callSonToDoHouseWork((function (){
-  if(this.isAngry){ // undefined
-    this.shopping();
-  }
-}).bind(this));
-// ...
+// 需要定義 self 去解決這個問題
+function mother(){
+  this.isAngry = true;
+  var self = this;
+  this.callSonToDoHouseWork(() => {
+    if(self.isAngry){ // true
+      self.shopping();
+    }
+  });
+}
 
-// ES6 arrow function
+// => with lexical this，不需要定義 self
 function mother(){
   this.isAngry = true;
   this.callSonToDoHouseWork(() => {
