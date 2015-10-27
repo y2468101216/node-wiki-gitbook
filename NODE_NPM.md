@@ -52,9 +52,9 @@ npm --version
 ================
 
 npm 目前擁有超過 6000 種套件（packages），
-可以在 `npm registry <http://search.npmjs.org/>` 使用關鍵字搜尋套件。
+可以在 `npm registry <https://www.npmjs.com/>` 使用關鍵字搜尋套件。
 
-http://search.npmjs.org/
+https://www.npmjs.com/
 
 舉例來說，在關鍵字欄位輸入「coffee-script」，
 下方的清單就會自動列出包含 coffee-script 關鍵字的套件。
