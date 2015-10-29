@@ -247,7 +247,6 @@ Selenium本身就內建支援firefox，但是如果你想支援chrome的話就�
 請先新增一個目錄，內容如下
 
 ```
-
 nightwatch
 nightwatch.json
 libs/
@@ -258,13 +257,11 @@ screenshots/
 tests/
   └── search
       └── googleSearchTest.js
-
 ```
 
 在你的測試專案根目錄新增nightwatch.json:
 
 ```json
-
 {
   "src_folders" : ["tests"],//你的測試檔案目錄
   "output_folder" : "reports",//如果要輸出報告時，輸出的目錄
@@ -325,10 +322,8 @@ tests/
 如果你想要自動啟動Selenium的話請更改你的nightwatch.json為
 
 ```json
-
 start_process : true,
 server_path : "/你的目錄/selenium-server-standalone-{VERSION}.jar"
-
 ```
 
 linux&mac:
@@ -336,7 +331,6 @@ linux&mac:
 新增一個nightwatch檔案在專案根目錄底下，內容如下
 
 ```javascript
-
 #!/usr/bin/env node
 require('nightwatch/bin/runner.js');
 
@@ -354,7 +348,6 @@ windows:
 新增一個nightwatch.js檔案在專案根目錄底下，內容如下
 
 ```javascript
-
 require('nightwatch/bin/runner.js');
 
 ```
@@ -362,7 +355,6 @@ require('nightwatch/bin/runner.js');
 用node先跑起來
 
 ```
-
 > node nightwatch.js
 
 ```
@@ -372,7 +364,6 @@ require('nightwatch/bin/runner.js');
 search/googleSearch.js:
 
 ```javascript
-
 module.exports = {
 	'search google test':function(browser){
 		browser
@@ -393,7 +384,6 @@ module.exports = {
 如果你並沒有設定Selenium自動執行，請先手動執行
 
 ```
-
 $ java -jar selenium-server-standalone-{VERSION}.jar
 
 ```
@@ -401,14 +391,11 @@ $ java -jar selenium-server-standalone-{VERSION}.jar
 進行測試，測試前請先切換到專案根目錄：
 
 ```
-
-# nightwatch tests/search/googleSearchTest.js
+$ nightwatch tests/search/googleSearchTest.js
 
 ```
 
 ![](img/zh-tw/node_test/nightwatchFirstTest.png)
-
-#
 
 # 測試應該注意的幾個事項
 
