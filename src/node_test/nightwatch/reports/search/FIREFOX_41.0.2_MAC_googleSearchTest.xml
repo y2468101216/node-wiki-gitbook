@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="1">
+
+  <testsuite name="googleSearchTest"
+    errors="0" failures="0" hostname="" id="" package="search" skipped="0"
+    tests="1" time="0.000" timestamp="Thu, 29 Oct 2015 06:47:25 GMT">
+  
+    <testcase name="search google test" time="6.539" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+  
+  </testsuite>
+</testsuites>

@@ -8,7 +8,7 @@ test是程式中很重要的一環，本篇我們將會介紹如何用mocha.js�
 
 # 為何要寫測試
 
-1. 先寫測試在開發程式有助於釐清你程式該如何寫。
+1. 邊寫測試邊開發程式有助於釐清你程式該如何寫。
 2. 出現邏輯上的錯誤時只要跑測試就可以知道哪裡出錯，不必慢慢猜測。
 3. 測試時可以釐清是哪個模組出錯了。
 
@@ -19,7 +19,6 @@ test是程式中很重要的一環，本篇我們將會介紹如何用mocha.js�
 3. 使用者測試
 
 單元測試最易除錯，但不貼近使用行為，使用者測試則相反。
-本篇我們只會講單元測試
 
 # TDD 與 BDD的差別
 
@@ -82,7 +81,7 @@ describe('firstTest', function () {
 $ mocha firsrTest.js
 ```
 
-![](img/zh-tw/node_test/firstTest.png)
+![](img/zh-tw/node_test/mochaFirstTest.png)
 
 # 比較object & array
 
@@ -162,7 +161,7 @@ describe('asyncTest', function () {
 有的時候你想測試的function必須用到外面的class，而那個class還沒寫好怎辦？
 最常見的就是ORM還沒寫好，但你需要串資料庫。
 
-沒關係我們可以模擬該class的行為，假裝有那個class的存在，就是所謂的interface拉。
+沒關係我們可以模擬該class的行為，假裝有那個class的存在。
 
 interfaceTest.js:
 
@@ -210,9 +209,206 @@ describe('firstTest', function () {
 我設計了一個計算訂單總金額的功能，這個訂單會從DB裡面被撈出來，但ORM還沒寫好。
 於是我模擬了ORM的行為去避免這個問題。
 
-# nightwatch.js
+# nightwatch.js簡介(整合測試)
 
-這是一個測試前端的好工具...（feature)
+這是一個測試end to end的好工具，她與Selenium結合使其可以自動打開browser做end to end測試，一般而言他會歸在整合測試中，但他也可以拿來做使用者測試。
+
+# 使用時機
+ 
+1. 當你想要重構某支程式，而他並不適合寫unit test
+2. 給PM或者那些不懂程式的人看你的程式是如何運行的
+3. 想要測試流程時，比如登入行為
+4. 想要測試前端
+ 
+# 安裝nightwatch.js
+
+跟mocha一樣，我們希望它可以可以在系統的任何地方run。
+
+```
+$ npm install nightwatch
+```
+
+# Selenium安裝
+
+Selenium需要java支援，請先確定你的PC上有java
+
+然後我們需要下載Selenium<http://selenium-release.storage.googleapis.com/index.html>
+請點選網址後下載最新版的
+
+* option
+
+Selenium本身就內建支援firefox，但是如果你想支援chrome的話就要另外下載chromedriver。
+請至<https://sites.google.com/a/chromium.org/chromedriver/downloads>下載最新版
+
+# 設定環境
+
+這邊我只挑基本常用的的出來講，其餘可以看nightwatch.js官網裡的doc
+
+請先新增一個目錄，內容如下
+
+```
+
+nightwatch
+nightwatch.json
+libs/
+  ├── selenium-server-standalone.jar
+  ├── chromedriver
+reports/
+screenshots/
+tests/
+  └── search
+      └── googleSearchTest.js
+
+```
+
+在你的測試專案根目錄新增nightwatch.json:
+
+```json
+
+{
+  "src_folders" : ["tests"],//你的測試檔案目錄
+  "output_folder" : "reports",//如果要輸出報告時，輸出的目錄
+  "custom_commands_path" : "",
+  "custom_assertions_path" : "",
+  "page_objects_path" : "",
+  "globals_path" : "",
+
+  //selenium設定
+  "selenium" : {
+    "start_process" : false, //是否自動啟動Selenium
+    "server_path" : "",//Selenium jar位置
+    "log_path" : "",//輸出Selenium的log位置
+    "host" : "127.0.0.1",//設定Selenium 伺服器IP
+    "port" : 4444,//設定Selenium 伺服器PORT
+    "cli_args" : {
+      "webdriver.chrome.driver" : "",//chromedriver位置
+      "webdriver.ie.driver" : ""//IE eats shit
+    }
+  },
+  //測試設定
+  "test_settings" : {
+    "default" : {
+      "launch_url" : "http://localhost",
+      "selenium_port"  : 4444,//連結Selenium 伺服器PORT
+      "selenium_host"  : "localhost",//連結Selenium 伺服器網址
+      "silent": true,
+      "screenshots" : {
+        "enabled" : true,//是否拍照
+  		"on_failure" : true,//測試失敗時拍照
+ 		"on_error" : false,//指令錯誤時拍照
+  		"path" : ""//拍照路徑
+      },
+	  //預設啟動的browser
+      "desiredCapabilities": {
+        "browserName": "firefox",//預設啟動的browser
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      }
+    },
+
+	//自定義browser，之後使用nightwatch可能會用到
+    "chrome" : {
+      "desiredCapabilities": {
+        "browserName": "chrome",//預設啟動的browser
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      }
+    }
+  }
+}
+
+
+```
+
+* option
+
+如果你想要自動啟動Selenium的話請更改你的nightwatch.json為
+
+```json
+
+start_process : true,
+server_path : "/你的目錄/selenium-server-standalone-{VERSION}.jar"
+
+```
+
+linux&mac:
+
+新增一個nightwatch檔案在專案根目錄底下，內容如下
+
+```javascript
+
+#!/usr/bin/env node
+require('nightwatch/bin/runner.js');
+
+```
+
+把它設定為可執行
+```
+
+$ chmod a+x nightwatch
+
+```
+
+windows:
+
+新增一個nightwatch.js檔案在專案根目錄底下，內容如下
+
+```javascript
+
+require('nightwatch/bin/runner.js');
+
+```
+
+用node先跑起來
+
+```
+
+> node nightwatch.js
+
+```
+
+# nightwatch.js的第一個測試
+
+search/googleSearch.js:
+
+```javascript
+
+module.exports = {
+	'search google test':function(browser){
+		browser
+		.url('http://www.google.com.tw')
+		.waitForElementVisible('body', 1000)
+		.setValue('input[type=text]', 'google')
+		.keys(browser.Keys.ENTER)
+		.pause(1000)
+		.assert.containsText("ol#rso a", "Google")
+		.end();
+	}
+}
+
+```
+
+* option
+
+如果你並沒有設定Selenium自動執行，請先手動執行
+
+```
+
+$ java -jar selenium-server-standalone-{VERSION}.jar
+
+```
+
+進行測試，測試前請先切換到專案根目錄：
+
+```
+
+# nightwatch tests/search/googleSearchTest.js
+
+```
+
+![](img/zh-tw/node_test/nightwatchFirstTest.png)
+
+#
 
 # 測試應該注意的幾個事項
 
@@ -230,4 +426,5 @@ describe('firstTest', function () {
 # 參考資料
 
 * mocha.js:<https://mochajs.org>
+* nightwatch.js:<http://nightwatchjs.org>
 * tdd vs bdd:<http://www.toptal.com/freelance/your-boss-won-t-appreciate-tdd-try-bdd>

@@ -1,0 +1,34 @@
+14:47:18.714 INFO - Launching a standalone Selenium Server
+Setting system property webdriver.chrome.driver to libs/chromedriver
+14:47:18.769 INFO - Java: Oracle Corporation 24.76-b04
+14:47:18.769 INFO - OS: Mac OS X 10.11.1 x86_64
+14:47:18.785 INFO - v2.48.0, with Core v2.48.0. Built from revision 41bccdd
+14:47:18.877 INFO - Driver provider org.openqa.selenium.ie.InternetExplorerDriver registration is skipped:
+registration capabilities Capabilities [{platform=WINDOWS, ensureCleanSession=true, browserName=internet explorer, version=}] does not match the current platform MAC
+14:47:18.877 INFO - Driver provider org.openqa.selenium.edge.EdgeDriver registration is skipped:
+registration capabilities Capabilities [{platform=WINDOWS, browserName=MicrosoftEdge, version=}] does not match the current platform MAC
+14:47:18.878 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+14:47:18.878 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
+14:47:18.972 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+14:47:18.972 INFO - Selenium Server is up and running
+14:47:19.283 INFO - Executing: [new session: Capabilities [{platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=firefox, name=Search / Google Search Test}]])
+14:47:19.300 INFO - Creating a new session for Capabilities [{platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=firefox, name=Search / Google Search Test}]
+14:47:22.665 INFO - Done: [new session: Capabilities [{platform=ANY, acceptSslCerts=true, javascriptEnabled=true, browserName=firefox, name=Search / Google Search Test}]]
+14:47:22.685 INFO - Executing: [get: http://www.google.com.tw])
+14:47:24.154 INFO - Done: [get: http://www.google.com.tw]
+14:47:24.166 INFO - Executing: [find elements: By.cssSelector: body])
+14:47:24.259 INFO - Done: [find elements: By.cssSelector: body]
+14:47:24.265 INFO - Executing: [is displayed: 0 [[FirefoxDriver: firefox on MAC (bd6226aa-4714-6d46-b16a-2e9a7a493636)] -> css selector: body]])
+14:47:24.278 INFO - Done: [is displayed: 0 [[FirefoxDriver: firefox on MAC (bd6226aa-4714-6d46-b16a-2e9a7a493636)] -> css selector: body]]
+14:47:24.291 INFO - Executing: [find element: By.cssSelector: input[type=text]])
+14:47:24.299 INFO - Done: [find element: By.cssSelector: input[type=text]]
+14:47:24.310 INFO - Executing: [send keys: 1 [[FirefoxDriver: firefox on MAC (bd6226aa-4714-6d46-b16a-2e9a7a493636)] -> css selector: input[type=text]], [g, o, o, g, l, e]])
+14:47:24.398 INFO - Done: [send keys: 1 [[FirefoxDriver: firefox on MAC (bd6226aa-4714-6d46-b16a-2e9a7a493636)] -> css selector: input[type=text]], [g, o, o, g, l, e]]
+14:47:24.402 INFO - Executing: [send keys to active: []])
+14:47:24.462 INFO - Done: [send keys to active: []]
+14:47:25.472 INFO - Executing: [find element: By.cssSelector: ol#rso a])
+14:47:25.489 INFO - Done: [find element: By.cssSelector: ol#rso a]
+14:47:25.493 INFO - Executing: [get text: 2 [[FirefoxDriver: firefox on MAC (bd6226aa-4714-6d46-b16a-2e9a7a493636)] -> css selector: ol#rso a]])
+14:47:25.505 INFO - Done: [get text: 2 [[FirefoxDriver: firefox on MAC (bd6226aa-4714-6d46-b16a-2e9a7a493636)] -> css selector: ol#rso a]]
+14:47:25.510 INFO - Executing: [delete session: 14678805-ab1b-4f88-8eeb-c1703948a475])
+14:47:25.599 INFO - Done: [delete session: 14678805-ab1b-4f88-8eeb-c1703948a475]
