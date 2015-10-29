@@ -32,6 +32,7 @@ https://www.gitbook.com/book/y2468101216/node-wiki-book/details
  * [README.md](README.md) -> 本書說明
  * zh-tw -> 內含各章節詳細資料，編排方式可參考 [SUMMARY.md](SUMMARY.md)
  * [src](src) -> 範例程式碼擺放位置(目前全部嵌在網頁裡面）
+ * [APPENDIX.md](APPENDIX.md) -> 附錄
 
 授權
 ====
