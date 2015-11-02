@@ -1,18 +1,65 @@
 #  前言
 
-test是程式中很重要的一環，本篇我們將會介紹如何用mocha.js撰寫test case。
+test是程式中很重要的一環，本篇我們將會介紹如何用mocha.js跟nightwatch.js撰寫test case。
 
 # 原始碼
 
 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_test>
 
-# 為何要寫測試
+# 為何我們要使用TDD，或者說寫測試有何好處
 
-1. 邊寫測試邊開發程式有助於釐清你程式該如何寫。
-2. 出現邏輯上的錯誤時只要跑測試就可以知道哪裡出錯，不必慢慢猜測。
-3. 測試時可以釐清是哪個模組出錯了。
+TDD是一種用測試來進行開發的模式，所以他的本質其實是為了開發而非測試。
 
-# 測試的層級
+Kent Beck(設計模式的先驅者)在RIP TDD裡舉出了8個你應該使用TDD的理由。
+
+1. Over-engineering(過度設計):
+
+EX:
+今天你被授命要做一個會員登入的系統，你老闆只要你串facebook登入，結果你多寫了一個google登入。
+這樣就過度設計了，程式碼裡不要擺用不到的東西，會造成後面維護上的困擾。
+
+TDD每一個測試都是需求，而你不應該寫需求以外的程式，TDD力求以最簡單的方法讓測試通過。
+
+2. API feedback(介面回饋):
+
+因為TDD會根據使用者的需求寫測試，當你發現 你的介面不敷使用於測試時，就會去修改介面，這會使你的介面越來越貼近使用者。
+
+3. Logic errors(邏輯錯誤):
+
+TDD裡面不會有任何的邏輯(if else)判斷，所以如果出來的結果不符合就是你的method有問題。
+而且TDD一次只會有一個測試失敗，所以一定是你剛增加的code有問題。
+
+4. Documentation(文件):
+
+每個工程師都會跟你說他討厭程式沒有文件，但實際上會寫文件的很少，後面會繼續維護的更少了。
+
+TDD的測試即文件，當你看完測試你就會瞭解這隻程式怎用了。
+而且如果需求改變，你的測試也會改變，就會很自然地維護它了。
+
+5. Feeling overwhelmed:
+
+標題無關。
+
+TDD的宗旨是先寫測試在開發，意味著即使沒有程式依然可以先寫測試，
+
+6. Separate interface from implementation thinking(從邏輯來實踐獨立介面):
+
+EX:
+今天有個需求是串金流API，但是開發API的人說他要等上線前10天才能給你測試。
+
+TDD遇到這種問題時就會做一個介面，測試時實作這個介面，去模擬API的行為。
+這樣你就不用因為別人拖延自己的進度。
+
+7. Agreement(同意)
+
+當你把需求解掉了以後，你要如何說服發出需求的人妳已經把問題解決掉了？
+顯然用測試是一個好方法。
+
+8. Anxiety(焦慮)
+
+當老闆問你一切是否OK時，TDD可以不用讓你提心吊膽的說OK。
+
+# 測試方法的層級
 
 1. 單元測試
 2. 整合測試
@@ -20,19 +67,11 @@ test是程式中很重要的一環，本篇我們將會介紹如何用mocha.js�
 
 單元測試最易除錯，但不貼近使用行為，使用者測試則相反。
 
+
+
 # TDD 與 BDD的差別
 
-他們的差別只在於對測試案例的描述，舉例來講:
 
-今天我想要測試1+1=2這件事
-
-TDD: 1+1 equals 2
-
-BDD: 1+1 should be 2
-
-TDD會比較傾向程式語言的描述，BDD會比較人性化。
-
-如果不知道要用哪種就用BDD，看懂最重要。
 
 # 安裝mocha.js
 
@@ -338,7 +377,6 @@ require('nightwatch/bin/runner.js');
 
 把它設定為可執行
 ```
-
 $ chmod a+x nightwatch
 
 ```
@@ -414,4 +452,5 @@ $ nightwatch tests/search/googleSearchTest.js
 
 * mocha.js:<https://mochajs.org>
 * nightwatch.js:<http://nightwatchjs.org>
+* RIP tdd:<https://www.facebook.com/notes/kent-beck/rip-tdd/750840194948847>
 * tdd vs bdd:<http://www.toptal.com/freelance/your-boss-won-t-appreciate-tdd-try-bdd>
