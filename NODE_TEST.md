@@ -6,6 +6,14 @@ test是程式中很重要的一環，本篇我們將會介紹如何用mocha.js�
 
 <https://github.com/y2468101216/node-wiki-gitbook/tree/master/src/node_test>
 
+# 測試方法的層級
+
+1. 單元測試
+2. 整合測試
+3. 使用者測試
+
+單元測試最易除錯，但不貼近使用行為，使用者測試則相反。
+
 # 為何我們要使用TDD，或者說寫測試有何好處
 
 TDD是一種用測試來進行開發的模式，所以他的本質其實是為了開發而非測試。
@@ -58,20 +66,6 @@ TDD遇到這種問題時就會做一個介面，測試時實作這個介面，�
 8. Anxiety(焦慮)
 
 當老闆問你一切是否OK時，TDD可以不用讓你提心吊膽的說OK。
-
-# 測試方法的層級
-
-1. 單元測試
-2. 整合測試
-3. 使用者測試
-
-單元測試最易除錯，但不貼近使用行為，使用者測試則相反。
-
-
-
-# TDD 與 BDD的差別
-
-
 
 # 安裝mocha.js
 
@@ -352,8 +346,6 @@ tests/
     }
   }
 }
-
-
 ```
 
 * option
@@ -378,7 +370,6 @@ require('nightwatch/bin/runner.js');
 把它設定為可執行
 ```
 $ chmod a+x nightwatch
-
 ```
 
 windows:
@@ -387,14 +378,12 @@ windows:
 
 ```javascript
 require('nightwatch/bin/runner.js');
-
 ```
 
 用node先跑起來
 
 ```
 > node nightwatch.js
-
 ```
 
 # nightwatch.js的第一個測試
@@ -423,17 +412,96 @@ module.exports = {
 
 ```
 $ java -jar selenium-server-standalone-{VERSION}.jar
-
 ```
 
 進行測試，測試前請先切換到專案根目錄：
 
 ```
 $ nightwatch tests/search/googleSearchTest.js
-
 ```
 
 ![](img/zh-tw/node_test/nightwatchFirstTest.png)
+
+# TDD 與 BDD 的差別
+
+在TDD的宗旨：需求即測試、測試即開發，理論上TDD應該也可以讓PM跟SA加入。不然需求定義不清的情況下，你也沒辦法使用TDD。
+
+但是這裡有一個問題：TDD大概只有工程師看得懂(node.js比較沒有這問題，因為他底下的測試工具幾乎都允許你用BDD模式開發)。
+為了讓PM跟SA也能看懂並且修正需求，BDD就這樣橫空出世。
+
+# BDD 的代言人:cucumber
+
+cucumber原本是for ruby的測試工具，但是因為他裡面的設計模式十分不錯，被轉成許多語言(JAVA、C#、JAVASCRIPT、PHP)等。
+他運用了簡單的幾個單字，讓工程師與PM更易於釐清需求
+
+下面將會介紹幾個cucumber的常用單字
+
+* Feature:產品名稱
+
+EX:要開發的是購物車那就會寫上Feature:shoppingCar
+
+* Background:
+
+他會在before之後的每個Scenario開始以前執行一次就像是mocha的beforeEach
+
+* Scenario:功能名稱
+
+EX:將商品放入購物車那就會寫上Scenario:put item in shoppingCar
+
+* Given:帶入參數
+
+* When:運算得到結果
+
+* Then:比對結果跟預期的是否一樣。
+
+# cucumber.js 安裝
+
+跟mocha一樣，我們希望它可以可以在系統的任何地方run。
+
+```
+$ npm install -g cucumber
+```
+
+# cucumber example
+
+我們要做一個shopingCar，雖然裡面只能放水果。
+
+建立一個目錄如下
+
+```
+features/
+  ├── step_definitions
+  |		└── shoppingCarStep.js
+  ├── support
+  |		├──	hook.js
+  |		└──	world.js
+  └── shoppingCar.feature
+lib/
+  └── shoppingCar.js		
+package.json
+```
+
+以下為目錄解析
+
+* features:是擺你的測試案例
+* lib:是擺你要測試的module
+* step_definitions:是擺測試步驟
+* support:擺測試前後要做的程式
+
+遵循TDD的原則一次只寫一個測試，打開shoppingCar.feature，撰寫內容如下:
+
+```
+Feature: shoppingCar
+
+  Scenario: calculate apple price
+    Given the item "apple"
+    And the numbers "4"
+    When the calculator is run
+    Then the output should be "200"
+```
+
+
+
 
 # 測試應該注意的幾個事項
 
@@ -453,4 +521,5 @@ $ nightwatch tests/search/googleSearchTest.js
 * mocha.js:<https://mochajs.org>
 * nightwatch.js:<http://nightwatchjs.org>
 * RIP tdd:<https://www.facebook.com/notes/kent-beck/rip-tdd/750840194948847>
-* tdd vs bdd:<http://www.toptal.com/freelance/your-boss-won-t-appreciate-tdd-try-bdd>
+* cucumber wiki:<https://github.com/cucumber/cucumber/wiki>
+* cucumber.js:<https://github.com/cucumber/cucumber-js>
