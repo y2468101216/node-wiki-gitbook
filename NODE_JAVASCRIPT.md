@@ -305,7 +305,7 @@ console.log(a.length);
 //print: 2
 ```
 
-同時也可以注意到，使用 pop 這個方法之後，陣列的長度內容也會被輸出。另外一個跟 pop 很像的方式就是 shift，
+同時也可以注意到，使用 pop 這個方法之後，陣列的數值也會被輸出。另外一個跟 pop 很像的方式就是 shift，
 
 ```javascript
 console.log(a.shift());
@@ -315,7 +315,7 @@ console.log(a.length);
 //print: 1
 ```
 
-shift 跟 pop 最大的差異，就是從最前面將數值取出，同時也會讓呼叫的陣列少一個數組。
+shift 跟 pop 最大的差異，就是從最前面將數值取出，同時也會讓呼叫的陣列少一個數值。
 
 slice
 ======
