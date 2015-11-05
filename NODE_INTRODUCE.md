@@ -10,11 +10,11 @@ JavaScript 是功能強大的物件導向程式語言，但是在 JavaScript 的
 
 開發人員所編寫出來的 JavaScript 腳本程式，怎麼可能會比其他語言寫出來的網路程式還要快上許多呢？以前的網路程式原理是將使用者每次的連線 (connection) 都開啟一個執行緒 (thread)，當連線爆增的時候將會快速耗盡系統效能，並且容易產生阻塞 (block)。
 
-Node.js 對於資源的調配有所不同，當程式接收到一筆連線 (connection)，會通知作業系統透過epoll, kqueue, /dev/poll或select將連線保留，並且放入heap中配置，先讓連線進入休眠 (sleep) 狀態，當系統通知時才會觸發連線的 callback。這種處理連線方式只會佔用掉記憶體，並不會使用到CPU資源。另外因為採用 JavaScript 語言的特性，每個 request 都會有一個 callback，如此可以避免發生 block。
+Node.js 對於資源的調配有所不同，當程式接收到一筆連線 (connection)，會通知作業系統透過 epoll, kqueue, /dev/poll 或 select 將連線保留，並且放入 heap 中配置，先讓連線進入休眠 (sleep) 狀態，當系統通知時才會觸發連線的 callback。這種處理連線方式只會佔用掉記憶體，並不會使用到CPU資源。另外因為採用 JavaScript 語言的特性，每個 request 都會有一個 callback，如此可以避免發生 block。
 
-基於 callback 特性，目前 Node.js 大多應用於 Comet(long pulling) Request Server，或者是高連線數量的網路服務上，目前也有許多公司將 Node.js 設為內部核心網路服務之一。在 Node.js 也提供了外掛管理 (Node package management)，讓愛好 Node.js 輕易開發更多有趣的服務、外掛，並且提供到 npm 讓全世界使用者快速安裝使用。
+基於 callback 特性，目前 Node.js 大多應用於 Comet(long polling) Request Server，或者是高連線數量的網路服務上，目前也有許多公司將 Node.js 設為內部核心網路服務之一。在 Node.js 也提供了外掛管理 (Node package management)，讓愛好 Node.js 輕易開發更多有趣的服務、外掛，並且提供到 npm 讓全世界使用者快速安裝使用。
 
 本書最後執行測試版本為Node.js v4.0.0，相關 API 文件可查詢
 https://nodejs.org
 
-本書所有範例均可於 Linux, Windows 上執行，如遇到任何問題歡迎至http://nodejs.tw ，詢問對於 Node.js 相關問題，或者可以加入FB社團<a href="https://www.facebook.com/groups/node.js.tw/">Node.js台灣</a>
+本書所有範例均可於 Linux, Windows 上執行，如遇到任何問題歡迎至 http://nodejs.tw ，詢問對於 Node.js 相關問題，或者可以加入 FB 社團 <a href="https://www.facebook.com/groups/node.js.tw/">Node.js台灣</a>
