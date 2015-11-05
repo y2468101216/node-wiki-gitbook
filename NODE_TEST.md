@@ -432,7 +432,15 @@ $ nightwatch tests/search/googleSearchTest.js
 # BDD 的代言人:cucumber
 
 cucumber原本是for ruby的測試工具，但是因為他裡面的設計模式十分不錯，被轉成許多語言(JAVA、C#、JAVASCRIPT、PHP)等。
-他運用了簡單的幾個單字，讓工程師與PM更易於釐清需求
+他運用了簡單的幾個單字，讓工程師與PM更易於釐清需求。
+
+# cucumber的好處
+
+1. 程式碼與需求分開，不會不小心改到測試程式
+2. 測試程式看起來更人性化。
+3. 關鍵字足夠適用於各類需求
+
+# cucumber單字簡介
 
 下面將會介紹幾個cucumber的常用單字
 
@@ -464,7 +472,7 @@ $ npm install -g cucumber
 
 # cucumber example
 
-我們要做一個shopingCar，雖然裡面只能放水果。
+我們要做一個shopingCar。
 
 建立一個目錄如下
 
@@ -488,7 +496,7 @@ package.json
 * step_definitions:是擺測試步驟
 * support:擺測試前後要做的程式
 
-遵循TDD的原則一次只寫一個測試，打開shoppingCar.feature，撰寫內容如下:
+遵循TDD的原則一次只寫一個測試，打開features/shoppingCar.feature，撰寫內容如下:
 
 ```
 Feature: shoppingCar
@@ -500,8 +508,117 @@ Feature: shoppingCar
     Then the output should be "200"
 ```
 
+features/step_definitions/shoppingCarStep.js:
 
+```javascript
+/**
+ * calculate step
+ */
 
+module.exports = function() {
+    var self = this;
+
+    this.Given('the item "$itemName"', function(itemName, callback) {
+        self.itemName = itemName;
+        callback();
+    });
+    
+    this.Given('the numbers "$numbers"', function(numbers, callback) {
+        self.numbers = numbers;
+        callback();
+    });
+
+    this.When(/^the calculator is run$/, function(callback) {
+        self.result = self.calculator.priceCal(self.itemName, self.numbers);
+        callback();
+    });
+
+    this.Then('the output should be "$output"', function(output, callback) {
+        self.assert.equal(self.result,output);
+        callback();
+    });
+}
+```
+
+讓我們來測試一下，請先切換到專案根目錄底下
+
+```
+$ cucumber.js features/shoppingCar.feature
+```
+
+![](img/zh-tw/node_test/cucumberFirstTest.png)
+
+當然會失敗，因為我們還沒有撰寫程式。
+
+在撰寫程式前，我們注意到需求裡並沒有給我們價錢，
+
+在實際工作上你應當要詢問每個蘋果的價錢是否是一樣的，不過這裡我們當作每顆蘋果的價錢是一樣的。
+
+lib/shoppingCar.js:
+
+```javascript
+/**
+ * @function
+ *
+ * simple shoppingCar
+ */
+var shoppingCar = module.exports = function () {
+	var fruitPrice = { apple: 50 };
+	
+	/**
+	* simple calculate implementation
+	* @param String name an fruit's name
+	* @param int numbers how many fruit
+	* @return int totalPrice
+	*/
+	this.priceCal = function (name, numbers) {
+		return fruitPrice[name] * numbers;
+	}
+};
+```
+
+features/support/world.js
+
+```javascript
+/**
+ * @function
+ *
+ * world is a constructor function
+ * with utility properties,
+ * destined to be used in step definitions
+ */
+var cwd = process.cwd();
+var path = require('path');
+
+var Calculator = require(path.join(cwd, 'lib', 'shoppingCar'));
+
+module.exports = function() {
+    this.calculator = new Calculator();
+    this.assert = require('assert');
+}
+```
+
+![](img/zh-tw/node_test/cucumberSecondTest.png)
+
+此時我們增加了第二個需求。
+
+```
+ Scenario: calculate orange price
+    Given the item "orange"
+    And the numbers "3"
+    When the calculator is run
+    Then the output should be "120"
+```
+
+多了orange，當然還是沒寫價錢，所以我們假定他一顆40元
+
+修改lib/shoppingCar.js:
+
+```javascript
+var fruitPrice = { apple: 50, orange: 40 };
+```
+
+![](img/zh-tw/node_test/cucumberThirdTest.png)
 
 # 測試應該注意的幾個事項
 
