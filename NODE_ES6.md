@@ -488,8 +488,8 @@ p2
 這是一個語法糖，類似 C# 裡面的 `foreach(var item in items)`。
 
 ```javascript
-var i1 = [1,2,3];
-for(var i of i1){
+let i1 = [1,2,3];
+for(let i of i1){
   console.log(i);
 }
 /*
@@ -497,8 +497,8 @@ for(var i of i1){
 2
 3
 */
-var i2 = 'abc';
-for(var i of i2){
+let i2 = 'abc';
+for(let i of i2){
   console.log(i);
 }
 /*
@@ -512,11 +512,11 @@ c
 
 ```javascript
 // Generator instance
-for(var i of (function*(){ yield 1; yield 2; yield 3; }())) { ... }
+for(let i of (function*(){ yield 1; yield 2; yield 3; }())) { ... }
 // Generic iterable
-for(var i of global.__createIterableObject([1, 2, 3])) { ... }
+for(let i of global.__createIterableObject([1, 2, 3])) { ... }
 // Generic iterable instance
-for(var i of Object.create(global.__createIterableObject([1, 2, 3]))) { ... }
+for(let i of Object.create(global.__createIterableObject([1, 2, 3]))) { ... }
 ```
 
 ##結語
