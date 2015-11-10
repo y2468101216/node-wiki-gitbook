@@ -1,6 +1,6 @@
 #  前言
 
-test是程式中很重要的一環，本篇我們將會介紹如何用mocha.js跟nightwatch.js撰寫test case。
+test是程式中很重要的一環，本篇我們將會介紹如何用mocha.js、nightwatch.js、cucumber.js撰寫test case。
 
 # 原始碼
 
