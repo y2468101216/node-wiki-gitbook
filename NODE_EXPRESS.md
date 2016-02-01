@@ -24,8 +24,8 @@ express 的使用也十分簡單，先來建立一個基本的hello world ，
 
 
 ```javascript
-var app = require('express').createServer(),
-		port = 1337;
+var app = require('express')();
+var port = 1337;
 
 app.listen(port);
 
