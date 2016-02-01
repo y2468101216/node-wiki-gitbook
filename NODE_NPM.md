@@ -288,6 +288,12 @@ npm uninstall express
   }
 }
 ```
+
+亦可使用NPM內建的REPL(Read-Eval-Print Loop)產生package.json檔
+```
+    npm init
+```
+
 其中 ``name`` 與 ``version`` 依照專案的需求設置。
 
 需要注意的是 ``dependencies`` 的設定，
