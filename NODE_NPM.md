@@ -93,7 +93,7 @@ npm search coffee-script
 
 並且將下載的套件，放置於這個子目錄，例如：
 
-``C:\project1node_modules\coffee-script``
+``C:\project1\node_modules\coffee-script``
 
 這個設計讓專案可以個別管理相依的套件，
 並且可以在專案佈署或發行時，
